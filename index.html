@@ -153,15 +153,34 @@
       text-decoration: none;
     }
 
+    .settings-panel button:hover,
+    .settings-panel a:hover {
+      background-color: var(--tab-active);
+      color: white;
+    }
+
     .settings-panel a {
       display: inline-block;
       text-decoration: none;
     }
 
-    .settings-panel button:hover,
-    .settings-panel a:hover {
-      background-color: var(--tab-active);
-      color: white;
+    /* Animations */
+    @keyframes rotateClockwise {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes rotateAntiClockwise {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(-360deg); }
+    }
+
+    .rotate-clockwise {
+      animation: rotateClockwise 0.5s linear;
+    }
+
+    .rotate-anticlockwise {
+      animation: rotateAntiClockwise 0.5s linear;
     }
   </style>
 </head>
@@ -169,18 +188,23 @@
 
   <!-- ⚙️ Settings Button -->
   <div class="settings">
-    <button onclick="toggleSettings()">⚙️</button>
+    <button id="settingsIcon" onclick="animatedOpen()">⚙️</button>
   </div>
 
-  <!-- Sliding Settings Panel -->
+  <!-- Settings Panel -->
   <div id="settingsPanel" class="settings-panel">
+    <!-- ⬅ Back Button -->
+    <button id="backArrow" onclick="animatedClose()" style="font-size: 18px; background: none; border: none; color: var(--text-color); margin-bottom: 10px; cursor: pointer;">
+      ⬅ Back
+    </button>
+
     <h3>Settings</h3>
     <button onclick="toggleVoice()">🎤 Toggle Voice</button>
     <button onclick="toggleTheme()">🌗 Switch Theme</button>
     <a href="https://www.github.com/raj0793/jarvis.ai.in" target="_blank">🔗 GitHub Repo</a>
   </div>
 
-  <!-- Main Heading -->
+  <!-- Title -->
   <h1>JARVIS Dashboard</h1>
 
   <!-- Tabs -->
@@ -191,7 +215,7 @@
     <button onclick="showTab(4)">FAQ</button>
   </div>
 
-  <!-- Tab Content -->
+  <!-- Tab Contents -->
   <div id="tab1" class="tab-content active">
     <h2>Home</h2>
     <p>Welcome to JARVIS! Your intelligent assistant is here to help you.</p>
@@ -212,11 +236,12 @@
     <p>Frequently Asked Questions about JARVIS and its features.</p>
   </div>
 
-  <!-- Click Me Button -->
+  <!-- Button -->
   <div class="center-button">
     <button onclick="mf()">Click Me</button>
   </div>
 
+  <!-- JavaScript -->
   <script>
     function mf() {
       alert("Hi");
@@ -238,11 +263,25 @@
       alert("🎤 Voice toggle clicked (functionality pending)");
     }
 
-    function toggleSettings() {
-      const panel = document.getElementById('settingsPanel');
-      panel.classList.toggle('active');
+    function animatedOpen() {
+      const icon = document.getElementById('settingsIcon');
+      icon.classList.add('rotate-clockwise');
+
+      setTimeout(() => {
+        icon.classList.remove('rotate-clockwise');
+        document.getElementById('settingsPanel').classList.add('active');
+      }, 500);
+    }
+
+    function animatedClose() {
+      const back = document.getElementById('backArrow');
+      back.classList.add('rotate-anticlockwise');
+
+      setTimeout(() => {
+        back.classList.remove('rotate-anticlockwise');
+        document.getElementById('settingsPanel').classList.remove('active');
+      }, 500);
     }
   </script>
-
 </body>
 </html>
