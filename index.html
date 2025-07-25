@@ -2,18 +2,42 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>JARVIS Tabs</title>
+  <title>JARVIS Dashboard</title>
   <style>
+    :root {
+      --bg-color: #f0f0f0;
+      --text-color: #333;
+      --tab-bg: #ddd;
+      --tab-active: #4CAF50;
+      --card-bg: white;
+      --shadow: rgba(0,0,0,0.1);
+      --button-bg: #2196F3;
+    }
+
+    body.dark {
+      --bg-color: #1e1e1e;
+      --text-color: #f5f5f5;
+      --tab-bg: #333;
+      --tab-active: #00c853;
+      --card-bg: #2b2b2b;
+      --shadow: rgba(0,0,0,0.6);
+      --button-bg: #1565C0;
+    }
+
+    * {
+      transition: background-color 0.3s, color 0.3s;
+    }
+
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f0f0f0;
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
       padding: 40px;
       margin: 0;
     }
 
     h1 {
       text-align: center;
-      color: #333;
       margin-bottom: 30px;
     }
 
@@ -29,26 +53,25 @@
       padding: 10px 25px;
       border: none;
       border-radius: 8px;
-      background-color: #ddd;
-      color: #333;
+      background-color: var(--tab-bg);
+      color: var(--text-color);
       font-size: 16px;
       cursor: pointer;
-      transition: all 0.3s ease;
     }
 
     .tabs button.active {
-      background-color: #4CAF50;
+      background-color: var(--tab-active);
       color: white;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 8px var(--shadow);
     }
 
     .tab-content {
       max-width: 600px;
       margin: auto;
-      background: white;
+      background: var(--card-bg);
       border-radius: 10px;
       padding: 25px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 10px var(--shadow);
       display: none;
       opacity: 0;
       transition: opacity 0.5s ease;
@@ -74,21 +97,93 @@
       font-size: 16px;
       border: none;
       border-radius: 6px;
-      background-color: #2196F3;
+      background-color: var(--button-bg);
       color: white;
       cursor: pointer;
-      transition: background-color 0.3s ease;
     }
 
-    .center-button button:hover {
-      background-color: #0b7dda;
+    .settings {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+    }
+
+    .settings button {
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: var(--text-color);
+      cursor: pointer;
+    }
+
+    /* Settings Panel */
+    .settings-panel {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 250px;
+      height: 100%;
+      background: var(--card-bg);
+      color: var(--text-color);
+      box-shadow: -2px 0 10px var(--shadow);
+      padding: 20px;
+      transition: right 0.3s ease;
+      z-index: 1000;
+    }
+
+    .settings-panel.active {
+      right: 0;
+    }
+
+    .settings-panel h3 {
+      margin-top: 0;
+    }
+
+    .settings-panel button, .settings-panel a {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 15px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      background-color: var(--tab-bg);
+      color: var(--text-color);
+      text-align: left;
+      text-decoration: none;
+    }
+
+    .settings-panel a {
+      display: inline-block;
+      text-decoration: none;
+    }
+
+    .settings-panel button:hover,
+    .settings-panel a:hover {
+      background-color: var(--tab-active);
+      color: white;
     }
   </style>
 </head>
 <body>
 
+  <!-- ⚙️ Settings Button -->
+  <div class="settings">
+    <button onclick="toggleSettings()">⚙️</button>
+  </div>
+
+  <!-- Sliding Settings Panel -->
+  <div id="settingsPanel" class="settings-panel">
+    <h3>Settings</h3>
+    <button onclick="toggleVoice()">🎤 Toggle Voice</button>
+    <button onclick="toggleTheme()">🌗 Switch Theme</button>
+    <a href="https://www.github.com/raj0793/jarvis.ai.in" target="_blank">🔗 GitHub Repo</a>
+  </div>
+
+  <!-- Main Heading -->
   <h1>JARVIS Dashboard</h1>
 
+  <!-- Tabs -->
   <div class="tabs">
     <button onclick="showTab(1)">Home</button>
     <button onclick="showTab(2)">Guides</button>
@@ -96,6 +191,7 @@
     <button onclick="showTab(4)">FAQ</button>
   </div>
 
+  <!-- Tab Content -->
   <div id="tab1" class="tab-content active">
     <h2>Home</h2>
     <p>Welcome to JARVIS! Your intelligent assistant is here to help you.</p>
@@ -116,6 +212,7 @@
     <p>Frequently Asked Questions about JARVIS and its features.</p>
   </div>
 
+  <!-- Click Me Button -->
   <div class="center-button">
     <button onclick="mf()">Click Me</button>
   </div>
@@ -126,18 +223,24 @@
     }
 
     function showTab(tabNumber) {
-      // Hide all content
-      const contents = document.querySelectorAll('.tab-content');
-      contents.forEach(content => content.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      document.getElementById('tab' + tabNumber).classList.add('active');
 
-      // Show selected content
-      const selectedContent = document.getElementById('tab' + tabNumber);
-      selectedContent.classList.add('active');
+      document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tabs button')[tabNumber - 1].classList.add('active');
+    }
 
-      // Update tab buttons
-      const buttons = document.querySelectorAll('.tabs button');
-      buttons.forEach(button => button.classList.remove('active'));
-      buttons[tabNumber - 1].classList.add('active');
+    function toggleTheme() {
+      document.body.classList.toggle('dark');
+    }
+
+    function toggleVoice() {
+      alert("🎤 Voice toggle clicked (functionality pending)");
+    }
+
+    function toggleSettings() {
+      const panel = document.getElementById('settingsPanel');
+      panel.classList.toggle('active');
     }
   </script>
 
