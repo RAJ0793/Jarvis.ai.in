@@ -1,38 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>JARVIS Tabs</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0f0f0;
+      padding: 40px;
+      margin: 0;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 30px;
     }
 
     .tabs {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
       margin-bottom: 20px;
     }
 
     .tabs button {
-      padding: 10px 20px;
-      margin-right: 5px;
+      padding: 10px 25px;
       border: none;
-      background-color: #eee;
+      border-radius: 8px;
+      background-color: #ddd;
+      color: #333;
+      font-size: 16px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: all 0.3s ease;
     }
 
     .tabs button.active {
       background-color: #4CAF50;
       color: white;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
 
     .tab-content {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      border-radius: 10px;
+      padding: 25px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
       display: none;
       opacity: 0;
       transition: opacity 0.5s ease;
-      border: 1px solid #ccc;
-      padding: 15px;
-      border-radius: 5px;
     }
 
     .tab-content.active {
@@ -41,8 +60,28 @@
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
+      from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+
+    .center-button {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .center-button button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      background-color: #2196F3;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .center-button button:hover {
+      background-color: #0b7dda;
     }
   </style>
 </head>
@@ -50,7 +89,6 @@
 
   <h1>JARVIS Dashboard</h1>
 
-  <!-- Tabs -->
   <div class="tabs">
     <button onclick="showTab(1)">Home</button>
     <button onclick="showTab(2)">Guides</button>
@@ -58,29 +96,29 @@
     <button onclick="showTab(4)">FAQ</button>
   </div>
 
-  <!-- Tab Contents -->
   <div id="tab1" class="tab-content active">
     <h2>Home</h2>
-    <p>Welcome to JARVIS! Your intelligent assistant is here.</p>
+    <p>Welcome to JARVIS! Your intelligent assistant is here to help you.</p>
   </div>
 
   <div id="tab2" class="tab-content">
     <h2>Guides</h2>
-    <p>Step-by-step tutorials to use and expand JARVIS features.</p>
+    <p>Explore step-by-step guides to use JARVIS effectively and efficiently.</p>
   </div>
 
   <div id="tab3" class="tab-content">
     <h2>Troubleshoot</h2>
-    <p>Find solutions for common issues and errors in JARVIS.</p>
+    <p>Find fixes for common problems, system checks, and diagnostics here.</p>
   </div>
 
   <div id="tab4" class="tab-content">
     <h2>FAQ</h2>
-    <p>Frequently Asked Questions about using and customizing JARVIS.</p>
+    <p>Frequently Asked Questions about JARVIS and its features.</p>
   </div>
 
-  <!-- Optional Button -->
-  <button onclick="mf()">Click Me</button>
+  <div class="center-button">
+    <button onclick="mf()">Click Me</button>
+  </div>
 
   <script>
     function mf() {
@@ -88,17 +126,17 @@
     }
 
     function showTab(tabNumber) {
-      // Hide all tab contents
+      // Hide all content
       const contents = document.querySelectorAll('.tab-content');
-      contents.forEach(c => c.classList.remove('active'));
+      contents.forEach(content => content.classList.remove('active'));
 
       // Show selected content
-      const selected = document.getElementById('tab' + tabNumber);
-      selected.classList.add('active');
+      const selectedContent = document.getElementById('tab' + tabNumber);
+      selectedContent.classList.add('active');
 
-      // Update active tab button style
+      // Update tab buttons
       const buttons = document.querySelectorAll('.tabs button');
-      buttons.forEach(b => b.classList.remove('active'));
+      buttons.forEach(button => button.classList.remove('active'));
       buttons[tabNumber - 1].classList.add('active');
     }
   </script>
