@@ -1,16 +1,107 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>JARVIS</title>
+  <title>JARVIS Tabs</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    .tabs {
+      margin-bottom: 20px;
+    }
+
+    .tabs button {
+      padding: 10px 20px;
+      margin-right: 5px;
+      border: none;
+      background-color: #eee;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .tabs button.active {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .tab-content {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      border: 1px solid #ccc;
+      padding: 15px;
+      border-radius: 5px;
+    }
+
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.5s forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
 <body>
+
+  <h1>JARVIS Dashboard</h1>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button onclick="showTab(1)">Home</button>
+    <button onclick="showTab(2)">Guides</button>
+    <button onclick="showTab(3)">Troubleshoot</button>
+    <button onclick="showTab(4)">FAQ</button>
+  </div>
+
+  <!-- Tab Contents -->
+  <div id="tab1" class="tab-content active">
+    <h2>Home</h2>
+    <p>Welcome to JARVIS! Your intelligent assistant is here.</p>
+  </div>
+
+  <div id="tab2" class="tab-content">
+    <h2>Guides</h2>
+    <p>Step-by-step tutorials to use and expand JARVIS features.</p>
+  </div>
+
+  <div id="tab3" class="tab-content">
+    <h2>Troubleshoot</h2>
+    <p>Find solutions for common issues and errors in JARVIS.</p>
+  </div>
+
+  <div id="tab4" class="tab-content">
+    <h2>FAQ</h2>
+    <p>Frequently Asked Questions about using and customizing JARVIS.</p>
+  </div>
+
+  <!-- Optional Button -->
   <button onclick="mf()">Click Me</button>
-  <h1>Hello, World!</h1>
 
   <script>
     function mf() {
-      alert("Hello");
+      alert("Hi");
+    }
+
+    function showTab(tabNumber) {
+      // Hide all tab contents
+      const contents = document.querySelectorAll('.tab-content');
+      contents.forEach(c => c.classList.remove('active'));
+
+      // Show selected content
+      const selected = document.getElementById('tab' + tabNumber);
+      selected.classList.add('active');
+
+      // Update active tab button style
+      const buttons = document.querySelectorAll('.tabs button');
+      buttons.forEach(b => b.classList.remove('active'));
+      buttons[tabNumber - 1].classList.add('active');
     }
   </script>
+
 </body>
 </html>
