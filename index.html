@@ -5,6 +5,83 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>JARVIS Dashboard</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .tabs button {
+      flex: 1 1 auto;
+      min-width: 100px;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin: 20px 0;
+    }
+
+    .feature-card {
+      background: #f1f1f1;
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    .video-container {
+      width: 100%;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    video {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+
+    .accordion {
+      width: 100%;
+      text-align: left;
+      padding: 12px;
+      border: none;
+      background: #eee;
+      font-size: 1rem;
+      margin-top: 10px;
+    }
+
+    .panel {
+      padding: 0 15px;
+      display: none;
+      background: #fafafa;
+      overflow: hidden;
+    }
+
+    .center-button {
+      text-align: center;
+      margin: 30px 0;
+    }
+
+    @media screen and (max-width: 600px) {
+      h1, h2, h3 {
+        text-align: center;
+      }
+      .settings-panel {
+        width: 90% !important;
+        left: 5% !important;
+      }
+    }
+  </style>
 </head>
 <body aria-label="JARVIS Dashboard" tabindex="0">
   <div class="overlay" id="overlay" onclick="closeSettings()"></div>
