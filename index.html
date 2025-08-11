@@ -1,89 +1,9 @@
-phir html se suruaat hoga|
-index.html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>JARVIS Dashboard</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    body {
-      margin: 0;
-      font-family: sans-serif;
-      padding: 10px;
-      box-sizing: border-box;
-    }
-
-    .tabs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: center;
-    }
-
-    .tabs button {
-      flex: 1 1 auto;
-      min-width: 100px;
-    }
-
-    .feature-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1rem;
-      margin: 20px 0;
-    }
-
-    .feature-card {
-      background: #f1f1f1;
-      padding: 10px;
-      border-radius: 8px;
-    }
-
-    .video-container {
-      width: 100%;
-      max-width: 600px;
-      margin: auto;
-    }
-
-    video {
-      width: 100%;
-      height: auto;
-      border-radius: 10px;
-    }
-
-    .accordion {
-      width: 100%;
-      text-align: left;
-      padding: 12px;
-      border: none;
-      background: #eee;
-      font-size: 1rem;
-      margin-top: 10px;
-    }
-
-    .panel {
-      padding: 0 15px;
-      display: none;
-      background: #fafafa;
-      overflow: hidden;
-    }
-
-    .center-button {
-      text-align: center;
-      margin: 30px 0;
-    }
-
-    @media screen and (max-width: 600px) {
-      h1, h2, h3 {
-        text-align: center;
-      }
-      .settings-panel {
-        width: 90% !important;
-        left: 5% !important;
-      }
-    }
-  </style>
 </head>
 <body aria-label="JARVIS Dashboard" tabindex="0">
   <div class="overlay" id="overlay" onclick="closeSettings()"></div>
@@ -103,221 +23,204 @@ index.html
 
   <h1>JARVIS Dashboard</h1>
 
-  <div class="tabs" role="tablist" aria-label="Main Tabs">
-    <button onclick="showTab(1)" class="active" role="tab" aria-selected="true" tabindex="0">Home</button>
-    <button onclick="showTab(2)" role="tab" aria-selected="false" tabindex="0">Guides</button>
-    <button onclick="showTab(3)" role="tab" aria-selected="false" tabindex="0">Troubleshoot</button>
-    <button onclick="showTab(4)" role="tab" aria-selected="false" tabindex="0">FAQ</button>
+  <!-- Single main tab -->
+  <div class="main-tab" role="tablist" aria-label="Main Tab">
+    <button class="active" tabindex="0" aria-selected="true" aria-controls="dashboardPanel" id="dashboardTab">Dashboard</button>
   </div>
 
-  <!-- Tab 1: Home -->
-  <div id="tab1" class="tab-content active">
-    <h2>Welcome to JARVIS</h2>
-    <p>Your offline-first smart assistant, built for productivity, automation, and daily interaction.</p>
-
-    <div class="feature-grid">
-      <div class="feature-card">
-        <h4>🎤 Voice Assistant</h4>
-        <p>Offline voice control using pyttsx3 + SpeechRecognition</p>
-      </div>
-      <div class="feature-card">
-        <h4>Requirements</h4>
-        <p>All your needs are here</p>
-      </div>
-      <div class="feature-card">
-        <h4>🧠 Smart Memory</h4>
-        <p>JSON-based recall system for context retention</p>
-      </div>
-      <div class="feature-card">
-        <h4>🧰 Arduino Integration</h4>
-        <p>Smart home automation capabilities</p>
-      </div>
-      <div class="feature-card">
-        <h4>🎨 Multi-Platform</h4>
-        <p>GUI, CLI, and Mobile App support</p>
-      </div>
-    </div>
-
-    <button class="accordion">What is JARVIS?</button>
-    <div class="panel">
-      <p>JARVIS is a modular, open-source assistant designed to run offline and handle daily tasks using speech and text commands. It's built with Python and designed for Indian households with local language support.</p>
-    </div>
-
-    <button class="accordion">How to Start?</button>
-    <div class="panel">
-      <ol>
-        <li>Install Python 3.10+</li>
-        <li>Clone repo from GitHub</li>
-        <li>Install dependencies via <code>pip install -r requirements.txt</code></li>
-        <li>Run using <code>python AI_main.py</code></li>
-      </ol>
-    </div>
-
-    <button class="accordion">Join Development</button>
-    <div class="panel">
-      <p>Contribute your code, ideas, or suggestions on GitHub:<br>
-      <a href="https://github.com/raj0793/jarvis.ai.in" target="_blank">🔗 GitHub: raj0793/jarvis.ai.in</a></p>
-    </div>
-
-    <button class="accordion">JARVIS Preview</button>
-    <div class="panel">
-      <p>Watch how Jarvis interacts in real-time:</p>
-      <div class="video-container">
-        <video controls>
-          <source src="Demo.mlt" type="video/mlt">
-          Your browser does not support the video tag.
-        </video>
-      </div>
-    </div>
+  <!-- Sub-tabs inside the main tab -->
+  <div class="sub-tabs" role="tablist" aria-label="Dashboard Sub Tabs">
+    <button class="active" role="tab" aria-selected="true" tabindex="0" aria-controls="tab1" id="subtab1" onclick="showSubTab(1)">Home</button>
+    <button role="tab" aria-selected="false" tabindex="0" aria-controls="tab2" id="subtab2" onclick="showSubTab(2)">Guides</button>
+    <button role="tab" aria-selected="false" tabindex="0" aria-controls="tab3" id="subtab3" onclick="showSubTab(3)">Troubleshoot</button>
+    <button role="tab" aria-selected="false" tabindex="0" aria-controls="tab4" id="subtab4" onclick="showSubTab(4)">FAQ</button>
   </div>
 
-  <!-- Tab 2: Guides -->
-  <div id="tab2" class="tab-content">
-    <h2>Step-by-Step Guides</h2>
-    <p>Complete tutorials to get JARVIS running efficiently on your system.</p>
-
-    <button class="accordion">Step 1: Setup Python & Dependencies</button>
-    <div class="panel">
-      <p><strong>Installation Process:</strong></p>
-      <ul>
-        <li>Download Python 3.10+ from <a href="https://python.org" target="_blank">Python</a></li>
-        <li>Ensure "Add Python to PATH" is checked during installation</li>
-        <li>Open terminal/CMD and run: <code>pip install -r requirements.txt</code></li>
-        <li>Verify installation in Windows PowerShell or in other terminal: <code>python --version</code></li>
-      </ul>
+  <!-- Sub-tabs content -->
+  <div id="dashboardPanel" role="tabpanel" aria-labelledby="dashboardTab">
+    <div id="tab1" class="tab-content active" role="tabpanel" aria-labelledby="subtab1">
+      <h2>Welcome to JARVIS</h2>
+      <p>Your offline-first smart assistant, built for productivity, automation, and daily interaction.</p>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h4>🎤 Voice Assistant</h4>
+          <p>Offline voice control using pyttsx3 + SpeechRecognition</p>
+        </div>
+        <div class="feature-card">
+          <h4>Requirements</h4>
+          <p>All your needs are here</p>
+        </div>
+        <div class="feature-card">
+          <h4>🧠 Smart Memory</h4>
+          <p>JSON-based recall system for context retention</p>
+        </div>
+        <div class="feature-card">
+          <h4>🧰 Arduino Integration</h4>
+          <p>Smart home automation capabilities</p>
+        </div>
+        <div class="feature-card">
+          <h4>🎨 Multi-Platform</h4>
+          <p>GUI, CLI, and Mobile App support</p>
+        </div>
+      </div>
+      <button class="accordion">What is JARVIS?</button>
+      <div class="panel">
+        <p>JARVIS is a modular, open-source assistant designed to run offline and handle daily tasks using speech and text commands. It's built with Python and designed for Indian households with local language support.</p>
+      </div>
+      <button class="accordion">How to Start?</button>
+      <div class="panel">
+        <ol>
+          <li>Install Python 3.10+</li>
+          <li>Clone repo from GitHub</li>
+          <li>Install dependencies via <code>pip install -r requirements.txt</code></li>
+          <li>Run using <code>python AI_main.py</code></li>
+        </ol>
+      </div>
+      <button class="accordion">Join Development</button>
+      <div class="panel">
+        <p>Contribute your code, ideas, or suggestions on GitHub:<br />
+          <a href="https://github.com/raj0793/jarvis.ai.in" target="_blank">🔗 GitHub: raj0793/jarvis.ai.in</a></p>
+      </div>
+      <button class="accordion">JARVIS Preview</button>
+      <div class="panel">
+        <p>Watch how Jarvis interacts in real-time:</p>
+        <div class="video-container">
+          <video controls>
+            <source src="Demo.mlt" type="video/mlt" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
     </div>
 
-    <button class="accordion">Step 2: Clone JARVIS Repository</button>
-    <div class="panel">
-      <p><strong>Get the Source Code:</strong></p>
-      <pre><code>git clone https://github.com/raj0793/jarvis.ai.in
+    <div id="tab2" class="tab-content" role="tabpanel" aria-labelledby="subtab2">
+      <h2>Step-by-Step Guides</h2>
+      <p>Complete tutorials to get JARVIS running efficiently on your system.</p>
+      <button class="accordion">Step 1: Setup Python & Dependencies</button>
+      <div class="panel">
+        <p><strong>Installation Process:</strong></p>
+        <ul>
+          <li>Download Python 3.10+ from <a href="https://python.org" target="_blank">Python</a></li>
+          <li>Ensure "Add Python to PATH" is checked during installation</li>
+          <li>Open terminal/CMD and run: <code>pip install -r requirements.txt</code></li>
+          <li>Verify installation in Windows PowerShell or in other terminal: <code>python --version</code></li>
+        </ul>
+      </div>
+      <button class="accordion">Step 2: Clone JARVIS Repository</button>
+      <div class="panel">
+        <p><strong>Get the Source Code:</strong></p>
+        <pre><code>git clone https://github.com/raj0793/jarvis.ai.in
 cd jarvis.ai.in</code></pre>
-      <p>Or download ZIP from GitHub and extract it.</p>
+        <p>Or download ZIP from GitHub and extract it.</p>
+      </div>
+      <button class="accordion">Step 3: First Run</button>
+      <div class="panel">
+        <p><strong>Launch JARVIS:</strong></p>
+        <pre><code>python AI_main.py</code></pre>
+        <p>The assistant will initialize and greet you. Try saying "Hello JARVIS" or "What time is it?"</p>
+      </div>
+      <button class="accordion">Step 4: Customization</button>
+      <div class="panel">
+        <p><strong>Personalize Your Assistant:</strong></p>
+        <ul>
+          <li>Edit <code>conversation.py</code> for custom responses</li>
+          <li>Modify <code>qna.json</code> for Q&A database</li>
+          <li>Configure voice settings in <code>voice_config.py</code></li>
+          <li>Add new commands in <code>commands.py</code></li>
+        </ul>
+      </div>
+      <button class="accordion">Step 5: Advanced Features</button>
+      <div class="panel">
+        <p><strong>Enable Full Functionality:</strong></p>
+        <ul>
+          <li>Configure microphone input device</li>
+          <li>Set up Arduino for IoT control</li>
+          <li>Train custom voice recognition models</li>
+          <li>Integrate with external APIs</li>
+        </ul>
+      </div>
     </div>
 
-    <button class="accordion">Step 3: First Run</button>
-    <div class="panel">
-      <p><strong>Launch JARVIS:</strong></p>
-      <pre><code>python AI_main.py</code></pre>
-      <p>The assistant will initialize and greet you. Try saying "Hello JARVIS" or "What time is it?"</p>
-    </div>
-
-    <button class="accordion">Step 4: Customization</button>
-    <div class="panel">
-      <p><strong>Personalize Your Assistant:</strong></p>
-      <ul>
-        <li>Edit <code>conversation.py</code> for custom responses</li>
-        <li>Modify <code>qna.json</code> for Q&A database</li>
-        <li>Configure voice settings in <code>voice_config.py</code></li>
-        <li>Add new commands in <code>commands.py</code></li>
-      </ul>
-    </div>
-
-    <button class="accordion">Step 5: Advanced Features</button>
-    <div class="panel">
-      <p><strong>Enable Full Functionality:</strong></p>
-      <ul>
-        <li>Configure microphone input device</li>
-        <li>Set up Arduino for IoT control</li>
-        <li>Train custom voice recognition models</li>
-        <li>Integrate with external APIs</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- Tab 3: Troubleshoot -->
-  <div id="tab3" class="tab-content">
-    <h2>Troubleshooting Guide</h2>
-    <p>Solutions for common issues and performance optimization tips.</p>
-
-    <button class="accordion">🎤 Microphone Issues</button>
-    <div class="panel">
-      <p><strong>Common Solutions:</strong></p>
-      <ul>
-        <li>Check Windows sound settings - ensure mic is set as default</li>
-        <li>Update audio drivers</li>
-        <li>Test mic with Windows Voice Recorder</li>
-        <li>Adjust microphone levels in sound control panel</li>
-        <li>Use <code>Microphone.list_microphone_names()</code> to debug device index</li>
-      </ul>
-    </div>
-
-    <button class="accordion">🐍 Python Path Errors</button>
-    <div class="panel">
-      <p><strong>Fix 'Python not recognized' error:</strong></p>
-      <ol>
-        <li>Reinstall Python with "Add to PATH" checked</li>
-        <li>Manually add Python to environment variables</li>
-        <li>Use <code>py</code> instead of <code>python</code> command</li>
-        <li>Restart command prompt after installation</li>
-      </ol>
-    </div>
-
-    <button class="accordion">📦 Module Import Errors</button>
-    <div class="panel">
-      <p><strong>Missing Dependencies:</strong></p>
-      <pre><code>pip install --upgrade pip
+    <div id="tab3" class="tab-content" role="tabpanel" aria-labelledby="subtab3">
+      <h2>Troubleshooting Guide</h2>
+      <p>Solutions for common issues and performance optimization tips.</p>
+      <button class="accordion">🎤 Microphone Issues</button>
+      <div class="panel">
+        <p><strong>Common Solutions:</strong></p>
+        <ul>
+          <li>Check Windows sound settings - ensure mic is set as default</li>
+          <li>Update audio drivers</li>
+          <li>Test mic with Windows Voice Recorder</li>
+          <li>Adjust microphone levels in sound control panel</li>
+          <li>Use <code>Microphone.list_microphone_names()</code> to debug device index</li>
+        </ul>
+      </div>
+      <button class="accordion">🐍 Python Path Errors</button>
+      <div class="panel">
+        <p><strong>Fix 'Python not recognized' error:</strong></p>
+        <ol>
+          <li>Reinstall Python with "Add to PATH" checked</li>
+          <li>Manually add Python to environment variables</li>
+          <li>Use <code>py</code> instead of <code>python</code> command</li>
+          <li>Restart command prompt after installation</li>
+        </ol>
+      </div>
+      <button class="accordion">📦 Module Import Errors</button>
+      <div class="panel">
+        <p><strong>Missing Dependencies:</strong></p>
+        <pre><code>pip install --upgrade pip
 pip install -r requirements.txt --force-reinstall</code></pre>
-      <p>If specific modules fail, install individually:
-      <code>pip install speechrecognition pyttsx3 pyaudio</code></p>
+        <p>If specific modules fail, install individually:
+          <code>pip install speechrecognition pyttsx3 pyaudio</code></p>
+      </div>
+      <button class="accordion">🔇 No Voice Output</button>
+      <div class="panel">
+        <p><strong>Text-to-Speech Issues:</strong></p>
+        <ul>
+          <li>Check system volume and speaker settings</li>
+          <li>Verify pyttsx3 engine: <code>import pyttsx3; engine = pyttsx3.init()</code></li>
+          <li>Try different TTS engines in voice settings</li>
+          <li>Install Windows Speech Platform if needed</li>
+        </ul>
+      </div>
+      <button class="accordion">⚡ Performance Optimization</button>
+      <div class="panel">
+        <p><strong>Speed Up JARVIS:</strong></p>
+        <ul>
+          <li>Close unnecessary background applications</li>
+          <li>Use SSD storage for faster file access</li>
+          <li>Increase virtual memory if low on RAM</li>
+          <li>Disable real-time antivirus scanning for JARVIS folder</li>
+          <li>Use lightweight voice models for faster processing</li>
+        </ul>
+      </div>
     </div>
 
-    <button class="accordion">🔇 No Voice Output</button>
-    <div class="panel">
-      <p><strong>Text-to-Speech Issues:</strong></p>
-      <ul>
-        <li>Check system volume and speaker settings</li>
-        <li>Verify pyttsx3 engine: <code>import pyttsx3; engine = pyttsx3.init()</code></li>
-        <li>Try different TTS engines in voice settings</li>
-        <li>Install Windows Speech Platform if needed</li>
-      </ul>
-    </div>
-
-    <button class="accordion">⚡ Performance Optimization</button>
-    <div class="panel">
-      <p><strong>Speed Up JARVIS:</strong></p>
-      <ul>
-        <li>Close unnecessary background applications</li>
-        <li>Use SSD storage for faster file access</li>
-        <li>Increase virtual memory if low on RAM</li>
-        <li>Disable real-time antivirus scanning for JARVIS folder</li>
-        <li>Use lightweight voice models for faster processing</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- Tab 4: FAQ -->
-  <div id="tab4" class="tab-content">
-    <h2>Frequently Asked Questions</h2>
-    <p>Quick answers to common questions about JARVIS functionality and usage.</p>
-
-    <div id="dynamicFAQs"></div>
-
-    <button class="accordion">What makes JARVIS different?</button>
-    <div class="panel">
-      <p>JARVIS is designed specifically for offline use with Indian household needs in mind. Unlike cloud-based assistants, your data stays private and local.</p>
-    </div>
-
-    <button class="accordion">Can it work without internet?</button>
-    <div class="panel">
-      <p>Yes! JARVIS works completely offline using local speech recognition and TTS engines. Internet is only needed for optional features like weather updates.</p>
-    </div>
-
-    <button class="accordion">Is it free to use?</button>
-    <div class="panel">
-      <p>Absolutely! JARVIS is open-source under MIT License. You can use, modify, and distribute it freely.</p>
-    </div>
-
-    <button class="accordion">Which languages are supported?</button>
-    <div class="panel">
-      <p>Currently English is fully supported. Hindi and other Indian languages are in development. You can contribute language packs!</p>
+    <div id="tab4" class="tab-content" role="tabpanel" aria-labelledby="subtab4">
+      <h2>Frequently Asked Questions</h2>
+      <p>Quick answers to common questions about JARVIS functionality and usage.</p>
+      <div id="dynamicFAQs"></div>
+      <button class="accordion">What makes JARVIS different?</button>
+      <div class="panel">
+        <p>JARVIS is designed specifically for offline use with Indian household needs in mind. Unlike cloud-based assistants, your data stays private and local.</p>
+      </div>
+      <button class="accordion">Can it work without internet?</button>
+      <div class="panel">
+        <p>Yes! JARVIS works completely offline using local speech recognition and TTS engines. Internet is only needed for optional features like weather updates.</p>
+      </div>
+      <button class="accordion">Is it free to use?</button>
+      <div class="panel">
+        <p>Absolutely! JARVIS is open-source under MIT License. You can use, modify, and distribute it freely.</p>
+      </div>
+      <button class="accordion">Which languages are supported?</button>
+      <div class="panel">
+        <p>Currently English is fully supported. Hindi and other Indian languages are in development. You can contribute language packs!</p>
+      </div>
     </div>
   </div>
 
   <div class="center-button">
     <button onclick="launchJARVIS()" class="pulse" aria-label="Launch JARVIS" tabindex="0">🚀 Launch JARVIS</button>
   </div>
-
-  <script src="script.js"></script>
 </body>
 </html>
