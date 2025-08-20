@@ -82,15 +82,12 @@ function initializeFAQ() {
 
 // Tab functionality
 function showTab(tabNumber) {
-  // Remove active class from all tabs and buttons
   document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
   document.querySelectorAll('.tabs button').forEach((b, i) => {
     b.classList.remove('active');
     b.setAttribute('aria-selected', 'false');
   });
-  // Close all open panels
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  // Activate selected tab
   document.getElementById('tab' + tabNumber).classList.add('active');
   const tabBtn = document.querySelectorAll('.tabs button')[tabNumber - 1];
   tabBtn.classList.add('active');
@@ -163,20 +160,16 @@ function launchJARVIS() {
 
 // Initialize page on DOM content loaded
 document.addEventListener('DOMContentLoaded', function() {
-  // Initialize FAQ section
   initializeFAQ();
   
-  // Enhanced accordion functionality for all tabs
   const accordions = document.querySelectorAll('.accordion');
   accordions.forEach(acc => {
-    if (!acc.onclick) { // Only add if not already assigned
+    if (!acc.onclick) {
       acc.onclick = () => {
         const panel = acc.nextElementSibling;
         const isActive = panel.classList.contains('active');
-        // Close all panels in current tab
         const currentTab = acc.closest('.tab-content');
         currentTab.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-        // Open this panel if it wasn't active
         if (!isActive) {
           panel.classList.add('active');
         }
@@ -188,7 +181,6 @@ document.addEventListener('DOMContentLoaded', function() {
   addAccessibleAccordionHandlers();
   updateAccordionAria();
   
-  // Load saved theme or system theme
   const savedTheme = localStorage.getItem('darkMode');
   if (savedTheme === 'true') {
     document.body.classList.add('dark');
@@ -232,4 +224,41 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     touchStartX = null;
   });
+});
+
+// ✅ Chat Send Message Function
+function sendMessage() {
+  const input = document.getElementById("user-input");
+  const chatBox = document.getElementById("chat-box");
+
+  if (!input || !chatBox) return; // agar chat UI page pe nahi hai toh skip
+
+  if (input.value.trim() === "") return;
+
+  // User message
+  const userMsg = document.createElement("div");
+  userMsg.className = "message user";
+  userMsg.textContent = input.value;
+  chatBox.appendChild(userMsg);
+
+  // Bot auto reply
+  const botMsg = document.createElement("div");
+  botMsg.className = "message bot";
+  botMsg.textContent = "You said: " + input.value;
+  chatBox.appendChild(botMsg);
+
+  // Scroll to bottom
+  chatBox.scrollTop = chatBox.scrollHeight;
+
+  // Clear input
+  input.value = "";
+}
+
+// ✅ Optional: Enter key to send
+document.addEventListener("keydown", function(e) {
+  const input = document.getElementById("user-input");
+  if (input && e.key === "Enter") {
+    e.preventDefault();
+    sendMessage();
+  }
 });
