@@ -1,4 +1,4 @@
-// -------- Accessible Accordion Handlers -------- //
+// Accessibility setup for accordions
 function addAccessibleAccordionHandlers() {
   document.querySelectorAll('.accordion').forEach(acc => {
     acc.setAttribute('tabindex', '0');
@@ -6,7 +6,7 @@ function addAccessibleAccordionHandlers() {
     acc.setAttribute('aria-expanded', 'false');
 
     acc.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+      if (['Enter', ' ', 'Spacebar'].includes(e.key)) {
         e.preventDefault();
         acc.click();
       }
@@ -23,7 +23,7 @@ function updateAccordionAria() {
   });
 }
 
-// -------- Dynamic FAQ Generator -------- //
+// FAQ data
 const faqData = {
   A: "Architecture: Built with modular Python design for easy extensibility and maintenance.",
   B: "Beginner Guide: Start with Python installation, then clone and run the main script.",
@@ -53,76 +53,62 @@ const faqData = {
   Z: "Zero Cost: Free forever with no subscription fees or usage limitations."
 };
 
+// Render FAQ section
 function initializeFAQ() {
   const faqContainer = document.getElementById("dynamicFAQs");
-  if (!faqContainer) return;
-
-  Object.entries(faqData).forEach(([letter, content]) => {
-    const btn = document.createElement("button");
-    btn.className = "accordion";
-    btn.innerText = `${letter} – ${content.split(":")[0]}`;
+  Object.entries(faqData).forEach(([key, content]) => {
+    const button = document.createElement("button");
+    button.className = "accordion";
+    button.innerText = `${key} – ${content.split(":")[0]}`;
 
     const panel = document.createElement("div");
     panel.className = "panel";
     panel.innerHTML = `<p>${content}</p>`;
 
-    btn.onclick = () => {
+    button.addEventListener('click', () => {
       const isActive = panel.classList.contains('active');
-      faqContainer.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      const currentTab = button.closest('.tab-content') || document;
+      currentTab.querySelectorAll('.panel.active').forEach(p => p.classList.remove('active'));
       if (!isActive) panel.classList.add('active');
       updateAccordionAria();
-    };
+    });
 
-    faqContainer.appendChild(btn);
-    faqContainer.appendChild(panel);
+    faqContainer.append(button, panel);
   });
 }
 
-// -------- Tabs & Sub-Tabs -------- //
+// Tab switching logic
 function showTab(tabNumber) {
-  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-  document.querySelectorAll('.tabs button').forEach((b, i) => {
-    b.classList.remove('active');
-    b.setAttribute('aria-selected', 'false');
-  });
-  document.getElementById('tab' + tabNumber).classList.add('active');
-  const tabBtn = document.querySelectorAll('.tabs button')[tabNumber - 1];
-  tabBtn.classList.add('active');
-  tabBtn.setAttribute('aria-selected', 'true');
-}
+  const tabs = document.querySelectorAll('.tabs button');
+  const contents = document.querySelectorAll('.tab-content');
 
-function showSubTab(tabNumber) {
-  const tabs = document.querySelectorAll(".tab-content");
-  const buttons = document.querySelectorAll(".sub-tabs button");
-
-  tabs.forEach((tab, i) => {
-    tab.classList.remove("active");
-    tab.setAttribute("aria-hidden", "true");
-    buttons[i].classList.remove("active");
-    buttons[i].setAttribute("aria-selected", "false");
+  tabs.forEach((btn, i) => {
+    const active = i + 1 === tabNumber;
+    btn.classList.toggle('active', active);
+    btn.setAttribute('aria-selected', String(active));
   });
 
-  const activeTab = document.getElementById(`tab${tabNumber}`);
-  const activeButton = document.getElementById(`subtab${tabNumber}`);
+  contents.forEach((content, i) => {
+    content.classList.toggle('active', i + 1 === tabNumber);
+    if (i + 1 === tabNumber) content.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  });
 
-  if (activeTab && activeButton) {
-    activeTab.classList.add("active");
-    activeTab.setAttribute("aria-hidden", "false");
-    activeButton.classList.add("active");
-    activeButton.setAttribute("aria-selected", "true");
-  }
+  tabs[tabNumber - 1].focus();
 }
 
-// -------- Theme, Voice & Settings -------- //
+// Theme toggle
 function toggleTheme() {
   document.body.classList.toggle('dark');
   localStorage.setItem('darkMode', document.body.classList.contains('dark'));
 }
 
+// Voice toggle
 function toggleVoice() {
-  alert("🎤 Voice Toggled!");
+  const enabled = Math.random() > 0.5;
+  alert(`🎤 Voice control ${enabled ? "enabled" : "disabled"}`);
 }
 
+// Reset all settings
 function resetSettings() {
   if (confirm("Reset all settings to default?")) {
     localStorage.clear();
@@ -131,72 +117,93 @@ function resetSettings() {
   }
 }
 
+// Settings panel open/close animations
 function animatedOpen() {
-  document.getElementById("settingsPanel").classList.add("open");
-  document.getElementById("overlay").style.display = "block";
+  const icon = document.getElementById('settingsIcon');
+  const overlay = document.getElementById('overlay');
+  icon.classList.add('rotate-clockwise');
+
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      icon.classList.remove('rotate-clockwise');
+      document.getElementById('settingsPanel').classList.add('active');
+      overlay.classList.add('active');
+    }, 250);
+  });
 }
 
 function animatedClose() {
-  document.getElementById("settingsPanel").classList.remove("open");
-  document.getElementById("overlay").style.display = "none";
+  const back = document.getElementById('backArrow');
+  const overlay = document.getElementById('overlay');
+  back.classList.add('rotate-anticlockwise');
+
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      back.classList.remove('rotate-anticlockwise');
+      document.getElementById('settingsPanel').classList.remove('active');
+      overlay.classList.remove('active');
+    }, 250);
+  });
 }
 
 function closeSettings() {
-  animatedClose();
+  document.getElementById('settingsPanel').classList.remove('active');
+  document.getElementById('overlay').classList.remove('active');
 }
 
-// -------- Chat Handling -------- //
-function sendMessage() {
-  const input = document.getElementById("user-input");
-  const chatBox = document.getElementById("chat-box");
-  if (!input || !chatBox) return;
-
-  if (input.value.trim() === "") return;
-
-  const userMsg = document.createElement("div");
-  userMsg.className = "message user";
-  userMsg.textContent = input.value;
-  chatBox.appendChild(userMsg);
-
-  const botMsg = document.createElement("div");
-  botMsg.className = "message bot";
-  botMsg.textContent = "You said: " + input.value;
-  chatBox.appendChild(botMsg);
-
-  chatBox.scrollTop = chatBox.scrollHeight;
-  input.value = "";
-}
-
-document.addEventListener("keydown", e => {
-  const input = document.getElementById("user-input");
-  if (input && e.key === "Enter") {
-    e.preventDefault();
-    sendMessage();
-  }
-});
-
-// -------- JARVIS Launch -------- //
+// Launch simulation
 function launchJARVIS() {
-  const responses = [
+  const messages = [
     "🤖 JARVIS is initializing...",
     "🎯 Systems coming online...",
     "🚀 Ready for commands, sir!",
     "⚡ All systems operational!",
     "🎤 Voice recognition activated!"
   ];
-  alert(responses[Math.floor(Math.random() * responses.length)]);
+  alert(messages[Math.floor(Math.random() * messages.length)]);
 }
 
-// -------- DOM Ready -------- //
+// Setup everything once DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
   initializeFAQ();
   addAccessibleAccordionHandlers();
   updateAccordionAria();
 
+  // Apply saved theme
   const savedTheme = localStorage.getItem('darkMode');
-  if (savedTheme === 'true') {
-    document.body.classList.add('dark');
-  } else if (savedTheme === null && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+  const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  if (savedTheme === 'true' || (savedTheme === null && systemDark)) {
     document.body.classList.add('dark');
   }
+
+  // Swipe gesture to close settings
+  const settingsPanel = document.getElementById('settingsPanel');
+  let touchStartX = null;
+
+  settingsPanel.addEventListener('touchstart', e => {
+    if (e.touches.length === 1) {
+      touchStartX = e.touches[0].clientX;
+    }
+  });
+
+  settingsPanel.addEventListener('touchend', e => {
+    if (touchStartX !== null && e.changedTouches.length === 1) {
+      const deltaX = e.changedTouches[0].clientX - touchStartX;
+      if (deltaX > 60) closeSettings();
+    }
+    touchStartX = null;
+  });
+});
+
+// Outside click and Escape key to close settings
+document.addEventListener('click', e => {
+  const panel = document.getElementById('settingsPanel');
+  const icon = document.getElementById('settingsIcon');
+  if (!panel.contains(e.target) && !icon.contains(e.target) && panel.classList.contains('active')) {
+    closeSettings();
+  }
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeSettings();
 });
