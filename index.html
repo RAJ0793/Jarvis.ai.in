@@ -8,7 +8,7 @@
 </head>
 <body aria-label="JARVIS Dashboard" tabindex="0">
 
-  <!-- OVERLAY + SETTINGS (From index2.html) -->
+  <!-- OVERLAY + SETTINGS -->
   <div class="overlay" id="overlay" onclick="closeSettings()" aria-hidden="true"></div>
   <div class="settings">
     <button id="settingsIcon" onclick="animatedOpen()" aria-label="Open Settings Panel" tabindex="0">⚙️</button>
@@ -24,8 +24,8 @@
 
   <!-- MAIN TABS (Home + Feedback) -->
   <div class="tab-container">
-    <button class="tab-btn active" onclick="showTab('home')">Home</button>
-    <button class="tab-btn" onclick="showTab('feedback')">Feedback</button>
+    <button class="tab-btn active" onclick="showMainTab('home')">Home</button>
+    <button class="tab-btn" onclick="showMainTab('feedback')">Feedback</button>
   </div>
 
   <!-- HOME TAB CONTENT (Full JARVIS Dashboard) -->
@@ -46,40 +46,86 @@
         <p>Your offline-first smart assistant, built for productivity, automation, and daily interaction.</p>
         <div class="feature-grid">
           <div class="feature-card"><h4>🎤 Voice Assistant</h4><p>Offline voice control using pyttsx3 + SpeechRecognition</p></div>
-          <div class="feature-card"><h4>Requirements</h4><p>All your needs are here</p></div>
+          <div class="feature-card"><h4>📋 Requirements</h4><p>All your needs are here</p></div>
           <div class="feature-card"><h4>🧠 Smart Memory</h4><p>JSON-based recall system for context retention</p></div>
           <div class="feature-card"><h4>🧰 Arduino Integration</h4><p>Smart home automation capabilities</p></div>
           <div class="feature-card"><h4>🎨 Multi-Platform</h4><p>GUI, CLI, and Mobile App support</p></div>
         </div>
-        <button class="accordion" onclick="toggleAccordion(this)">What is JARVIS?</button>
-        <div class="panel"><p>JARVIS is a modular, open-source assistant designed to run offline...</p></div>
-        <button class="accordion" onclick="toggleAccordion(this)">How to Start?</button>
-        <div class="panel"><ol><li>Install Python 3.10+</li><li>Clone repo from GitHub</li><li>Install dependencies</li></ol></div>
-        <button class="accordion" onclick="toggleAccordion(this)">Join Development</button>
-        <div class="panel"><p>Contribute on GitHub:<a href="https://github.com/raj0793/jarvis.ai.in">🔗 Repo</a></p></div>
-        <button class="accordion" onclick="toggleAccordion(this)">JARVIS Preview</button>
-        <div class="panel"><video controls><source src="demo-video.mp4" type="video/mp4"></video></div>
+        <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">What is JARVIS?</button>
+        <div class="panel"><p>JARVIS is a modular, open-source assistant designed to run offline with advanced voice recognition and smart home integration capabilities.</p></div>
+        <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">How to Start?</button>
+        <div class="panel"><ol><li>Install Python 3.10+</li><li>Clone repo from GitHub</li><li>Install dependencies with <code>pip install -r requirements.txt</code></li><li>Run <code>python main.py</code></li></ol></div>
+        <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">Join Development</button>
+        <div class="panel"><p>Contribute on GitHub: <a href="https://github.com/raj0793/jarvis.ai.in" target="_blank" rel="noopener">🔗 Repository</a></p></div>
+        <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">JARVIS Preview</button>
+        <div class="panel">
+          <div class="video-container">
+            <video controls>
+              <source src="demo-video.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
       </div>
 
       <!-- Tab 2: Guides -->
       <div id="tab2" class="tab-content">
         <h2>Step-by-Step Guides</h2>
-        <button class="accordion" onclick="toggleAccordion(this)">Setup Python</button>
-        <div class="panel"><p>Install Python and dependencies...</p></div>
+        <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">Setup Python Environment</button>
+        <div class="panel">
+          <p>Follow these steps to set up Python for JARVIS:</p>
+          <ol>
+            <li>Download Python 3.10+ from python.org</li>
+            <li>Install with PATH option enabled</li>
+            <li>Verify installation: <code>python --version</code></li>
+            <li>Install pip: <code>python -m pip install --upgrade pip</code></li>
+          </ol>
+        </div>
+        <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">Voice Recognition Setup</button>
+        <div class="panel">
+          <p>Configure voice recognition for optimal performance:</p>
+          <ul>
+            <li>Install required packages: <code>pip install SpeechRecognition pyttsx3</code></li>
+            <li>Test microphone access in system settings</li>
+            <li>Adjust microphone sensitivity</li>
+            <li>Train voice recognition for better accuracy</li>
+          </ul>
+        </div>
       </div>
 
       <!-- Tab 3: Troubleshoot -->
       <div id="tab3" class="tab-content">
         <h2>Troubleshooting</h2>
-        <button class="accordion" onclick="toggleAccordion(this)">Microphone Issues</button>
-        <div class="panel"><p>Check mic settings...</p></div>
+        <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">Microphone Issues</button>
+        <div class="panel">
+          <p>Common microphone problems and solutions:</p>
+          <ul>
+            <li>Check microphone permissions in browser/system settings</li>
+            <li>Test microphone with other applications</li>
+            <li>Update audio drivers</li>
+            <li>Try different microphone devices</li>
+          </ul>
+        </div>
+        <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">Python Installation Problems</button>
+        <div class="panel">
+          <p>Resolve Python-related issues:</p>
+          <ul>
+            <li>Ensure Python is in system PATH</li>
+            <li>Use virtual environment: <code>python -m venv jarvis_env</code></li>
+            <li>Activate environment: <code>jarvis_env\Scripts\activate</code> (Windows)</li>
+            <li>Reinstall dependencies if needed</li>
+          </ul>
+        </div>
       </div>
 
       <!-- Tab 4: FAQ -->
       <div id="tab4" class="tab-content">
-        <h2>FAQ</h2>
-        <button class="accordion" onclick="toggleAccordion(this)">What makes JARVIS unique?</button>
-        <div class="panel"><p>Fully offline...</p></div>
+        <h2>Frequently Asked Questions</h2>
+        <div id="dynamicFAQs"></div>
+        <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">What makes JARVIS unique?</button>
+        <div class="panel">
+          <p>JARVIS is designed to be fully offline-capable with advanced voice recognition, smart memory system, and extensive customization options. Unlike cloud-based assistants, your data stays private and secure on your local machine.</p>
+        </div>
       </div>
     </main>
     <div class="center-button">
@@ -89,142 +135,30 @@
 
   <!-- FEEDBACK TAB CONTENT -->
   <div id="feedback" class="content">
-    <h1>Feedback Section</h1>
-    <div class="subtab-container">
-      <button class="subtab-btn active" onclick="showSubtab('rating')">Emoji Rating</button>
-      <button class="subtab-btn" onclick="showSubtab('email')">Send Email</button>
-    </div>
-    <div id="rating" class="subcontent active">
-      <h3>How do you feel about Jarvis?</h3>
-      <span class="emoji" onclick="alert('Thanks for 😍 feedback!')">😍</span>
-      <span class="emoji" onclick="alert('Thanks for 🙂 feedback!')">🙂</span>
-      <span class="emoji" onclick="alert('Thanks for 😐 feedback!')">😐</span>
-      <span class="emoji" onclick="alert('Thanks for 😡 feedback!')">😡</span>
-    </div>
-    <div id="email" class="subcontent" style="display:none;">
-      <h3>Send Feedback via Email</h3>
-      <form onsubmit="sendEmail(event)">
-        <input type="text" id="subject" placeholder="Subject" required>
-        <textarea id="message" rows="4" placeholder="Your message..." required></textarea>
-        <button type="submit">Send</button>
-      </form>
-    </div>
-  </div>
-
-  <script src="script.js"></script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>JARVIS Dashboard</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body aria-label="JARVIS Dashboard" tabindex="0">
-
-  <!-- OVERLAY + SETTINGS (From index2.html) -->
-  <div class="overlay" id="overlay" onclick="closeSettings()" aria-hidden="true"></div>
-  <div class="settings">
-    <button id="settingsIcon" onclick="animatedOpen()" aria-label="Open Settings Panel" tabindex="0">⚙️</button>
-  </div>
-  <div id="settingsPanel" class="settings-panel" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
-    <button id="backArrow" onclick="animatedClose()" aria-label="Close Settings Panel" tabindex="0">⬅ Back</button>
-    <h3 id="settingsTitle">Settings</h3>
-    <button onclick="toggleVoice()" aria-label="Toggle Voice Recognition">🎤 Toggle Voice</button>
-    <button onclick="toggleTheme()" aria-label="Toggle Light/Dark Theme">🌗 Switch Theme</button>
-    <a href="https://www.github.com/raj0793/jarvis.ai.in" target="_blank" rel="noopener" aria-label="View GitHub Repository">🔗 GitHub Repo</a>
-    <button onclick="resetSettings()" aria-label="Reset All Settings">🔄 Reset Settings</button>
-  </div>
-
-  <!-- MAIN TABS (Home + Feedback) -->
-  <div class="tab-container">
-    <button class="tab-btn active" onclick="showTab('home')">Home</button>
-    <button class="tab-btn" onclick="showTab('feedback')">Feedback</button>
-  </div>
-
-  <!-- HOME TAB CONTENT (Full JARVIS Dashboard) -->
-  <div id="home" class="content active">
     <main>
-      <h1>JARVIS Dashboard</h1>
-
-      <div class="tabs" role="tablist" aria-label="Main Navigation Tabs">
-        <button onclick="showTabContent(1)" class="active" role="tab" aria-selected="true" tabindex="0">Home</button>
-        <button onclick="showTabContent(2)" role="tab" aria-selected="false" tabindex="0">Guides</button>
-        <button onclick="showTabContent(3)" role="tab" aria-selected="false" tabindex="0">Troubleshoot</button>
-        <button onclick="showTabContent(4)" role="tab" aria-selected="false" tabindex="0">FAQ</button>
+      <h1>Feedback Section</h1>
+      <div class="subtab-container">
+        <button class="subtab-btn active" onclick="showSubtab('rating')">Emoji Rating</button>
+        <button class="subtab-btn" onclick="showSubtab('email')">Send Email</button>
       </div>
-
-      <!-- Tab 1: Home -->
-      <div id="tab1" class="tab-content active">
-        <h2>Welcome to JARVIS</h2>
-        <p>Your offline-first smart assistant, built for productivity, automation, and daily interaction.</p>
-        <div class="feature-grid">
-          <div class="feature-card"><h4>🎤 Voice Assistant</h4><p>Offline voice control using pyttsx3 + SpeechRecognition</p></div>
-          <div class="feature-card"><h4>Requirements</h4><p>All your needs are here</p></div>
-          <div class="feature-card"><h4>🧠 Smart Memory</h4><p>JSON-based recall system for context retention</p></div>
-          <div class="feature-card"><h4>🧰 Arduino Integration</h4><p>Smart home automation capabilities</p></div>
-          <div class="feature-card"><h4>🎨 Multi-Platform</h4><p>GUI, CLI, and Mobile App support</p></div>
+      <div id="rating" class="subcontent active">
+        <h3>How do you feel about JARVIS?</h3>
+        <div class="emoji-container">
+          <span class="emoji" onclick="submitEmojiRating('😍')" tabindex="0" role="button" aria-label="Excellent">😍</span>
+          <span class="emoji" onclick="submitEmojiRating('🙂')" tabindex="0" role="button" aria-label="Good">🙂</span>
+          <span class="emoji" onclick="submitEmojiRating('😐')" tabindex="0" role="button" aria-label="Neutral">😐</span>
+          <span class="emoji" onclick="submitEmojiRating('😡')" tabindex="0" role="button" aria-label="Poor">😡</span>
         </div>
-        <button class="accordion" onclick="toggleAccordion(this)">What is JARVIS?</button>
-        <div class="panel"><p>JARVIS is a modular, open-source assistant designed to run offline...</p></div>
-        <button class="accordion" onclick="toggleAccordion(this)">How to Start?</button>
-        <div class="panel"><ol><li>Install Python 3.10+</li><li>Clone repo from GitHub</li><li>Install dependencies</li></ol></div>
-        <button class="accordion" onclick="toggleAccordion(this)">Join Development</button>
-        <div class="panel"><p>Contribute on GitHub:<a href="https://github.com/raj0793/jarvis.ai.in">🔗 Repo</a></p></div>
-        <button class="accordion" onclick="toggleAccordion(this)">JARVIS Preview</button>
-        <div class="panel"><video controls><source src="demo-video.mp4" type="video/mp4"></video></div>
       </div>
-
-      <!-- Tab 2: Guides -->
-      <div id="tab2" class="tab-content">
-        <h2>Step-by-Step Guides</h2>
-        <button class="accordion" onclick="toggleAccordion(this)">Setup Python</button>
-        <div class="panel"><p>Install Python and dependencies...</p></div>
-      </div>
-
-      <!-- Tab 3: Troubleshoot -->
-      <div id="tab3" class="tab-content">
-        <h2>Troubleshooting</h2>
-        <button class="accordion" onclick="toggleAccordion(this)">Microphone Issues</button>
-        <div class="panel"><p>Check mic settings...</p></div>
-      </div>
-
-      <!-- Tab 4: FAQ -->
-      <div id="tab4" class="tab-content">
-        <h2>FAQ</h2>
-        <button class="accordion" onclick="toggleAccordion(this)">What makes JARVIS unique?</button>
-        <div class="panel"><p>Fully offline...</p></div>
+      <div id="email" class="subcontent">
+        <h3>Send Feedback via Email</h3>
+        <div class="feedback-form">
+          <input type="text" id="subject" placeholder="Subject" required>
+          <textarea id="message" rows="4" placeholder="Your message..." required></textarea>
+          <button type="button" onclick="sendEmail()">Send Feedback</button>
+        </div>
       </div>
     </main>
-    <div class="center-button">
-      <button onclick="launchJARVIS()" class="pulse" aria-label="Launch JARVIS" tabindex="0">🚀 Launch JARVIS</button>
-    </div>
-  </div>
-
-  <!-- FEEDBACK TAB CONTENT -->
-  <div id="feedback" class="content">
-    <h1>Feedback Section</h1>
-    <div class="subtab-container">
-      <button class="subtab-btn active" onclick="showSubtab('rating')">Emoji Rating</button>
-      <button class="subtab-btn" onclick="showSubtab('email')">Send Email</button>
-    </div>
-    <div id="rating" class="subcontent active">
-      <h3>How do you feel about Jarvis?</h3>
-      <span class="emoji" onclick="alert('Thanks for 😍 feedback!')">😍</span>
-      <span class="emoji" onclick="alert('Thanks for 🙂 feedback!')">🙂</span>
-      <span class="emoji" onclick="alert('Thanks for 😐 feedback!')">😐</span>
-      <span class="emoji" onclick="alert('Thanks for 😡 feedback!')">😡</span>
-    </div>
-    <div id="email" class="subcontent" style="display:none;">
-      <h3>Send Feedback via Email</h3>
-      <form onsubmit="sendEmail(event)">
-        <input type="text" id="subject" placeholder="Subject" required>
-        <textarea id="message" rows="4" placeholder="Your message..." required></textarea>
-        <button type="submit">Send</button>
-      </form>
-    </div>
   </div>
 
   <script src="script.js"></script>
