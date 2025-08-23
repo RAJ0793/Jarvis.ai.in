@@ -1,10 +1,32 @@
-// Enhanced JavaScript with additional functionality
-function showTab(tabNumber) {
-  // Hide all tabs
+// Enhanced JavaScript with fixed functionality
+
+// Main Tab Functions (Home/Feedback)
+function showMainTab(tabName) {
+  // Hide all main content sections
+  const contents = document.querySelectorAll('.content');
+  contents.forEach(content => content.classList.remove('active'));
+  
+  // Remove active from all main tab buttons
+  const tabButtons = document.querySelectorAll('.tab-btn');
+  tabButtons.forEach(button => button.classList.remove('active'));
+  
+  // Show selected content
+  document.getElementById(tabName).classList.add('active');
+  
+  // Set active tab button
+  const activeButton = document.querySelector(`.tab-btn[onclick="showMainTab('${tabName}')"]`);
+  if (activeButton) {
+    activeButton.classList.add('active');
+  }
+}
+
+// Internal Tab Functions (Home/Guides/Troubleshoot/FAQ)
+function showTabContent(tabNumber) {
+  // Hide all internal tabs
   const tabs = document.querySelectorAll('.tab-content');
   tabs.forEach(tab => tab.classList.remove('active'));
   
-  // Remove active from all tab buttons
+  // Remove active from all internal tab buttons
   const tabButtons = document.querySelectorAll('.tabs button');
   tabButtons.forEach(button => {
     button.classList.remove('active');
@@ -12,27 +34,61 @@ function showTab(tabNumber) {
   });
   
   // Show selected tab
-  document.getElementById(`tab${tabNumber}`).classList.add('active');
+  const selectedTab = document.getElementById(`tab${tabNumber}`);
+  if (selectedTab) {
+    selectedTab.classList.add('active');
+  }
   
   // Set active tab button
   const activeButton = document.querySelector(`.tabs button:nth-child(${tabNumber})`);
-  activeButton.classList.add('active');
-  activeButton.setAttribute('aria-selected', 'true');
+  if (activeButton) {
+    activeButton.classList.add('active');
+    activeButton.setAttribute('aria-selected', 'true');
+  }
 }
 
+// Feedback Sub-tab Functions
+function showSubtab(subtabName) {
+  // Hide all sub-content
+  const subcontents = document.querySelectorAll('.subcontent');
+  subcontents.forEach(content => content.classList.remove('active'));
+  
+  // Remove active from all subtab buttons
+  const subtabButtons = document.querySelectorAll('.subtab-btn');
+  subtabButtons.forEach(button => button.classList.remove('active'));
+  
+  // Show selected subcontent
+  const selectedSubcontent = document.getElementById(subtabName);
+  if (selectedSubcontent) {
+    selectedSubcontent.classList.add('active');
+  }
+  
+  // Set active subtab button
+  const activeButton = document.querySelector(`.subtab-btn[onclick="showSubtab('${subtabName}')"]`);
+  if (activeButton) {
+    activeButton.classList.add('active');
+  }
+}
+
+// Accordion Functions
 function toggleAccordion(element) {
   const panel = element.nextElementSibling;
   const isExpanded = element.getAttribute('aria-expanded') === 'true';
   
   // Close all other accordions in the same tab
-  const currentTab = element.closest('.tab-content');
-  const accordions = currentTab.querySelectorAll('.accordion');
-  accordions.forEach(acc => {
-    if (acc !== element) {
-      acc.setAttribute('aria-expanded', 'false');
-      acc.nextElementSibling.style.maxHeight = null;
-    }
-  });
+  const currentTab = element.closest('.tab-content, .subcontent');
+  if (currentTab) {
+    const accordions = currentTab.querySelectorAll('.accordion');
+    accordions.forEach(acc => {
+      if (acc !== element) {
+        acc.setAttribute('aria-expanded', 'false');
+        const accPanel = acc.nextElementSibling;
+        if (accPanel) {
+          accPanel.style.maxHeight = null;
+        }
+      }
+    });
+  }
   
   // Toggle current accordion
   if (isExpanded) {
@@ -44,6 +100,7 @@ function toggleAccordion(element) {
   }
 }
 
+// Settings Functions
 function animatedOpen() {
   document.getElementById('settingsPanel').classList.add('open');
   document.getElementById('overlay').style.display = 'block';
@@ -66,12 +123,10 @@ function toggleVoice() {
   localStorage.setItem('voiceEnabled', newStatus);
   
   if (newStatus) {
-    alert('Voice recognition enabled! 🎤');
-    // Here you would initialize voice recognition
+    showNotification('Voice recognition enabled! 🎤');
     initializeVoiceRecognition();
   } else {
-    alert('Voice recognition disabled! 🔇');
-    // Here you would stop voice recognition
+    showNotification('Voice recognition disabled! 🔇');
     stopVoiceRecognition();
   }
 }
@@ -81,7 +136,6 @@ function toggleTheme() {
   const isDark = document.body.classList.contains('dark-theme');
   localStorage.setItem('theme', isDark ? 'dark' : 'light');
   
-  // Show notification
   const theme = isDark ? 'Dark' : 'Light';
   showNotification(`${theme} theme activated! 🌗`);
 }
@@ -96,13 +150,53 @@ function resetSettings() {
 
 function launchJARVIS() {
   showNotification('🚀 JARVIS launching... Please ensure Python environment is ready!');
-  // This would typically trigger the Python script
-  // For demo purposes, showing notification
   
   // Simulate loading process
   setTimeout(() => {
     showNotification('✅ JARVIS is ready! You can now use voice commands.');
   }, 2000);
+}
+
+// Feedback Functions
+function submitEmojiRating(emoji) {
+  const emojiMeaning = {
+    '😍': 'Excellent',
+    '🙂': 'Good', 
+    '😐': 'Neutral',
+    '😡': 'Poor'
+  };
+  
+  const rating = emojiMeaning[emoji] || 'Unknown';
+  showNotification(`Thanks for your ${rating} feedback! ${emoji}`);
+  
+  // Here you could send the rating to a server
+  console.log('Emoji rating submitted:', emoji, rating);
+}
+
+function sendEmail() {
+  const subject = document.getElementById('subject').value;
+  const message = document.getElementById('message').value;
+  
+  if (!subject.trim() || !message.trim()) {
+    showNotification('Please fill in both subject and message! ⚠️');
+    return;
+  }
+  
+  // Create mailto link
+  const mailtoLink = `mailto:support@jarvis.ai?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
+  
+  // Try to open email client
+  try {
+    window.location.href = mailtoLink;
+    showNotification('Email client opened! 📧');
+    
+    // Clear form
+    document.getElementById('subject').value = '';
+    document.getElementById('message').value = '';
+  } catch (error) {
+    showNotification('Could not open email client. Please try again. ❌');
+    console.error('Email error:', error);
+  }
 }
 
 // Voice Recognition Functions
@@ -122,12 +216,26 @@ function initializeVoiceRecognition() {
     
     recognition.onerror = function(event) {
       console.error('Speech recognition error:', event.error);
+      showNotification('Voice recognition error. Please try again. 🎤');
+    };
+    
+    recognition.onstart = function() {
+      showNotification('Voice recognition started. Listening... 🎤');
+    };
+    
+    recognition.onend = function() {
+      const voiceEnabled = localStorage.getItem('voiceEnabled') === 'true';
+      if (voiceEnabled) {
+        setTimeout(() => {
+          recognition.start();
+        }, 1000);
+      }
     };
     
     recognition.start();
     window.voiceRecognition = recognition;
   } else {
-    alert('Speech recognition is not supported in this browser.');
+    showNotification('Speech recognition is not supported in this browser. ❌');
   }
 }
 
@@ -135,6 +243,7 @@ function stopVoiceRecognition() {
   if (window.voiceRecognition) {
     window.voiceRecognition.stop();
     window.voiceRecognition = null;
+    showNotification('Voice recognition stopped. 🔇');
   }
 }
 
@@ -143,24 +252,35 @@ function handleVoiceCommand(command) {
   
   // Voice command handlers
   if (lowerCommand.includes('hello jarvis')) {
-    showNotification('Hello! How can I help you today?');
+    showNotification('Hello! How can I help you today? 👋');
   } else if (lowerCommand.includes('what time is it')) {
     const currentTime = new Date().toLocaleTimeString();
-    showNotification(`Current time is ${currentTime}`);
+    showNotification(`Current time is ${currentTime} ⏰`);
   } else if (lowerCommand.includes('open settings')) {
     animatedOpen();
+    showNotification('Settings opened ⚙️');
   } else if (lowerCommand.includes('close settings')) {
     animatedClose();
+    showNotification('Settings closed ✅');
   } else if (lowerCommand.includes('switch theme') || lowerCommand.includes('toggle theme')) {
     toggleTheme();
-  } else if (lowerCommand.includes('show home')) {
-    showTab(1);
+  } else if (lowerCommand.includes('show home') || lowerCommand.includes('go home')) {
+    showTabContent(1);
+    showNotification('Home tab activated 🏠');
   } else if (lowerCommand.includes('show guides')) {
-    showTab(2);
+    showTabContent(2);
+    showNotification('Guides tab activated 📖');
   } else if (lowerCommand.includes('show troubleshoot')) {
-    showTab(3);
+    showTabContent(3);
+    showNotification('Troubleshoot tab activated 🔧');
   } else if (lowerCommand.includes('show faq')) {
-    showTab(4);
+    showTabContent(4);
+    showNotification('FAQ tab activated ❓');
+  } else if (lowerCommand.includes('feedback')) {
+    showMainTab('feedback');
+    showNotification('Feedback section opened 💬');
+  } else if (lowerCommand.includes('launch jarvis')) {
+    launchJARVIS();
   }
 }
 
@@ -196,20 +316,22 @@ function showNotification(message) {
   }, 3000);
 }
 
-// Search functionality
+// Search functionality for FAQ
 function searchFAQ() {
   const searchInput = document.getElementById('searchInput');
+  if (!searchInput) return;
+  
   const searchTerm = searchInput.value.toLowerCase();
   const accordions = document.querySelectorAll('#tab4 .accordion');
   
   accordions.forEach(accordion => {
     const text = accordion.textContent.toLowerCase();
     const panel = accordion.nextElementSibling;
-    const panelText = panel.textContent.toLowerCase();
+    const panelText = panel ? panel.textContent.toLowerCase() : '';
     
     if (text.includes(searchTerm) || panelText.includes(searchTerm)) {
       accordion.style.display = 'block';
-      panel.style.display = 'block';
+      if (panel) panel.style.display = 'block';
       
       // Highlight search term
       if (searchTerm && text.includes(searchTerm)) {
@@ -219,18 +341,27 @@ function searchFAQ() {
       }
     } else {
       accordion.style.display = searchTerm ? 'none' : 'block';
-      panel.style.display = searchTerm ? 'none' : 'block';
+      if (panel) panel.style.display = searchTerm ? 'none' : 'block';
       accordion.classList.remove('highlight');
     }
   });
 }
 
-// Auto-save settings
+function clearSearch() {
+  const searchInput = document.getElementById('searchInput');
+  if (searchInput) {
+    searchInput.value = '';
+    searchFAQ();
+  }
+}
+
+// Settings Management
 function saveSettings() {
   const settings = {
     theme: document.body.classList.contains('dark-theme') ? 'dark' : 'light',
     voiceEnabled: localStorage.getItem('voiceEnabled') === 'true',
-    lastActiveTab: getCurrentActiveTab()
+    lastActiveTab: getCurrentActiveTab(),
+    lastMainTab: getCurrentMainTab()
   };
   
   localStorage.setItem('jarvisSettings', JSON.stringify(settings));
@@ -250,9 +381,14 @@ function loadSettings() {
       localStorage.setItem('voiceEnabled', 'true');
     }
     
-    // Show last active tab
+    // Show last main tab
+    if (settings.lastMainTab) {
+      showMainTab(settings.lastMainTab);
+    }
+    
+    // Show last active internal tab
     if (settings.lastActiveTab) {
-      showTab(settings.lastActiveTab);
+      showTabContent(settings.lastActiveTab);
     }
   } catch (error) {
     console.error('Error loading settings:', error);
@@ -267,9 +403,18 @@ function getCurrentActiveTab() {
   return 1;
 }
 
-// Initialize dynamic content
+function getCurrentMainTab() {
+  const activeMainContent = document.querySelector('.content.active');
+  if (activeMainContent) {
+    return activeMainContent.id;
+  }
+  return 'home';
+}
+
+// Dynamic FAQ Loading
 function loadDynamicFAQs() {
   const dynamicContainer = document.getElementById('dynamicFAQs');
+  if (!dynamicContainer) return;
   
   const additionalFAQs = [
     {
@@ -312,12 +457,12 @@ function loadDynamicFAQs() {
 
 // Keyboard shortcuts
 function handleKeyboardShortcuts(event) {
-  // Ctrl + number keys to switch tabs
+  // Ctrl + number keys to switch internal tabs
   if (event.ctrlKey) {
     const key = parseInt(event.key);
     if (key >= 1 && key <= 4) {
       event.preventDefault();
-      showTab(key);
+      showTabContent(key);
     }
   }
   
@@ -336,6 +481,18 @@ function handleKeyboardShortcuts(event) {
         searchInput.focus();
       }
     }
+  }
+  
+  // Alt + H for Home tab
+  if (event.altKey && event.key.toLowerCase() === 'h') {
+    event.preventDefault();
+    showMainTab('home');
+  }
+  
+  // Alt + F for Feedback tab
+  if (event.altKey && event.key.toLowerCase() === 'f') {
+    event.preventDefault();
+    showMainTab('feedback');
   }
 }
 
@@ -356,9 +513,31 @@ function monitorPerformance() {
   window.addEventListener('load', () => {
     setTimeout(() => {
       const perfData = performance.getEntriesByType('navigation')[0];
-      console.log('Page Load Time:', Math.round(perfData.loadEventEnd - perfData.loadEventStart) + 'ms');
+      if (perfData) {
+        console.log('Page Load Time:', Math.round(perfData.loadEventEnd - perfData.loadEventStart) + 'ms');
+      }
     }, 0);
   });
+}
+
+// Add search box to FAQ tab
+function addSearchToFAQ() {
+  const faqTab = document.getElementById('tab4');
+  if (!faqTab) return;
+  
+  const faqTitle = faqTab.querySelector('h2');
+  if (!faqTitle) return;
+  
+  // Create search container
+  const searchContainer = document.createElement('div');
+  searchContainer.className = 'search-container';
+  searchContainer.innerHTML = `
+    <input type="text" id="searchInput" placeholder="Search FAQs..." onkeyup="searchFAQ()" />
+    <button onclick="clearSearch()">Clear</button>
+  `;
+  
+  // Insert after title
+  faqTitle.parentNode.insertBefore(searchContainer, faqTitle.nextSibling);
 }
 
 // Initialize everything when DOM is loaded
@@ -399,29 +578,15 @@ document.addEventListener('DOMContentLoaded', function() {
   setTimeout(() => {
     showNotification('Welcome to JARVIS Dashboard! 🤖');
   }, 1000);
+  
+  // Initialize voice recognition if enabled
+  const voiceEnabled = localStorage.getItem('voiceEnabled') === 'true';
+  if (voiceEnabled) {
+    setTimeout(() => {
+      initializeVoiceRecognition();
+    }, 2000);
+  }
 });
-
-// Add search box to FAQ tab
-function addSearchToFAQ() {
-  const faqTab = document.getElementById('tab4');
-  const faqTitle = faqTab.querySelector('h2');
-  
-  // Create search container
-  const searchContainer = document.createElement('div');
-  searchContainer.className = 'search-container';
-  searchContainer.innerHTML = `
-    <input type="text" id="searchInput" placeholder="Search FAQs..." onkeyup="searchFAQ()" />
-    <button onclick="clearSearch()">Clear</button>
-  `;
-  
-  // Insert after title
-  faqTitle.parentNode.insertBefore(searchContainer, faqTitle.nextSibling);
-}
-
-function clearSearch() {
-  document.getElementById('searchInput').value = '';
-  searchFAQ();
-}
 
 // Save settings when page is about to unload
 window.addEventListener('beforeunload', saveSettings);
@@ -437,99 +602,9 @@ document.addEventListener('visibilitychange', function() {
     // Page is visible, resume if enabled
     const voiceEnabled = localStorage.getItem('voiceEnabled') === 'true';
     if (voiceEnabled && !window.voiceRecognition) {
-      initializeVoiceRecognition();
+      setTimeout(() => {
+        initializeVoiceRecognition();
+      }, 1000);
     }
   }
 });
-
-// Add CSS for notifications and search
-const additionalStyles = `
-.notification {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%) translateY(-100px);
-  background: rgba(102, 126, 234, 0.95);
-  color: white;
-  padding: 15px 25px;
-  border-radius: 25px;
-  font-weight: bold;
-  z-index: 2000;
-  opacity: 0;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-}
-
-.notification.show {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
-
-.search-container {
-  margin: 20px 0;
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.search-container input {
-  flex: 1;
-  padding: 12px 15px;
-  border: 2px solid #667eea;
-  border-radius: 25px;
-  font-size: 16px;
-  outline: none;
-  transition: all 0.3s ease;
-}
-
-.search-container input:focus {
-  border-color: #5a67d8;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-}
-
-.search-container button {
-  padding: 12px 20px;
-  background: #667eea;
-  color: white;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.search-container button:hover {
-  background: #5a67d8;
-}
-
-.accordion.highlight {
-  background: #fff3cd !important;
-  border-left-color: #ffc107 !important;
-}
-
-@media (max-width: 768px) {
-  .search-container {
-    flex-direction: column;
-  }
-  
-  .search-container button {
-    width: 100%;
-  }
-  
-  .notification {
-    left: 10px;
-    right: 10px;
-    transform: translateY(-100px);
-    width: auto;
-  }
-  
-  .notification.show {
-    transform: translateY(0);
-  }
-}
-`;
-
-// Inject additional styles
-const styleSheet = document.createElement('style');
-styleSheet.textContent = additionalStyles;
-document.head.appendChild(styleSheet);
