@@ -160,10 +160,15 @@ function launchJARVIS() {
 // Feedback Functions
 function submitEmojiRating(emoji) {
   const emojiMeaning = {
-    '😍': 'Excellent',
-    '🙂': 'Good', 
-    '😐': 'Neutral',
-    '😡': 'Poor'
+    '😍': 'Awesome',
+    '😆': 'Excellent', 
+    '😊': 'Well done',
+    '😅': 'Neutral',
+    '😏': 'Not very well',
+    '🙄': 'Ok', 
+    '😐': 'Poor',
+    '😡': 'Very poor'
+
   };
   
   const rating = emojiMeaning[emoji] || 'Unknown';
