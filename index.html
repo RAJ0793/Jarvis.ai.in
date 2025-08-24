@@ -5,8 +5,71 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>JARVIS Dashboard</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+/* Fullscreen Loader Overlay */
+#pageLoader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #0d1117;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  opacity: 1;
+  transition: opacity 2s ease-out;
+}
+
+/* Hide Animation Class */
+#pageLoader.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Dots Animation */
+.loader {
+  display: flex;
+  gap: 15px;
+}
+
+.loader .dot {
+  width: 20px;
+  height: 20px;
+  background: #58a6ff;
+  border-radius: 50%;
+  animation: bounce 1s infinite alternate;
+}
+
+.loader .dot:nth-child(2) { animation-delay: 0.2s; }
+.loader .dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes bounce {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-20px); }
+}
+
+/* Loading Text */
+#pageLoader p {
+  color: #58a6ff;
+  font-size: 18px;
+  margin-top: 15px;
+}
+  </style>
 </head>
 <body aria-label="JARVIS Dashboard" tabindex="0">
+
+  <!-- Page Loader -->
+  <div id="pageLoader">
+    <div class="loader">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+    <p>Loading JARVIS...</p>
+  </div>
 
   <!-- OVERLAY + SETTINGS -->
   <div class="overlay" id="overlay" onclick="closeSettings()" aria-hidden="true"></div>
@@ -28,7 +91,7 @@
     <button class="tab-btn" onclick="showMainTab('feedback')">Feedback</button>
   </div>
 
-  <!-- HOME TAB CONTENT (Full JARVIS Dashboard) -->
+  <!-- HOME TAB CONTENT -->
   <div id="home" class="content active">
     <main>
       <h1>JARVIS Dashboard</h1>
@@ -38,6 +101,7 @@
         <button onclick="showTabContent(2)" role="tab" aria-selected="false" tabindex="0">Guides</button>
         <button onclick="showTabContent(3)" role="tab" aria-selected="false" tabindex="0">Troubleshoot</button>
         <button onclick="showTabContent(4)" role="tab" aria-selected="false" tabindex="0">FAQ</button>
+        <button onclick="showTabContent(5)" role="tab" aria-selected="false" tabindex="0">About</button>
       </div>
 
       <!-- Tab 1: Home -->
@@ -49,7 +113,9 @@
           <div class="feature-card"><h4>📋 Requirements</h4><p>All your needs are here</p></div>
           <div class="feature-card"><h4>🧠 Smart Memory</h4><p>JSON-based recall system for context retention</p></div>
           <div class="feature-card"><h4>🧰 Arduino Integration</h4><p>Smart home automation capabilities</p></div>
-          <div class="feature-card"><h4>🎨 Multi-Platform</h4><p>GUI, CLI, and Mobile App support</p></div>
+          <div class="feature-card"><h4>🎨 Games</h4><p>Jarvis has it's in-built games</p></div>
+          <div class="feature-card"><h4>🎨 Multi-Platform</h4><p>Website and App support</p></div>
+          <div class="feature-card"><h4>🎨 Multi-Functional</h4><p>GUI, CLI, and agent support</p></div>
         </div>
         <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">What is JARVIS?</button>
         <div class="panel"><p>JARVIS is a modular, open-source assistant designed to run offline with advanced voice recognition and smart home integration capabilities.</p></div>
@@ -121,12 +187,17 @@
       <!-- Tab 4: FAQ -->
       <div id="tab4" class="tab-content">
         <h2>Frequently Asked Questions</h2>
-        <div id="dynamicFAQs"></div>
         <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">What makes JARVIS unique?</button>
         <div class="panel">
           <p>JARVIS is designed to be fully offline-capable with advanced voice recognition, smart memory system, and extensive customization options. Unlike cloud-based assistants, your data stays private and secure on your local machine.</p>
         </div>
       </div>
+
+      <!-- Tab 5: About -->
+      <div id="tab5" class="tab-content">
+        <h2>About Jarvis</h2>
+      </div>
+
     </main>
     <div class="center-button">
       <button onclick="launchJARVIS()" class="pulse" aria-label="Launch JARVIS" tabindex="0">🚀 Launch JARVIS</button>
@@ -144,10 +215,14 @@
       <div id="rating" class="subcontent active">
         <h3>How do you feel about JARVIS?</h3>
         <div class="emoji-container">
-          <span class="emoji" onclick="submitEmojiRating('😍')" tabindex="0" role="button" aria-label="Excellent">😍</span>
-          <span class="emoji" onclick="submitEmojiRating('🙂')" tabindex="0" role="button" aria-label="Good">🙂</span>
-          <span class="emoji" onclick="submitEmojiRating('😐')" tabindex="0" role="button" aria-label="Neutral">😐</span>
-          <span class="emoji" onclick="submitEmojiRating('😡')" tabindex="0" role="button" aria-label="Poor">😡</span>
+          <span class="emoji" onclick="submitEmojiRating('😍')" tabindex="0" role="button" aria-label="Awesome">😍</span>
+          <span class="emoji" onclick="submitEmojiRating('😆')" tabindex="0" role="button" aria-label="Excellent">😆</span>
+          <span class="emoji" onclick="submitEmojiRating('😊')" tabindex="0" role="button" aria-label="Well done">😊</span>
+          <span class="emoji" onclick="submitEmojiRating('😅')" tabindex="0" role="button" aria-label="Neutral">😅</span>
+          <span class="emoji" onclick="submitEmojiRating('😏')" tabindex="0" role="button" aria-label="Not very well">😏</span>
+          <span class="emoji" onclick="submitEmojiRating('🙄')" tabindex="0" role="button" aria-label="Ok">🙄</span>
+          <span class="emoji" onclick="submitEmojiRating('😐')" tabindex="0" role="button" aria-label="Poor">😐</span>
+          <span class="emoji" onclick="submitEmojiRating('😡')" tabindex="0" role="button" aria-label="Very poor">😡</span>
         </div>
       </div>
       <div id="email" class="subcontent">
@@ -162,5 +237,13 @@
   </div>
 
   <script src="script.js"></script>
+  <script>
+    window.addEventListener("load", function () {
+      const loader = document.getElementById("pageLoader");
+      loader.classList.add("hidden");
+      setTimeout(() => loader.style.display = "none", 500);
+    });
+  </script>
+
 </body>
 </html>
