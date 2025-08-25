@@ -5,59 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>JARVIS Dashboard</title>
   <link rel="stylesheet" href="style.css" />
-  <style>
-/* Fullscreen Loader Overlay */
-#pageLoader {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #0d1117;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  opacity: 1;
-  transition: opacity 2s ease-out;
-}
-
-/* Hide Animation Class */
-#pageLoader.hidden {
-  opacity: 0;
-  pointer-events: none;
-}
-
-/* Dots Animation */
-.loader {
-  display: flex;
-  gap: 15px;
-}
-
-.loader .dot {
-  width: 20px;
-  height: 20px;
-  background: #58a6ff;
-  border-radius: 50%;
-  animation: bounce 1s infinite alternate;
-}
-
-.loader .dot:nth-child(2) { animation-delay: 0.2s; }
-.loader .dot:nth-child(3) { animation-delay: 0.4s; }
-
-@keyframes bounce {
-  from { transform: translateY(0); }
-  to   { transform: translateY(-20px); }
-}
-
-/* Loading Text */
-#pageLoader p {
-  color: #58a6ff;
-  font-size: 18px;
-  margin-top: 15px;
-}
-  </style>
+  <link rel="stylesheet" href="loader.css" />
 </head>
 <body aria-label="JARVIS Dashboard" tabindex="0">
 
@@ -85,13 +33,15 @@
     <button onclick="resetSettings()" aria-label="Reset All Settings">🔄 Reset Settings</button>
   </div>
 
-  <!-- MAIN TABS (Home + Feedback) -->
+  <!-- MAIN TABS -->
   <div class="tab-container">
-    <button class="tab-btn active" onclick="showMainTab('home')">Home</button>
-    <button class="tab-btn" onclick="showMainTab('feedback')">Feedback</button>
+    <button class="tab-btn active" onclick="showMainTab('Home')">Home</button>
+    <button class="tab-btn" onclick="showMainTab('Feedback')">Feedback</button>
+    <button class="tab-btn" onclick="showMainTab('download and install')">Download and install</button>
+    <button class="tab-btn" onclick="showMainTab('setup')">Setup</button>
   </div>
 
-  <!-- HOME TAB CONTENT -->
+  <!-- HOME TAB CONTENTS -->
   <div id="home" class="content active">
     <main>
       <h1>JARVIS Dashboard</h1>
@@ -239,7 +189,48 @@
     </main>
   </div>
 
+  <!-- DOWNLOAD AND INSTALL TAB CONTENT -->
+<div id="dwnlninstl" class="content">
+  <main>
+    <h1>Download and Install JARVIS</h1>
+    <div class="download-section">
+      <h2>Get the Latest Release</h2>
+      <p>Download the latest version of Python of  official website.</p>
+      <a href="https://www.python.org" target="_blank" rel="noopener">🔗 Download Here</a>
+      <h2>Installation Instructions</h2>
+      <ol>
+        <li>Extract the downloaded ZIP file to your preferred location.</li>
+        <li>Ensure Python 3.10.0 is installed on your system(check aad to path during installation).</li>
+        <li>Open terminal or command prompt in the extracted folder.</li>
+        <li>Run <code>pip install -r requirements.txt</code> to install dependencies.</li>
+        <li>Launch JARVIS using <code>python main.py</code>.</li>
+         <li>Launch JARVIS using <code>python main.py</code>.</li>
+      </ol>
+    </div>
+  </main>
+</div>
+
+<!-- SETUP TAB CONTENT -->
+<div id="setup" class="content">
+  <main>
+    <h1>Setup Instructions</h1>
+    <div class="setup-section">
+      <h2>Step-by-Step Setup</h2>
+      <ol>
+        <li>Install Python 3.10+ from <a href="https://www.python.org/downloads/" target="_blank" rel="noopener">python.org</a>.</li>
+        <li>Clone or download the JARVIS repository from GitHub: 
+          <a href="https://github.com/raj0793/jarvis.ai.in" target="_blank" rel="noopener">🔗 GitHub Repo</a>
+        </li>
+        <li>Open terminal/command prompt in the project folder.</li>
+        <li>Install dependencies: <code>pip install -r requirements.txt</code></li>
+        <li>Run JARVIS: <code>python main.py</code></li>
+        <li>Optionally, configure voice recognition or themes in settings panel.</li>
+      </ol>
+    </div>
+  </main>
+</div>
   <script src="script.js"></script>
+  <script src="loader.js"></script>
   <script>
     window.addEventListener("load", function () {
       const loader = document.getElementById("pageLoader");
