@@ -1,133 +1,103 @@
-// Enhanced JavaScript with fixed functionality
+// Compact JARVIS Dashboard JavaScript
 
-// Main Tab Functions (Home/Feedback)
+// Utility functions
+const $ = id => document.getElementById(id);
+const $$ = sel => document.querySelectorAll(sel);
+const hide = el => { el.classList.remove('active'); el.style.display = 'none'; };
+const show = el => { el.classList.add('active'); el.style.display = 'block'; };
+
+// Main tab switching
 function showMainTab(tabName) {
-  // Hide all main content sections
-  const contents = document.querySelectorAll('.content');
-  contents.forEach(content => content.classList.remove('active'));
+  $$('.content').forEach(hide);
+  $$('.tab-btn').forEach(btn => btn.classList.remove('active'));
   
-  // Remove active from all main tab buttons
-  const tabButtons = document.querySelectorAll('.tab-btn');
-  tabButtons.forEach(button => button.classList.remove('active'));
+  const targetId = tabName.toLowerCase() === 'download and install' ? 'dwnlninstl' : 
+                   tabName.toLowerCase() === 'setup' ? 'setup' : 
+                   tabName.toLowerCase();
   
-  // Show selected content
-  document.getElementById(tabName).classList.add('active');
+  const target = $(targetId);
+  if (target) show(target);
   
-  // Set active tab button
-  const activeButton = document.querySelector(`.tab-btn[onclick="showMainTab('${tabName}')"]`);
-  if (activeButton) {
-    activeButton.classList.add('active');
-  }
+  const activeBtn = Array.from($$('.tab-btn')).find(btn => 
+    btn.textContent.trim().toLowerCase() === tabName.toLowerCase());
+  if (activeBtn) activeBtn.classList.add('active');
 }
 
-// Internal Tab Functions (Home/Guides/Troubleshoot/FAQ)
+// Internal tab switching
 function showTabContent(tabNumber) {
-  // Hide all internal tabs
-  const tabs = document.querySelectorAll('.tab-content');
-  tabs.forEach(tab => tab.classList.remove('active'));
+  for (let i = 1; i <= 5; i++) {
+    const tab = $(`tab${i}`);
+    if (tab) hide(tab);
+  }
   
-  // Remove active from all internal tab buttons
-  const tabButtons = document.querySelectorAll('.tabs button');
-  tabButtons.forEach(button => {
-    button.classList.remove('active');
-    button.setAttribute('aria-selected', 'false');
+  const selected = $(`tab${tabNumber}`);
+  if (selected) show(selected);
+  
+  $$('.tabs button').forEach((btn, i) => {
+    btn.classList.toggle('active', i === tabNumber - 1);
+    btn.setAttribute('aria-selected', i === tabNumber - 1);
   });
-  
-  // Show selected tab
-  const selectedTab = document.getElementById(`tab${tabNumber}`);
-  if (selectedTab) {
-    selectedTab.classList.add('active');
-  }
-  
-  // Set active tab button
-  const activeButton = document.querySelector(`.tabs button:nth-child(${tabNumber})`);
-  if (activeButton) {
-    activeButton.classList.add('active');
-    activeButton.setAttribute('aria-selected', 'true');
-  }
 }
 
-// Feedback Sub-tab Functions
+// Feedback subtabs
 function showSubtab(subtabName) {
-  // Hide all sub-content
-  const subcontents = document.querySelectorAll('.subcontent');
-  subcontents.forEach(content => content.classList.remove('active'));
+  $$('.subcontent').forEach(hide);
+  $$('.subtab-btn').forEach(btn => btn.classList.remove('active'));
   
-  // Remove active from all subtab buttons
-  const subtabButtons = document.querySelectorAll('.subtab-btn');
-  subtabButtons.forEach(button => button.classList.remove('active'));
-  
-  // Show selected subcontent
-  const selectedSubcontent = document.getElementById(subtabName);
-  if (selectedSubcontent) {
-    selectedSubcontent.classList.add('active');
-  }
-  
-  // Set active subtab button
-  const activeButton = document.querySelector(`.subtab-btn[onclick="showSubtab('${subtabName}')"]`);
-  if (activeButton) {
-    activeButton.classList.add('active');
-  }
+  const target = $(subtabName);
+  if (target) show(target);
+  event.target.classList.add('active');
 }
 
-// Accordion Functions
+// Accordion toggle
 function toggleAccordion(element) {
   const panel = element.nextElementSibling;
-  const isExpanded = element.getAttribute('aria-expanded') === 'true';
+  const isOpen = element.getAttribute('aria-expanded') === 'true';
   
-  // Close all other accordions in the same tab
-  const currentTab = element.closest('.tab-content, .subcontent');
-  if (currentTab) {
-    const accordions = currentTab.querySelectorAll('.accordion');
-    accordions.forEach(acc => {
+  // Close others in same tab
+  const tab = element.closest('.tab-content, .subcontent');
+  if (tab) {
+    tab.querySelectorAll('.accordion').forEach(acc => {
       if (acc !== element) {
         acc.setAttribute('aria-expanded', 'false');
-        const accPanel = acc.nextElementSibling;
-        if (accPanel) {
-          accPanel.style.maxHeight = null;
-        }
+        acc.nextElementSibling.style.maxHeight = null;
       }
     });
   }
   
-  // Toggle current accordion
-  if (isExpanded) {
-    element.setAttribute('aria-expanded', 'false');
-    panel.style.maxHeight = null;
-  } else {
-    element.setAttribute('aria-expanded', 'true');
-    panel.style.maxHeight = panel.scrollHeight + "px";
-  }
+  element.setAttribute('aria-expanded', !isOpen);
+  panel.style.maxHeight = isOpen ? null : panel.scrollHeight + "px";
 }
 
-// Settings Functions
+// Settings panel
+const settingsPanel = () => $('settingsPanel');
+const overlay = () => $('overlay');
+
 function animatedOpen() {
-  document.getElementById('settingsPanel').classList.add('open');
-  document.getElementById('overlay').style.display = 'block';
+  settingsPanel().classList.add('open');
+  overlay().style.display = 'block';
   document.body.style.overflow = 'hidden';
 }
 
-function animatedClose() {
-  closeSettings();
-}
+function animatedClose() { closeSettings(); }
 
 function closeSettings() {
-  document.getElementById('settingsPanel').classList.remove('open');
-  document.getElementById('overlay').style.display = 'none';
+  settingsPanel().classList.remove('open');
+  overlay().style.display = 'none';
   document.body.style.overflow = 'auto';
 }
 
 function toggleVoice() {
-  const currentStatus = localStorage.getItem('voiceEnabled') === 'true';
-  const newStatus = !currentStatus;
+  const current = localStorage.getItem('voiceEnabled') === 'true';
+  const newStatus = !current;
   localStorage.setItem('voiceEnabled', newStatus);
   
   if (newStatus) {
-    showNotification('Voice recognition enabled! 🎤');
-    initializeVoiceRecognition();
+    showNotification('Voice enabled! 🎤');
+    initVoice();
   } else {
-    showNotification('Voice recognition disabled! 🔇');
-    stopVoiceRecognition();
+    showNotification('Voice disabled! 🔇');
+    stopVoice();
   }
 }
 
@@ -135,481 +105,254 @@ function toggleTheme() {
   document.body.classList.toggle('dark-theme');
   const isDark = document.body.classList.contains('dark-theme');
   localStorage.setItem('theme', isDark ? 'dark' : 'light');
-  
-  const theme = isDark ? 'Dark' : 'Light';
-  showNotification(`${theme} theme activated! 🌗`);
+  showNotification(`${isDark ? 'Dark' : 'Light'} theme! 🌗`);
 }
 
 function resetSettings() {
-  if (confirm('This will reset all settings to default. Continue?')) {
+  if (confirm('Reset all settings?')) {
     localStorage.clear();
     document.body.classList.remove('dark-theme');
-    showNotification('Settings have been reset! 🔄');
+    showNotification('Settings reset! 🔄');
   }
 }
 
 function launchJARVIS() {
-  showNotification('🚀 JARVIS launching... Please ensure Python environment is ready!');
-  
-  // Simulate loading process
-  setTimeout(() => {
-    showNotification('✅ JARVIS is ready! You can now use voice commands.');
-  }, 2000);
+  showNotification('🚀 JARVIS launching...');
+  setTimeout(() => showNotification('✅ JARVIS ready!'), 2000);
 }
 
-// Feedback Functions
+// Feedback functions
 function submitEmojiRating(emoji) {
-  const emojiMeaning = {
-    '😍': 'Awesome',
-    '😆': 'Excellent', 
-    '😊': 'Well done',
-    '😅': 'Neutral',
-    '😏': 'Not very well',
-    '🙄': 'Ok', 
-    '😐': 'Poor',
-    '😡': 'Very poor'
-
+  const ratings = {
+    '😍': 'Awesome', '😆': 'Excellent', '😊': 'Well done', '😅': 'Neutral',
+    '😏': 'Not very well', '🙄': 'Ok', '😐': 'Poor', '😡': 'Very poor'
   };
-  
-  const rating = emojiMeaning[emoji] || 'Unknown';
-  showNotification(`Thanks for your ${rating} feedback! ${emoji}`);
-  
-  // Here you could send the rating to a server
-  console.log('Emoji rating submitted:', emoji, rating);
+  showNotification(`Thanks for ${ratings[emoji]} feedback! ${emoji}`);
 }
 
 function sendEmail() {
-  const subject = document.getElementById('subject').value;
-  const message = document.getElementById('message').value;
+  const subject = $('subject').value;
+  const message = $('message').value;
   
   if (!subject.trim() || !message.trim()) {
-    showNotification('Please fill in both subject and message! ⚠️');
+    showNotification('Fill both fields! ⚠️');
     return;
   }
   
-  // Create mailto link
-  const mailtoLink = `mailto:support@jarvis.ai?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
+  const mailto = `mailto:support@jarvis.ai?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
+  window.location.href = mailto;
+  showNotification('Email opened! 📧');
+  $('subject').value = $('message').value = '';
+}
+
+// Voice recognition
+let recognition = null;
+
+function initVoice() {
+  if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
+    showNotification('Speech not supported! ❌');
+    return;
+  }
   
-  // Try to open email client
-  try {
-    window.location.href = mailtoLink;
-    showNotification('Email client opened! 📧');
-    
-    // Clear form
-    document.getElementById('subject').value = '';
-    document.getElementById('message').value = '';
-  } catch (error) {
-    showNotification('Could not open email client. Please try again. ❌');
-    console.error('Email error:', error);
+  const Speech = window.SpeechRecognition || window.webkitSpeechRecognition;
+  recognition = new Speech();
+  Object.assign(recognition, { continuous: true, interimResults: true, lang: 'en-US' });
+  
+  recognition.onresult = e => handleCommand(e.results[e.results.length - 1][0].transcript);
+  recognition.onerror = () => showNotification('Voice error! 🎤');
+  recognition.onstart = () => showNotification('Listening... 🎤');
+  recognition.onend = () => {
+    if (localStorage.getItem('voiceEnabled') === 'true') {
+      setTimeout(() => recognition.start(), 1000);
+    }
+  };
+  
+  recognition.start();
+}
+
+function stopVoice() {
+  if (recognition) {
+    recognition.stop();
+    recognition = null;
+    showNotification('Voice stopped! 🔇');
   }
 }
 
-// Voice Recognition Functions
-function initializeVoiceRecognition() {
-  if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    const recognition = new SpeechRecognition();
-    
-    recognition.continuous = true;
-    recognition.interimResults = true;
-    recognition.lang = 'en-US';
-    
-    recognition.onresult = function(event) {
-      const transcript = event.results[event.results.length - 1][0].transcript;
-      handleVoiceCommand(transcript);
-    };
-    
-    recognition.onerror = function(event) {
-      console.error('Speech recognition error:', event.error);
-      showNotification('Voice recognition error. Please try again. 🎤');
-    };
-    
-    recognition.onstart = function() {
-      showNotification('Voice recognition started. Listening... 🎤');
-    };
-    
-    recognition.onend = function() {
-      const voiceEnabled = localStorage.getItem('voiceEnabled') === 'true';
-      if (voiceEnabled) {
-        setTimeout(() => {
-          recognition.start();
-        }, 1000);
-      }
-    };
-    
-    recognition.start();
-    window.voiceRecognition = recognition;
-  } else {
-    showNotification('Speech recognition is not supported in this browser. ❌');
-  }
+function handleCommand(cmd) {
+  const lower = cmd.toLowerCase().trim();
+  const commands = {
+    'hello jarvis': () => showNotification('Hello! 👋'),
+    'what time is it': () => showNotification(`Time: ${new Date().toLocaleTimeString()} ⏰`),
+    'open settings': () => { animatedOpen(); showNotification('Settings opened ⚙️'); },
+    'close settings': () => { animatedClose(); showNotification('Settings closed ✅'); },
+    'switch theme': toggleTheme,
+    'toggle theme': toggleTheme,
+    'show home': () => { showTabContent(1); showNotification('Home 🏠'); },
+    'go home': () => { showTabContent(1); showNotification('Home 🏠'); },
+    'show guides': () => { showTabContent(2); showNotification('Guides 📖'); },
+    'show troubleshoot': () => { showTabContent(3); showNotification('Troubleshoot 🔧'); },
+    'show faq': () => { showTabContent(4); showNotification('FAQ ❓'); },
+    'feedback': () => { showMainTab('feedback'); showNotification('Feedback 💬'); },
+    'launch jarvis': launchJARVIS
+  };
+  
+  Object.keys(commands).forEach(key => {
+    if (lower.includes(key)) commands[key]();
+  });
 }
 
-function stopVoiceRecognition() {
-  if (window.voiceRecognition) {
-    window.voiceRecognition.stop();
-    window.voiceRecognition = null;
-    showNotification('Voice recognition stopped. 🔇');
-  }
-}
-
-function handleVoiceCommand(command) {
-  const lowerCommand = command.toLowerCase().trim();
+// Notification system
+function showNotification(msg) {
+  const existing = document.querySelector('.notification');
+  if (existing) existing.remove();
   
-  // Voice command handlers
-  if (lowerCommand.includes('hello jarvis')) {
-    showNotification('Hello! How can I help you today? 👋');
-  } else if (lowerCommand.includes('what time is it')) {
-    const currentTime = new Date().toLocaleTimeString();
-    showNotification(`Current time is ${currentTime} ⏰`);
-  } else if (lowerCommand.includes('open settings')) {
-    animatedOpen();
-    showNotification('Settings opened ⚙️');
-  } else if (lowerCommand.includes('close settings')) {
-    animatedClose();
-    showNotification('Settings closed ✅');
-  } else if (lowerCommand.includes('switch theme') || lowerCommand.includes('toggle theme')) {
-    toggleTheme();
-  } else if (lowerCommand.includes('show home') || lowerCommand.includes('go home')) {
-    showTabContent(1);
-    showNotification('Home tab activated 🏠');
-  } else if (lowerCommand.includes('show guides')) {
-    showTabContent(2);
-    showNotification('Guides tab activated 📖');
-  } else if (lowerCommand.includes('show troubleshoot')) {
-    showTabContent(3);
-    showNotification('Troubleshoot tab activated 🔧');
-  } else if (lowerCommand.includes('show faq')) {
-    showTabContent(4);
-    showNotification('FAQ tab activated ❓');
-  } else if (lowerCommand.includes('feedback')) {
-    showMainTab('feedback');
-    showNotification('Feedback section opened 💬');
-  } else if (lowerCommand.includes('launch jarvis')) {
-    launchJARVIS();
-  }
-}
-
-// Notification System
-function showNotification(message) {
-  // Remove existing notifications
-  const existingNotification = document.querySelector('.notification');
-  if (existingNotification) {
-    existingNotification.remove();
-  }
-
-  // Create notification element
-  const notification = document.createElement('div');
-  notification.className = 'notification';
-  notification.textContent = message;
+  const notif = document.createElement('div');
+  notif.className = 'notification';
+  notif.textContent = msg;
+  document.body.appendChild(notif);
   
-  // Add to body
-  document.body.appendChild(notification);
-  
-  // Show notification
+  setTimeout(() => notif.classList.add('show'), 100);
   setTimeout(() => {
-    notification.classList.add('show');
-  }, 100);
-  
-  // Hide and remove notification
-  setTimeout(() => {
-    notification.classList.remove('show');
-    setTimeout(() => {
-      if (notification.parentNode) {
-        notification.remove();
-      }
-    }, 300);
+    notif.classList.remove('show');
+    setTimeout(() => notif.remove(), 300);
   }, 3000);
 }
 
-// Search functionality for FAQ
+// FAQ search
 function searchFAQ() {
-  const searchInput = document.getElementById('searchInput');
-  if (!searchInput) return;
-  
-  const searchTerm = searchInput.value.toLowerCase();
-  const accordions = document.querySelectorAll('#tab4 .accordion');
-  
-  accordions.forEach(accordion => {
-    const text = accordion.textContent.toLowerCase();
-    const panel = accordion.nextElementSibling;
+  const term = $('searchInput').value.toLowerCase();
+  $$('#tab4 .accordion').forEach(acc => {
+    const text = acc.textContent.toLowerCase();
+    const panel = acc.nextElementSibling;
     const panelText = panel ? panel.textContent.toLowerCase() : '';
+    const match = text.includes(term) || panelText.includes(term);
     
-    if (text.includes(searchTerm) || panelText.includes(searchTerm)) {
-      accordion.style.display = 'block';
-      if (panel) panel.style.display = 'block';
-      
-      // Highlight search term
-      if (searchTerm && text.includes(searchTerm)) {
-        accordion.classList.add('highlight');
-      } else {
-        accordion.classList.remove('highlight');
-      }
-    } else {
-      accordion.style.display = searchTerm ? 'none' : 'block';
-      if (panel) panel.style.display = searchTerm ? 'none' : 'block';
-      accordion.classList.remove('highlight');
-    }
+    acc.style.display = !term || match ? 'block' : 'none';
+    if (panel) panel.style.display = !term || match ? 'block' : 'none';
+    acc.classList.toggle('highlight', term && match);
   });
 }
 
 function clearSearch() {
-  const searchInput = document.getElementById('searchInput');
-  if (searchInput) {
-    searchInput.value = '';
-    searchFAQ();
-  }
+  const input = $('searchInput');
+  if (input) { input.value = ''; searchFAQ(); }
 }
 
-// Settings Management
+// Settings management
 function saveSettings() {
   const settings = {
     theme: document.body.classList.contains('dark-theme') ? 'dark' : 'light',
     voiceEnabled: localStorage.getItem('voiceEnabled') === 'true',
-    lastActiveTab: getCurrentActiveTab(),
-    lastMainTab: getCurrentMainTab()
+    lastTab: getCurrentTab(),
+    lastMain: getCurrentMain()
   };
-  
   localStorage.setItem('jarvisSettings', JSON.stringify(settings));
 }
 
 function loadSettings() {
   try {
     const settings = JSON.parse(localStorage.getItem('jarvisSettings') || '{}');
-    
-    // Apply theme
-    if (settings.theme === 'dark') {
-      document.body.classList.add('dark-theme');
-    }
-    
-    // Apply voice setting
-    if (settings.voiceEnabled) {
-      localStorage.setItem('voiceEnabled', 'true');
-    }
-    
-    // Show last main tab
-    if (settings.lastMainTab) {
-      showMainTab(settings.lastMainTab);
-    }
-    
-    // Show last active internal tab
-    if (settings.lastActiveTab) {
-      showTabContent(settings.lastActiveTab);
-    }
-  } catch (error) {
-    console.error('Error loading settings:', error);
-  }
+    if (settings.theme === 'dark') document.body.classList.add('dark-theme');
+    if (settings.voiceEnabled) localStorage.setItem('voiceEnabled', 'true');
+    if (settings.lastMain) showMainTab(settings.lastMain);
+    if (settings.lastTab) showTabContent(settings.lastTab);
+  } catch (e) { console.error('Settings load error:', e); }
 }
 
-function getCurrentActiveTab() {
-  const activeTab = document.querySelector('.tab-content.active');
-  if (activeTab) {
-    return parseInt(activeTab.id.replace('tab', ''));
-  }
-  return 1;
-}
+const getCurrentTab = () => {
+  const active = document.querySelector('.tab-content.active');
+  return active ? parseInt(active.id.replace('tab', '')) : 1;
+};
 
-function getCurrentMainTab() {
-  const activeMainContent = document.querySelector('.content.active');
-  if (activeMainContent) {
-    return activeMainContent.id;
-  }
-  return 'home';
-}
+const getCurrentMain = () => {
+  const active = document.querySelector('.content.active');
+  return active ? active.id : 'home';
+};
 
-// Dynamic FAQ Loading
-function loadDynamicFAQs() {
-  const dynamicContainer = document.getElementById('dynamicFAQs');
-  if (!dynamicContainer) return;
+// Dynamic FAQ loading
+function loadFAQs() {
+  const container = $('dynamicFAQs');
+  if (!container) return;
   
-  const additionalFAQs = [
-    {
-      question: "How to contribute to JARVIS source code?",
-      answer: "Fork the repository on GitHub, make your changes, and submit a pull request. Make sure to follow the coding guidelines and include proper documentation."
-    },
-    {
-      question: "Voice recognition is not accurate?",
-      answer: "Use clear pronunciation, reduce background noise, and keep the microphone close to your mouth. You can also train the voice recognition system for better accuracy."
-    },
-    {
-      question: "Can JARVIS control smart home devices?",
-      answer: "Yes! With Arduino integration, JARVIS can control lights, fans, sensors, and other IoT devices. Check the Arduino setup guide for more details."
-    },
-    {
-      question: "How to add custom voice commands?",
-      answer: "Edit the conversation.py file and add your custom commands in the appropriate functions. You can also modify the qna.json file for simple question-answer pairs."
-    },
-    {
-      question: "JARVIS is consuming too much CPU?",
-      answer: "This might be due to continuous voice recognition. Try reducing the recognition sensitivity or optimize the processing interval in the settings."
-    }
+  const faqs = [
+    { q: "How to contribute to JARVIS source code?", a: "Fork the repository on GitHub, make changes, and submit a pull request with proper documentation." },
+    { q: "Voice recognition not accurate?", a: "Use clear pronunciation, reduce noise, keep mic close. Train the system for better accuracy." },
+    { q: "Can JARVIS control smart home devices?", a: "Yes! With Arduino integration, JARVIS can control lights, fans, sensors, and IoT devices." },
+    { q: "How to add custom voice commands?", a: "Edit conversation.py and add commands in appropriate functions. Modify qna.json for Q&A pairs." },
+    { q: "JARVIS consuming too much CPU?", a: "Reduce voice recognition sensitivity or optimize processing interval in settings." },
+    { q: "Which platforms does JARVIS support?", a: "Works on Windows, Linux, macOS, and Android. Some features are platform-specific." },
+    { q: "How to enable offline mode?", a: "Enable in settings. Some AI features may have limited functionality offline." },
+    { q: "Can JARVIS send emails?", a: "Yes! Configure credentials in email_settings.json. Use 'send email' command." },
+    { q: "Multiple language support?", a: "Currently English only. Additional languages coming in future updates." },
+    { q: "How to update JARVIS?", a: "Pull latest from GitHub or use built-in update command if available." }
   ];
-
-  additionalFAQs.forEach(faq => {
-    const accordionButton = document.createElement('button');
-    accordionButton.className = 'accordion';
-    accordionButton.setAttribute('aria-expanded', 'false');
-    accordionButton.onclick = () => toggleAccordion(accordionButton);
-    accordionButton.textContent = faq.question;
-
+  
+  faqs.forEach(faq => {
+    const btn = document.createElement('button');
+    btn.className = 'accordion';
+    btn.setAttribute('aria-expanded', 'false');
+    btn.onclick = () => toggleAccordion(btn);
+    btn.textContent = faq.q;
+    
     const panel = document.createElement('div');
     panel.className = 'panel';
-    panel.innerHTML = `<p>${faq.answer}</p>`;
-
-    dynamicContainer.appendChild(accordionButton);
-    dynamicContainer.appendChild(panel);
+    panel.innerHTML = `<p>${faq.a}</p>`;
+    
+    container.append(btn, panel);
   });
 }
 
 // Keyboard shortcuts
-function handleKeyboardShortcuts(event) {
-  // Ctrl + number keys to switch internal tabs
-  if (event.ctrlKey) {
-    const key = parseInt(event.key);
-    if (key >= 1 && key <= 4) {
-      event.preventDefault();
-      showTabContent(key);
-    }
+function handleKeys(e) {
+  if (e.ctrlKey && e.key >= '1' && e.key <= '4') {
+    e.preventDefault();
+    showTabContent(parseInt(e.key));
   }
-  
-  // Escape to close settings
-  if (event.key === 'Escape') {
-    closeSettings();
+  if (e.key === 'Escape') closeSettings();
+  if (e.ctrlKey && e.key === '/' && getCurrentTab() === 4) {
+    e.preventDefault();
+    $('searchInput')?.focus();
   }
-  
-  // Ctrl + / for search (when on FAQ tab)
-  if (event.ctrlKey && event.key === '/') {
-    const activeTab = getCurrentActiveTab();
-    if (activeTab === 4) { // FAQ tab
-      event.preventDefault();
-      const searchInput = document.getElementById('searchInput');
-      if (searchInput) {
-        searchInput.focus();
-      }
-    }
-  }
-  
-  // Alt + H for Home tab
-  if (event.altKey && event.key.toLowerCase() === 'h') {
-    event.preventDefault();
-    showMainTab('home');
-  }
-  
-  // Alt + F for Feedback tab
-  if (event.altKey && event.key.toLowerCase() === 'f') {
-    event.preventDefault();
-    showMainTab('feedback');
-  }
+  if (e.altKey && e.key.toLowerCase() === 'h') { e.preventDefault(); showMainTab('home'); }
+  if (e.altKey && e.key.toLowerCase() === 'f') { e.preventDefault(); showMainTab('feedback'); }
 }
 
-// Performance monitoring
-function monitorPerformance() {
-  // Monitor memory usage (if available)
-  if (performance.memory) {
-    const memoryInfo = {
-      used: Math.round(performance.memory.usedJSHeapSize / 1048576) + ' MB',
-      total: Math.round(performance.memory.totalJSHeapSize / 1048576) + ' MB',
-      limit: Math.round(performance.memory.jsHeapSizeLimit / 1048576) + ' MB'
-    };
-    
-    console.log('Memory Usage:', memoryInfo);
-  }
+// Add search to FAQ
+function addSearch() {
+  const faqTab = $('tab4');
+  const title = faqTab?.querySelector('h2');
+  if (!title) return;
   
-  // Monitor page load performance
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      const perfData = performance.getEntriesByType('navigation')[0];
-      if (perfData) {
-        console.log('Page Load Time:', Math.round(perfData.loadEventEnd - perfData.loadEventStart) + 'ms');
-      }
-    }, 0);
-  });
-}
-
-// Add search box to FAQ tab
-function addSearchToFAQ() {
-  const faqTab = document.getElementById('tab4');
-  if (!faqTab) return;
-  
-  const faqTitle = faqTab.querySelector('h2');
-  if (!faqTitle) return;
-  
-  // Create search container
-  const searchContainer = document.createElement('div');
-  searchContainer.className = 'search-container';
-  searchContainer.innerHTML = `
+  const search = document.createElement('div');
+  search.className = 'search-container';
+  search.innerHTML = `
     <input type="text" id="searchInput" placeholder="Search FAQs..." onkeyup="searchFAQ()" />
     <button onclick="clearSearch()">Clear</button>
   `;
-  
-  // Insert after title
-  faqTitle.parentNode.insertBefore(searchContainer, faqTitle.nextSibling);
+  title.parentNode.insertBefore(search, title.nextSibling);
 }
 
-// Initialize everything when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-  // Load saved settings
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
   loadSettings();
+  loadFAQs();
+  addSearch();
+  document.addEventListener('keydown', handleKeys);
+  setInterval(saveSettings, 30000);
   
-  // Add dynamic FAQ content
-  loadDynamicFAQs();
+  setTimeout(() => showNotification('Welcome to JARVIS! 🤖'), 1000);
   
-  // Add search functionality to FAQ tab
-  addSearchToFAQ();
-  
-  // Setup keyboard shortcuts
-  document.addEventListener('keydown', handleKeyboardShortcuts);
-  
-  // Auto-save settings periodically
-  setInterval(saveSettings, 30000); // Save every 30 seconds
-  
-  // Monitor performance
-  monitorPerformance();
-  
-  // Add smooth scrolling
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-      e.preventDefault();
-      const target = document.querySelector(this.getAttribute('href'));
-      if (target) {
-        target.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-      }
-    });
-  });
-  
-  // Show welcome message
-  setTimeout(() => {
-    showNotification('Welcome to JARVIS Dashboard! 🤖');
-  }, 1000);
-  
-  // Initialize voice recognition if enabled
-  const voiceEnabled = localStorage.getItem('voiceEnabled') === 'true';
-  if (voiceEnabled) {
-    setTimeout(() => {
-      initializeVoiceRecognition();
-    }, 2000);
+  if (localStorage.getItem('voiceEnabled') === 'true') {
+    setTimeout(initVoice, 2000);
   }
 });
 
-// Save settings when page is about to unload
 window.addEventListener('beforeunload', saveSettings);
 
-// Handle visibility change to pause/resume voice recognition
-document.addEventListener('visibilitychange', function() {
-  if (document.hidden) {
-    // Page is hidden, pause voice recognition
-    if (window.voiceRecognition) {
-      window.voiceRecognition.stop();
-    }
-  } else {
-    // Page is visible, resume if enabled
-    const voiceEnabled = localStorage.getItem('voiceEnabled') === 'true';
-    if (voiceEnabled && !window.voiceRecognition) {
-      setTimeout(() => {
-        initializeVoiceRecognition();
-      }, 1000);
-    }
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden && recognition) {
+    recognition.stop();
+  } else if (!document.hidden && localStorage.getItem('voiceEnabled') === 'true' && !recognition) {
+    setTimeout(initVoice, 1000);
   }
 });
