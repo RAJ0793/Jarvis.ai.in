@@ -5,7 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>JARVIS Dashboard</title>
   <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="loader.css" />
+  <link rel="stylesheet" href="index.html" />
+  <h1 class="dashboard-title">JARVIS Dashboard</h1>
+<style>
+  .dashboard-title {
+    display: inline-block;
+    font-size: 2.5rem;
+    font-weight: bold;
+    position: relative;
+    color: #fff;
+  }
+
+  .dashboard-title::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 3px;
+    background: #00f0ff;
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    border-radius: 2px;
+  }
+</style>
+
 </head>
 <body aria-label="JARVIS Dashboard" tabindex="0">
 
@@ -44,7 +67,7 @@
   <!-- HOME TAB CONTENTS -->
   <div id="home" class="content active">
     <main>
-      <h1>JARVIS Dashboard</h1>
+      <h1><u>JARVIS Dashboard</u></h1>
 
       <div class="tabs" role="tablist" aria-label="Main Navigation Tabs">
         <button onclick="showTabContent(1)" class="active" role="tab" aria-selected="true" tabindex="0">Home</button>
@@ -70,14 +93,23 @@
           <div class="feature-card"><h4>🎨 Ai Agent</h4><p>Some new function will coming soon</p></div>
           <div class="feature-card"><h4>🎨 Multi-Platform</h4><p>Website supported via MacOS,Android,iOS,Windows 10/11 and Linux distros</p></div>
           <div class="feature-card"><h4>🎨 JarSetting</h4><p>JarSetting is the setting tool for Jarvis for Windows 11</p></div>
+          <div class="feature-card"><h4>🎨 Chatbot</h4><p>Jarvis is also used for Windows 11 as a Chatbot</p></div>
+          <div class="feature-card"><h4>🎨 Image generation</h4><p>This feature is currently not availaible.[This feature is under development]</p></div>
+          <div class="feature-card"><h4>🎨 Web search</h4><p>Jarvis can search anything in google,ask,bing,yahoo etc.in Windows 11</p></div>
       </div>   
 
         <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">What is JARVIS?</button>
         <div class="panel"><p>JARVIS is a modular, open-source assistant designed to run offline with advanced voice recognition and smart home integration capabilities.</p></div>
         <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">How to Start?</button>
-        <div class="panel"><ol><li>Install Python 3.10+</li><li>Clone repo from GitHub</li><li>Install dependencies with <code>pip install -r requirements.txt</code></li><li>Run <code>python main.py </code>in the VS code or Windows powershell</li></ol></div>
+        <div class="panel"><p>See download and install and setup</p></div>
         <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">Join Development</button>
-        <div class="panel"><p>Contribute on GitHub: <a href="https://github.com/raj0793/jarvis.ai.in" target="_blank" rel="noopener">🔗 Repository</a></p></div>
+        <div class="panel"><p>Contribute on GitHub: <a href="https://github.com/raj0793/jarvis.ai.in" target="_blank" rel="noopener">🔗 Repository</a>You can also up to date through GitHub</p></div>
+
+        
+
+
+
+
         <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">JARVIS Preview</button>
         <div class="panel">
           <div class="video-container">
@@ -87,6 +119,7 @@
             </video>
           </div>
         </div>
+
       </div>
 
       <!-- Tab 2: Guides -->
@@ -129,6 +162,7 @@
             <li>Try different microphone devices</li>
           </ul>
         </div>
+
         <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">Python Installation Problems</button>
         <div class="panel">
           <p>Resolve Python-related issues:</p>
@@ -139,16 +173,129 @@
             <li>Reinstall dependencies if needed</li>
           </ul>
         </div>
-      </div>
 
-      <!-- Tab 4: FAQ -->
-      <div id="tab4" class="tab-content">
-        <h2>Frequently Asked Questions</h2>
-        <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">What makes JARVIS unique?</button>
-        <div class="panel">
-        <p>JARVIS is designed to be fully offline-capable with advanced voice recognition, smart memory system, and extensive customization options. Unlike cloud-based assistants, your data stays private and secure on your local machine.</p>
+          <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">Pyttsx3 problems</button>
+          <div class="panel">
+            <p>Resolve Pyttsx3-related issues:</p>
+            <ul>
+              <li>Ensure Pyttsx3 is installed in your virtual environment.</li>
+              <li>Ensure virtual environment is activated in VS Code</li>
+              <li>Activate environment: <code>jarvis_env\Scripts\activate</code> (Windows) if not activated</li>
+              <li>Reinstall dependencies if needed</li>
+              <li>Check pyttsx3 with pip list command </li>
+            </ul>
+          </div> 
+
+          <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">In-built games is not working?</button>
+          <div class="panel">
+            <p>Check if code is incorrect.Make sure code is running in virtual environment and installed dependencies.</p>
+          </div>
         </div>
-      </div>
+        <!-- Tab 4: FAQ -->
+  <div id="tab4" class="tab-content">
+    <h2>Frequently Asked Questions</h2>
+
+    <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">What is JARVIS?</button>
+    <div class="panel">
+      <p>JARVIS is an AI-powered assistant designed to run both online and offline, offering personalized features such as voice commands, smart search, and system automation.</p>
+    </div>
+
+    <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">What makes JARVIS unique?</button>
+    <div class="panel">
+      <p>JARVIS is designed to be fully offline-capable with advanced voice recognition, smart memory system, and extensive customization options. Unlike cloud-based assistants, your data stays private and secure on your local machine.</p>
+    </div>
+
+    <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">Does JARVIS require the internet?</button>
+    <div class="panel">
+      <p>No. JARVIS works perfectly offline for most features like commands, memory recall, and system tasks. Internet is only required for online search or cloud-based APIs.</p>
+    </div>
+
+    <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">Can JARVIS control my PC?</button>
+    <div class="panel">
+      <p>Yes. JARVIS can open apps, control system settings, manage files, and even automate tasks like updates, music playback, and custom workflows.</p>
+    </div>
+
+    <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">Is my data safe with JARVIS?</button>
+    <div class="panel">
+      <p>Absolutely. JARVIS stores all personal data locally using encrypted JSON files. No data is uploaded to external servers without your permission.</p>
+    </div>
+
+    <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">Can I customize JARVIS?</button>
+    <div class="panel">
+      <p>Yes. You can add your own commands, voices, responses, and even integrate third-party APIs, making JARVIS completely customizable to your needs.</p>
+    </div>
+
+    <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">What platforms does JARVIS support?</button>
+    <div class="panel">
+      <p>JARVIS supports Windows, Linux, Android (via a companion app), and will soon expand to macOS and iOS.</p>
+    </div>
+
+    <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">Does JARVIS update automatically?</button>
+    <div class="panel">
+      <p>JARVIS notifies you when a new version is available and allows you to update manually or automatically, depending on your preference.</p>
+    </div>
+
+    <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">Can JARVIS learn from me?</button>
+    <div class="panel">
+      <p>Yes. JARVIS can store previous commands, preferences, and interactions in its local memory, improving responses over time without sending data online.</p>
+    </div>
+
+    <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">Can I use JARVIS without a microphone?</button>
+    <div class="panel">
+      <p>Yes. You can control JARVIS entirely through the keyboard or GUI, though voice commands enhance the experience.</p>
+    </div>
+
+    <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">Does JARVIS support multiple languages?</button>
+    <div class="panel">
+      <p>Currently, JARVIS supports English, but you can add more languages through its customization files.</p>
+    </div>
+
+    <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">Can JARVIS run on low-end PCs?</button>
+    <div class="panel">
+      <p>Yes. JARVIS is optimized to run smoothly even on systems with as low as 2GB RAM, ensuring lightweight yet powerful performance.</p>
+    </div>
+
+    <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">Can JARVIS integrate with Arduino and IoT?</button>
+    <div class="panel">
+      <p>Yes. JARVIS can be extended to control smart devices, Arduino boards, and IoT setups through plugins and custom modules.</p>
+    </div>
+
+    <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">Can JARVIS control system volume and media playback?</button>
+    <div class="panel">
+      <p>Yes. JARVIS can adjust system volume, control media playback, pause/resume music, and manage audio devices through voice or text commands.</p>
+    </div>
+
+    <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">Does JARVIS have a mobile app?</button>
+    <div class="panel">
+      <p>Yes. A companion Android app is available, allowing you to control your PC remotely and sync with JARVIS’s core functions.</p>
+    </div>
+
+    <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">What if I face errors using JARVIS?</button>
+    <div class="panel">
+      <p>JARVIS maintains an error log in its local folder. You can also enable troubleshooting mode to diagnose and fix problems easily.</p>
+    </div>
+
+    <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">Is JARVIS open source?</button>
+    <div class="panel">
+      <p>Yes. JARVIS is open source, allowing developers to contribute, improve, and customize it freely on GitHub.</p>
+    </div>
+
+  </div> <!-- /tab4 -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       <!-- Tab 5: About -->
       <div id="tab5" class="tab-content">
