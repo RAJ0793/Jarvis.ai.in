@@ -596,3 +596,168 @@ const AppInitializer = {
 
 // === MAIN INITIALIZATION ===
 document.addEventListener('DOMContentLoaded', AppInitializer.init);
+// Global variables
+let isGlowing = false;
+let backgroundIndex = 0;
+let particleInterval;
+
+// Array of background gradients
+const backgrounds = [
+    'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+    'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+    'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+    'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+    'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+    'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)'
+];
+
+/**
+ * Replays the logo drawing animation
+ */
+function replayAnimation() {
+    const paths = document.querySelectorAll('.logo-path');
+    paths.forEach(path => {
+        path.style.animation = 'none';
+        path.offsetHeight; // Trigger reflow to restart animation
+        path.style.animation = null;
+    });
+}
+
+/**
+ * Toggles the glow effect on the logo
+ */
+function toggleGlow() {
+    const logo = document.querySelector('.animista-logo');
+    if (isGlowing) {
+        logo.classList.remove('glow');
+        isGlowing = false;
+    } else {
+        logo.classList.add('glow');
+        isGlowing = true;
+    }
+}
+
+/**
+ * Changes the background gradient
+ */
+function changeBackground() {
+    backgroundIndex = (backgroundIndex + 1) % backgrounds.length;
+    document.body.style.background = backgrounds[backgroundIndex];
+    
+    // Add a smooth transition effect
+    document.body.style.transition = 'background 0.5s ease';
+    setTimeout(() => {
+        document.body.style.transition = '';
+    }, 500);
+}
+
+/**
+ * Creates a single particle element
+ */
+function createParticle() {
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+    
+    // Random horizontal position
+    particle.style.left = Math.random() * 100 + '%';
+    
+    // Random animation duration and delay
+    particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+    particle.style.animationDelay = Math.random() * 2 + 's';
+    
+    // Add particle to container
+    document.getElementById('particles').appendChild(particle);
+
+    // Remove particle after animation completes
+    setTimeout(() => {
+        if (particle.parentNode) {
+            particle.remove();
+        }
+    }, 8000);
+}
+
+/**
+ * Toggles the particle system on/off
+ */
+function addParticles() {
+    if (particleInterval) {
+        // Stop particles
+        clearInterval(particleInterval);
+        particleInterval = null;
+        document.getElementById('particles').innerHTML = '';
+    } else {
+        // Start particles
+        particleInterval = setInterval(createParticle, 200);
+    }
+}
+
+/**
+ * Initialize the page when DOM is loaded
+ */
+document.addEventListener('DOMContentLoaded', function() {
+    // Add some initial particles after a delay
+    setTimeout(() => {
+        for (let i = 0; i < 10; i++) {
+            setTimeout(createParticle, i * 100);
+        }
+    }, 2000);
+
+    // Add click animation to logo
+    const logo = document.querySelector('.animista-logo');
+    if (logo) {
+        logo.addEventListener('click', function() {
+            this.style.transform = 'scale(0.95) rotate(5deg)';
+            setTimeout(() => {
+                this.style.transform = 'scale(1) rotate(0deg)';
+            }, 150);
+        });
+    }
+
+    // Add keyboard shortcuts
+    document.addEventListener('keydown', function(event) {
+        switch(event.key) {
+            case 'r':
+            case 'R':
+                replayAnimation();
+                break;
+            case 'g':
+            case 'G':
+                toggleGlow();
+                break;
+            case 'b':
+            case 'B':
+                changeBackground();
+                break;
+            case 'p':
+            case 'P':
+                addParticles();
+                break;
+        }
+    });
+});
+
+/**
+ * Handle window resize for responsive behavior
+ */
+window.addEventListener('resize', function() {
+    // Clear particles on resize to prevent overflow issues
+    if (particleInterval) {
+        document.getElementById('particles').innerHTML = '';
+    }
+});
+
+  function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+            particle.style.animationDelay = Math.random() * 2 + 's';
+            document.getElementById('particles').appendChild(particle);
+            setTimeout(() => particle.remove(), 8000);
+        }
+
+        setTimeout(() => {
+            for (let i = 0; i < 10; i++) {
+                setTimeout(createParticle, i * 100);
+            }
+        }, 2000);
