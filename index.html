@@ -2,13 +2,82 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Page Loader</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jarvis Welcome + Loader</title>
   <style>
-    body,html {margin:0;padding:0;background:#0d1117;}
-    #pageLoader {
-      position: fixed;inset:0;background:#0d1117;
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body,html{background:#0d1117;height:100%;font-family:'Arial',sans-serif;overflow:hidden;}
+
+    /* === WELCOME SCREEN === */
+    #welcomeScreen {
       display:flex;flex-direction:column;justify-content:center;align-items:center;
+      height:100vh;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+      opacity:1;transition:opacity 2s ease-out;
+      position:relative;
+    }
+    #welcomeScreen.hidden {opacity:0;pointer-events:none;}
+
+    .container {
+      text-align:center;
+      padding:2rem;
+      background:rgba(255,255,255,0.1);
+      -webkit-backdrop-filter:blur(10px);
+      backdrop-filter:blur(10px);
+      border-radius:20px;
+      border:1px solid rgba(255,255,255,0.2);
+      box-shadow:0 8px 32px rgba(31,38,135,0.37);
+      max-width:800px;width:90%;
+    }
+
+    .logo-container {margin:2rem 0;position:relative;}
+    svg.jarvis-logo text {
+      font-size:100px;font-weight:bold;fill:none;stroke:white;stroke-width:3;
+      stroke-dasharray:700;stroke-dashoffset:700;
+      opacity:0;
+    }
+    .draw-animation svg.jarvis-logo text {
+      animation:drawText 3s ease forwards;
+      opacity:1;
+    }
+    @keyframes drawText {to{stroke-dashoffset:0;}}
+
+    .title {
+      color:white;font-size:2.5rem;margin-bottom:1rem;
+      text-shadow:2px 2px 4px rgba(0,0,0,0.3);
+      opacity:0;
+    }
+    .title.show {animation:fadeInUp 1s ease-out forwards;}
+
+    .subtitle {
+      color:rgba(255,255,255,0.8);font-size:1.2rem;margin-bottom:2rem;
+      opacity:0;
+    }
+    .subtitle.show {animation:fadeInUp 1s ease-out forwards;}
+
+    @keyframes fadeInUp {
+      from{opacity:0;transform:translateY(30px);}
+      to{opacity:1;transform:translateY(0);}
+    }
+
+    .particles {
+      position:absolute;top:0;left:0;width:100%;height:100%;
+      pointer-events:none;z-index:-1;
+    }
+    .particle {
+      position:absolute;width:4px;height:4px;
+      background:rgba(255,255,255,0.6);border-radius:50%;
+      animation:float 6s infinite linear;
+    }
+    @keyframes float {
+      0%{transform:translateY(100vh) rotate(0deg);opacity:0;}
+      10%,90%{opacity:1;}
+      100%{transform:translateY(-100px) rotate(360deg);opacity:0;}
+    }
+
+    /* === PAGE LOADER === */
+    #pageLoader {
+      position:fixed;inset:0;background:#0d1117;
+      display:none;flex-direction:column;justify-content:center;align-items:center;
       z-index:9999;opacity:1;transition:opacity 2s ease-out;
     }
     #pageLoader.hidden {opacity:0;pointer-events:none;}
@@ -25,46 +94,97 @@
       border:none;border-radius:8px;color:#fff;cursor:pointer;
       background:linear-gradient(270deg,#ff004c,#ffb600,#00ff6a,#00c3ff,#7a00ff);
       background-size:400% 400%;animation:rainbow 5s linear infinite;
-      opacity:0;transition:opacity 0.8s ease-in;
+      opacity:0;transition:opacity 0.8s ease-in;padding:10px 20px;font-size:16px;
     }
     #continueBtn.show{opacity:1;}
-    @keyframes rainbow{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+    @keyframes rainbow{
+      0%{background-position:0% 50%;}
+      50%{background-position:100% 50%;}
+      100%{background-position:0% 50%;}
+    }
     #continueBtn:hover{transform:scale(1.05);}
   </style>
 </head>
 <body>
+  <!-- WELCOME SCREEN -->
+  <div id="welcomeScreen">
+    <div class="particles" id="particles"></div>
+    <div class="container">
+      <h1 class="title" id="welcomeText">Welcome to Jarvis</h1>
+      <p class="subtitle" id="subText">Interactive welcome site</p>
+      <div class="logo-container" id="logoContainer">
+        <svg class="jarvis-logo" viewbox="0 0 600 150" xmlns="http://www.w3.org/2000/svg">
+          <text x="50" y="100">JARVIS</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE LOADER -->
   <div id="pageLoader">
     <div class="loader"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
     <p>Loading, please wait...</p>
-    <button id="continueBtn" onclick="launchSite()">Continue</button>
+    <button id="continueBtn" onclick="goToMain()">Continue</button>
   </div>
 
   <script>
-  const loader = document.getElementById("pageLoader"),
-        btn = document.getElementById("continueBtn"),
-        dots = document.querySelector(".loader"),
-        text = loader.querySelector("p");
+    const welcome=document.getElementById("welcomeText"),
+          subtitle=document.getElementById("subText"),
+          logoContainer=document.getElementById("logoContainer"),
+          welcomeScreen=document.getElementById("welcomeScreen"),
+          loader=document.getElementById("pageLoader"),
+          btn=document.getElementById("continueBtn"),
+          dots=document.querySelector(".loader"),
+          text=loader.querySelector("p");
 
-  const launchSite = () => {
-    loader.classList.add("hidden");
-    setTimeout(()=>location.href="main.html",2000);
-  };
+    // Welcome Screen Sequence
+    startParticles();
+    setTimeout(()=>welcome.classList.add("show"),200);
+    setTimeout(()=>logoContainer.classList.add("draw-animation"),1600);
+    setTimeout(()=>subtitle.classList.add("show"),5000);
 
-  // Show button after 4s, hide dots & text
-  setTimeout(()=>{
-    btn.classList.add("show");
-    dots.style.display = "none";
-    text.style.display = "none";
-  },4000);
+    // After Welcome -> Show Loader
+    setTimeout(()=>{
+      welcomeScreen.classList.add("hidden");
+      setTimeout(()=>{
+        welcomeScreen.style.display="none";
+        loader.style.display="flex";
 
-  // Auto-launch after 10s
-  setTimeout(launchSite,10000);
+        // Show Continue Button after 4s
+        setTimeout(()=>{
+          btn.classList.add("show");
+          dots.style.display="none";
+          text.style.display="none";
+        },4000);
 
-  // Escape key to launch immediately
-  document.addEventListener("keydown",e=>{
-    if(e.key==="Escape") launchSite();
-  });
-</script>
+        // Auto redirect after 10s
+        setTimeout(goToMain,10000);
 
+      },2000);
+    },8000); // 8s for Welcome animations
+
+    function startParticles(){
+      for(let i=0;i<10;i++){
+        setTimeout(()=>{
+          const p=document.createElement('div');
+          p.className='particle';
+          p.style.left=Math.random()*100+'%';
+          p.style.animationDuration=(Math.random()*3+3)+'s';
+          p.style.animationDelay=Math.random()*2+'s';
+          document.getElementById('particles').appendChild(p);
+          setTimeout(()=>p.remove(),8000);
+        },i*100);
+      }
+    }
+
+    function goToMain(){
+      loader.classList.add("hidden");
+      setTimeout(()=>location.href="main.html",2000);
+    }
+
+    document.addEventListener("keydown",e=>{
+      if(e.key==="Escape") goToMain();
+    });
+  </script>
 </body>
 </html>
