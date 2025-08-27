@@ -8,7 +8,7 @@ body{font-family:'Segoe UI',Tahoma,Verdana,sans-serif;line-height:1.6;color:#333
 .loader .dot:nth-child(2){animation-delay:.2s}
 .loader .dot:nth-child(3){animation-delay:.4s}
 @keyframes bounce{from{transform:translateY(0)}to{transform:translateY(-15px)}}
-
+ 
 /* Main Tabs */
 .tab-container{display:flex;justify-content:center;padding:20px 0;background:rgba(255,255,255,.1);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
 .tab-btn{background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.3);color:white;padding:12px 30px;margin:0 10px;border-radius:25px;cursor:pointer;transition:all .3s ease;font-weight:bold;font-size:16px}
@@ -39,8 +39,8 @@ body{font-family:'Segoe UI',Tahoma,Verdana,sans-serif;line-height:1.6;color:#333
 .feedback-form button:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(102,126,234,.4)}
 
 /* Settings */
-.overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:999}
-.settings{position:fixed;top:20px;right:20px;z-index:1001}
+.overlay{display:none;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:999}
+.settings{top:20px;right:20px;z-index:1001}
 #settingsIcon{background:rgba(255,255,255,.2);border:none;padding:12px;border-radius:50%;font-size:20px;cursor:pointer;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transition:all .3s ease}
 #settingsIcon:hover{background:rgba(255,255,255,.3);transform:rotate(90deg)}
 .settings-panel{position:fixed;top:0;right:-350px;width:350px;height:100vh;background:rgba(255,255,255,.95);-webkit-backdrop-filter:blur(15px);backdrop-filter:blur(15px);padding:20px;transition:right .3s ease;z-index:1000;box-shadow:-5px 0 20px rgba(0,0,0,.1)}
@@ -51,8 +51,10 @@ body{font-family:'Segoe UI',Tahoma,Verdana,sans-serif;line-height:1.6;color:#333
 
 /* Main Content */
 main{max-width:1200px;margin:0 auto;padding:20px;background:rgba(255,255,255,.95);-webkit-backdrop-filter:blur(15px);backdrop-filter:blur(15px);border-radius:20px;margin-top:20px;margin-bottom:100px;box-shadow:0 20px 40px rgba(0,0,0,.1)}
-h1,h3,h6{text-align:center;margin-bottom:60px;background:linear-gradient(135deg,#667eea,#908997);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:2.5em}
-h2,h5{text-align:center;margin-bottom:30px;background:linear-gradient(135deg,#5f678b,#340466);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:2.2em}
+h1{text-align:center;margin-bottom:60px;background:linear-gradient(135deg,rgba(159, 5, 255, 0.804),rgb(10, 136, 209),blue,green,yellow,orange,red);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:2.5em}
+h2{text-align:center;margin-bottom:30px;background:linear-gradient(135deg,#5f678b,#340466);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:2.2em}
+h3{text-align:center;margin-bottom:60px;background:linear-gradient(135deg,violet,indigo,blue,green,yellow,orange,red);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:2.5em}
+h5,h6{text-align:center;margin-bottom:30px;background:linear-gradient(135deg,#5f678b,#340466);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:2.2em}
 
 /* Internal Tabs */
 .tabs{display:flex;justify-content:center;margin-bottom:30px;flex-wrap:wrap}
@@ -134,3 +136,437 @@ h1{font-size:1.8em}
 .emoji{font-size:2.5rem;padding:1px}
 .feedback-form{padding:0 10px}
 }
+
+/* Dashboard Section Title */
+.dashboard-section-title {
+  background-color: #0000ff;
+  color: #ffffff;
+  padding: 20px;
+}
+/* ========================================
+   ANIMISTA LOGO ANIMATIONS
+   ======================================== */
+
+/* Logo Path Drawing Animation */
+.logo-path {
+    fill: none;
+    stroke: #ffffff;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0;
+    animation: drawPath 2s ease-in-out forwards;
+}
+
+/* Sequential Animation Delays for Each Letter */
+.logo-path:nth-child(1) { animation-delay: 0.2s; }  /* a */
+.logo-path:nth-child(2) { animation-delay: 0.4s; }  /* n */
+.logo-path:nth-child(3) { animation-delay: 0.6s; }  /* i */
+.logo-path:nth-child(4) { animation-delay: 0.8s; }  /* m */
+.logo-path:nth-child(5) { animation-delay: 1.0s; }  /* i */
+.logo-path:nth-child(6) { animation-delay: 1.2s; }  /* s */
+.logo-path:nth-child(7) { animation-delay: 1.4s; }  /* ta */
+
+/* Path Drawing Keyframe Animation */
+@keyframes drawPath {
+    0% {
+        opacity: 0;
+        stroke-dasharray: 1000;
+        stroke-dashoffset: 1000;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 1;
+        stroke-dasharray: 1000;
+        stroke-dashoffset: 0;
+    }
+}
+
+/* Logo Hover Animation */
+.animista-logo {
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.animista-logo:hover {
+    transform: scale(1.05);
+}
+
+/* Title and Subtitle Fade-In Animation */
+.title {
+    opacity: 0;
+    animation: fadeInUp 1s ease-out 1.6s forwards;
+}
+
+.subtitle {
+    opacity: 0;
+    animation: fadeInUp 1s ease-out 1.8s forwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Button Hover Animations */
+.btn {
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+/* Glow Effect Animation */
+.glow {
+    animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        filter: drop-shadow(0 0 10px #fff);
+    }
+    to {
+        filter: drop-shadow(0 0 30px #fff) drop-shadow(0 0 40px #667eea);
+    }
+}
+
+/* Particle Float Animation */
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    animation: float 6s infinite linear;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Logo Click Animation (Applied via JavaScript) */
+.logo-click-effect {
+    transform: scale(0.95) rotate(5deg);
+    transition: transform 0.15s ease;
+}
+
+/* Background Transition Animation */
+.bg-transition {
+    transition: background 0.5s ease;
+}
+
+/* Additional Custom Animations */
+
+/* Pulse Animation */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.8;
+    }
+}
+
+.pulse-animation {
+    animation: pulse 2s infinite;
+}
+
+/* Bounce Animation */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+.bounce-animation {
+    animation: bounce 1s;
+}
+
+/* Shake Animation */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
+    20%, 40%, 60%, 80% { transform: translateX(2px); }
+}
+
+.shake-animation {
+    animation: shake 0.5s;
+}
+
+/* Rotate Animation */
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.rotate-animation {
+    animation: rotate 2s linear infinite;
+}
+
+/* Scale In Animation */
+@keyframes scaleIn {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.scale-in-animation {
+    animation: scaleIn 0.5s ease-out;
+}
+
+/* Slide In Animations */
+@keyframes slideInFromLeft {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromRight {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromTop {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromBottom {
+    0% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.slide-in-left { animation: slideInFromLeft 0.8s ease-out; }
+.slide-in-right { animation: slideInFromRight 0.8s ease-out; }
+.slide-in-top { animation: slideInFromTop 0.8s ease-out; }
+.slide-in-bottom { animation: slideInFromBottom 0.8s ease-out; }
+
+/* Fade Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+.fade-in { animation: fadeIn 1s ease-in; }
+.fade-out { animation: fadeOut 1s ease-out; }
+
+/* Text Typing Animation */
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blink {
+    50% { border-color: transparent; }
+}
+
+.typewriter {
+    overflow: hidden;
+    border-right: 2px solid rgba(255, 255, 255, 0.75);
+    white-space: nowrap;
+    animation: typing 3s steps(40, end), blink 0.75s step-end infinite;
+}
+
+/* Animation Control Classes */
+.animation-paused {
+    animation-play-state: paused;
+}
+
+.animation-running {
+    animation-play-state: running;
+}
+
+.animation-fast {
+    animation-duration: 0.5s !important;
+}
+
+.animation-slow {
+    animation-duration: 3s !important;
+}
+k * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .container {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            max-width: 800px;
+            width: 90%;
+        }
+
+        .logo-container {
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        svg.jarvis-logo text {
+            font-size: 100px;
+            font-weight: bold;
+            fill: none;
+            stroke: white;
+            stroke-width: 3;
+            stroke-dasharray: 700;
+            stroke-dashoffset: 700;
+            animation: drawText 3s ease forwards;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+        }
+
+        @keyframes drawText {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        .title {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 1.6s forwards;
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 1.8s forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            animation: float 6s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+
+        .glow {
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 10px #fff); }
+            to { filter: drop-shadow(0 0 30px #fff) drop-shadow(0 0 40px #667eea); }
+        }
