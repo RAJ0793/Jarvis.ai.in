@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,117 +5,67 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Page Loader</title>
   <style>
-    /* Fullscreen Loader Overlay */
+    body,html {margin:0;padding:0;background:#0d1117;}
     #pageLoader {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #0d1117;
-      display: flex;
-      flex-direction: column;
-      justify-content: center; 
-      align-items: center;
-      z-index: 9999;
-      opacity: 1;
-      transition: opacity 2s ease-out;
+      position: fixed;inset:0;background:#0d1117;
+      display:flex;flex-direction:column;justify-content:center;align-items:center;
+      z-index:9999;opacity:1;transition:opacity 2s ease-out;
     }
-
-    /* Hide Animation Class */
-    #pageLoader.hidden {
-      opacity: 0;
-      pointer-events: none;
+    #pageLoader.hidden {opacity:0;pointer-events:none;}
+    .loader {display:flex;gap:15px;}
+    .dot {
+      width:20px;height:20px;border-radius:50%;
+      background:#58a6ff;animation:bounce 1s infinite alternate;
     }
-
-    /* Dots Animation */
-    .loader {
-      display: flex;
-      gap: 15px;
-    }
-
-    .loader .dot {
-      width: 20px;
-      height: 20px;
-      background: #58a6ff;
-      border-radius: 50%;
-      animation: bounce 1s infinite alternate;
-    }
-
-    .loader .dot:nth-child(2) { 
-      animation-delay: 0.2s; 
-    }
-
-    .loader .dot:nth-child(3) { 
-      animation-delay: 0.4s; 
-    }
-
-    @keyframes bounce {
-      from { transform: translateY(0); }
-      to { transform: translateY(-15px); }
-    }
-
-    /* Loading Text */
-    #pageLoader p {
-      color: #58a6ff;
-      font-size: 18px;
-      margin-top: 15px;
-    }
-
-    /* Continue Button (Hidden Initially) */
+    .dot:nth-child(2){animation-delay:0.2s;}
+    .dot:nth-child(3){animation-delay:0.4s;}
+    @keyframes bounce{to{transform:translateY(-15px);}}
+    #pageLoader p {color:#58a6ff;font-size:18px;margin-top:15px;}
     #continueBtn {
-      margin-top: 25px;
-      padding: 12px 25px;
-      font-size: 18px;
-      font-weight: bold;
-      border: none;
-      border-radius: 8px;
-      background: linear-gradient(270deg, #ff004c, #ffb600, #00ff6a, #00c3ff, #7a00ff);
-      background-size: 400% 400%;
-      color: white;
-      cursor: pointer;
-      display: none;
-      animation: rainbow 5s linear infinite;
+      margin-top:25px;padding:12px 25px;font-size:18px;font-weight:bold;
+      border:none;border-radius:8px;color:#fff;cursor:pointer;
+      background:linear-gradient(270deg,#ff004c,#ffb600,#00ff6a,#00c3ff,#7a00ff);
+      background-size:400% 400%;animation:rainbow 5s linear infinite;
+      opacity:0;transition:opacity 0.8s ease-in;
     }
-
-    @keyframes rainbow {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    #continueBtn:hover {
-      transform: scale(1.05);
-    }
+    #continueBtn.show{opacity:1;}
+    @keyframes rainbow{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+    #continueBtn:hover{transform:scale(1.05);}
   </style>
 </head>
 <body>
-
-  <!-- Loader -->
   <div id="pageLoader">
-    <div class="loader">
-      <div class="dot"></div>
-      <div class="dot"></div>
-      <div class="dot"></div>
-    </div>
+    <div class="loader"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
     <p>Loading, please wait...</p>
     <button id="continueBtn" onclick="launchSite()">Continue</button>
   </div>
 
   <script>
-    // Show button after 4 seconds
-    setTimeout(() => {
-      document.getElementById("continueBtn").style.display = "block";
-    }, 4000);
+  const loader = document.getElementById("pageLoader"),
+        btn = document.getElementById("continueBtn"),
+        dots = document.querySelector(".loader"),
+        text = loader.querySelector("p");
 
-    // Redirect to index.html when button is clicked
-    function launchSite() {
-      document.getElementById("pageLoader").classList.add("hidden");
-      setTimeout(() => {
-        window.location.href = "main.html"; // Change to your desired page
-      }, 2000); // matches transition duration
-    }
-  </script>
+  const launchSite = () => {
+    loader.classList.add("hidden");
+    setTimeout(()=>location.href="main.html",2000);
+  };
+
+  // Show button after 4s, hide dots & text
+  setTimeout(()=>{
+    btn.classList.add("show");
+    dots.style.display = "none";
+    text.style.display = "none";
+  },4000);
+
+  // Auto-launch after 10s
+  setTimeout(launchSite,10000);
+
+  // Escape key to launch immediately
+  document.addEventListener("keydown",e=>{
+    if(e.key==="Escape") launchSite();
+  });
+</script>
 
 </body>
 </html>
