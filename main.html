@@ -8,6 +8,13 @@
   <link rel="stylesheet" href="index.html" />
   <h1 class="dashboard-title">JARVIS Dashboard</h1>
 <style>
+  /* General Styles for tablist */
+  [role=tablist] {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 40px;
+    background: #d3caca;
+  }
   .dashboard-title {
     display: inline-block;
     font-size: 2.5rem;
@@ -27,6 +34,13 @@
     left: 0;
     border-radius: 2px;
   }
+
+  .dashboard-section-title {
+    background-color: #1935bec4;
+    color: #ffffff;
+    padding: 20px;
+  }
+
 </style>
 
 </head>
@@ -67,7 +81,10 @@
   <!-- HOME TAB CONTENTS -->
   <div id="home" class="content active">
     <main>
-      <h1><u>JARVIS Dashboard</u></h1>
+     
+      <h2 class="dashboard-section-title">
+          JARVIS Dashboard
+      </h2>
 
       <div class="tabs" role="tablist" aria-label="Main Navigation Tabs">
         <button onclick="showTabContent(1)" class="active" role="tab" aria-selected="true" tabindex="0">Home</button>
@@ -98,6 +115,8 @@
           <div class="feature-card"><h4>🎨 Web search</h4><p>Jarvis can search anything in google,ask,bing,yahoo etc.in Windows 11</p></div>
       </div>   
 
+
+        <!--Accordion-->
         <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">What is JARVIS?</button>
         <div class="panel"><p>JARVIS is a modular, open-source assistant designed to run offline with advanced voice recognition and smart home integration capabilities.</p></div>
         <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">How to Start?</button>
@@ -280,23 +299,7 @@
       <p>Yes. JARVIS is open source, allowing developers to contribute, improve, and customize it freely on GitHub.</p>
     </div>
 
-  </div> <!-- /tab4 -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  </div> 
       <!-- Tab 5: About -->
       <div id="tab5" class="tab-content">
         <h2>About Jarvis</h2>
