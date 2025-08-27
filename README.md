@@ -1,39 +1,37 @@
-# 🤖 Jarvis v1.0
+# JARVIS v1.0
 
-Welcome to **Jarvis v1.0** – Your personal AI assistant that is smarter than ever and ready to help you manage your day-to-day tasks, chat, and assist you in multiple ways.  
-
-> Note: Currently, Jarvis v1.0 focuses on **chatbot and agent capabilities**. Arduino integrations and advanced image generation are planned for future updates.
-
----
-
-## 🌟 Features
-
-Jarvis v1.0 comes packed with intelligent and practical features:
-
-### 🔹 AI Chatbot
-- Talk with Jarvis naturally.  
-- Capable of **context-aware responses**.  
-- Built-in **GPT-like chatbot functionality** (no external LLM required for now).  
-
-### 🔹 Smart Agent Capabilities
-- **Reminders & Notes**: Set personal reminders and never miss important tasks.  
-- **Calculations & Conversions**: Do quick math, unit conversions, and calculations.  
-- **Voice Assistance**: Talk to Jarvis and receive voice responses.  
-
-### 🔹 Interactive UI
-- Beautiful, **modern dashboard interface**.  
-- **Tabs, panels, and cards** for easy navigation.  
-- Supports **dark mode** for night-time use.  
-
-### 🔹 Lightweight & Fast
-- Efficient **offline performance**.  
-- Runs smoothly even on **low-end systems**.  
-- Minimal dependencies, ready to expand.
+**JARVIS** is a personal AI assistant designed to provide essential productivity tools in a simple, offline-friendly package.  
+Currently focused on **basic functionalities**, with **advanced features planned for future releases**.
 
 ---
 
-## 📂 Installation
+## 🚀 Current Features (v1.0)
 
-1. Clone the repository:  
-```bash
-git clone https://github.com/raj0793/jarvis.ai.in
+- **Basic Calculations** – Perform arithmetic operations directly.
+- **Web Search (Basic)** – Opens search results in a browser.
+- **Agent (Limited)** – Handles a few basic tasks (reminders, simple queries).
+- **Voice Assistance** – Speak to JARVIS and get voice responses.
+- **Music Playback** – Play local music via integrated command.
+- **Lightweight & Offline** – Works without constant internet connectivity.
+
+---
+
+## 🔧 In Development
+
+- **JarSetting (Settings Panel)** – GUI-based configuration (work in progress).
+- **Improved Agent Features** – Smarter context handling and expanded task support.
+- **User Interface Enhancements** – Cleaner UI and additional themes.
+
+---
+
+## 🛠️ Planned for Future Releases
+
+- **Image Generation** – AI-powered image creation.
+- **WebView Support** – Integrated browser for displaying content inside JARVIS.
+- **Arduino Integration** – Smart device and IoT control.
+- **Cross-Platform Support** – Windows, Android, Linux, macOS integration.
+- **Advanced AI Agent** – Context-aware smart assistant with recall.
+
+---
+
+
