@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jarvis Settings</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f4f5;
+      color: #333;
+    }
+    .container {
+      display: flex;
+      height: 100vh;
+    }
+    .sidebar {
+      width: 250px;
+      background-color: #ffffff;
+      border-right: 1px solid #ddd;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    }
+    .sidebar h2 {
+      padding: 20px;
+      margin: 0;
+      border-bottom: 1px solid #ddd;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      font-size: 1.3em;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .sidebar ul li {
+      padding: 15px 20px;
+      cursor: pointer;
+      border-bottom: 1px solid #eee;
+      transition: all 0.2s ease;
+    }
+    .sidebar ul li:hover {
+      background-color: #e5e7eb;
+      transform: translateX(5px);
+    }
+    .sidebar ul li.active {
+      background-color: #2563eb;
+      color: white;
+      border-left: 4px solid #1e40af;
+    }
+    .main {
+      flex: 1;
+      padding: 30px;
+      overflow-y: auto;
+      background-color: #fafafa;
+    }
+    .content-section {
+      display: none;
+    }
+    .content-section.active {
+      display: block;
+      animation: fadeIn 0.3s ease-in;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .setting-section {
+      background: white;
+      margin-bottom: 20px;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      border: 1px solid #e5e7eb;
+    }
+    .setting-section h3 {
+      margin: 0 0 20px 0;
+      font-size: 1.2em;
+      color: #374151;
+      border-bottom: 2px solid #e5e7eb;
+      padding-bottom: 10px;
+    }
+    .toggle {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      padding: 10px;
+      background-color: #f9fafb;
+      border-radius: 6px;
+      transition: background-color 0.2s;
+    }
+    .toggle:hover {
+      background-color: #f3f4f6;
+    }
+    .toggle input[type="checkbox"] {
+      margin-right: 12px;
+      width: 18px;
+      height: 18px;
+      accent-color: #2563eb;
+    }
+    .setting-section label {
+      font-weight: 500;
+      color: #374151;
+    }
+    .setting-item {
+      margin-bottom: 20px;
+    }
+    .setting-item input[type="text"], .setting-item select {
+      padding: 12px;
+      width: 100%;
+      max-width: 300px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: border-color 0.2s;
+    }
+    .setting-item input[type="text"]:focus, .setting-item select:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+    .btn {
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      transition: all 0.2s;
+      margin-top: 20px;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+    .btn:active {
+      transform: translateY(0);
+    }
+    .status-indicator {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #10b981;
+      margin-left: 8px;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    .version-info {
+      text-align: center;
+      padding: 20px;
+      color: #6b7280;
+    }
+    .security-warning {
+      background-color: #fef3c7;
+      border: 1px solid #f59e0b;
+      padding: 15px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+    }
+    .success-message {
+      background-color: #d1fae5;
+      border: 1px solid #10b981;
+      color: #065f46;
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2>JARVIS Settings <span class="status-indicator"></span></h2>
+      <ul>
+        <li class="active" data-section="general">General</li>
+        <li data-section="appearance">Appearance</li>
+        <li data-section="security">Security</li>
+        <li data-section="about">About</li>
+      </ul>
+    </div>
+    
+    <div class="main">
+      <div class="success-message" id="successMessage">
+        Settings saved successfully!
+      </div>
+       <button onclick="updateSetting('dark_mode', 'on')">Enable Dark Mode</button>
+      <!-- General Section -->
+      <div class="content-section active" id="general">
+        <div class="setting-section">
+          <h3>System Settings</h3>
+          <div class="toggle">
+            <input type="checkbox" id="autoStart" checked>
+            <label for="autoStart">Start JARVIS on system startup</label>
+          </div>
+          <div class="toggle">
+            <input type="checkbox" id="notifications" checked>
+            <label for="notifications">Enable desktop notifications</label>
+          </div>
+          <div class="setting-item">
+            <label for="username">Username:</label><br>
+            <input type="text" id="username" name="username" placeholder="Enter username" value="Tony Stark">
+          </div>
+          <div class="setting-item">
+            <label for="language">Language:</label><br>
+            <select id="language" name="language">
+              <option value="en">English</option>
+              <option value="es">Spanish</option>
+              <option value="fr">French</option>
+              <option value="de">German</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Appearance Section -->
+      <div class="content-section" id="appearance">
+        <div class="setting-section">
+          <h3>Visual Settings</h3>
+          <div class="setting-item">
+            <label for="theme">Theme:</label><br>
+            <select id="theme" name="theme">
+              <option value="light">Light</option>
+              <option value="dark" selected>Dark</option>
+              <option value="system">System Default</option>
+            </select>
+          </div>
+          <div class="toggle">
+            <input type="checkbox" id="compactMode">
+            <label for="compactMode">Compact Layout</label>
+          </div>
+          <div class="toggle">
+            <input type="checkbox" id="animations" checked>
+            <label for="animations">Enable animations</label>
+          </div>
+          <div class="setting-item">
+            <label for="fontSize">Font Size:</label><br>
+            <select id="fontSize" name="fontSize">
+              <option value="small">Small</option>
+              <option value="medium" selected>Medium</option>
+              <option value="large">Large</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Security Section -->
+      <div class="content-section" id="security">
+        <div class="setting-section">
+          <h3>Security & Privacy</h3>
+          <div class="security-warning">
+            <strong>⚠️ Security Notice:</strong> These settings affect your system security. Please review carefully.
+          </div>
+          <div class="toggle">
+            <input type="checkbox" id="autoLock" checked>
+            <label for="autoLock">Auto-lock after inactivity</label>
+          </div>
+          <div class="toggle">
+            <input type="checkbox" id="dataCollection">
+            <label for="dataCollection">Allow anonymous usage data collection</label>
+          </div>
+          <div class="setting-item">
+            <label for="lockTimeout">Auto-lock timeout (minutes):</label><br>
+            <select id="lockTimeout" name="lockTimeout">
+              <option value="5">5 minutes</option>
+              <option value="10" selected>10 minutes</option>
+              <option value="30">30 minutes</option>
+              <option value="60">1 hour</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- About Section -->
+      <div class="content-section" id="about">
+        <div class="setting-section">
+          <h3>About JARVIS</h3>
+          <div class="version-info">
+            <h2>JARVIS - Your AI Assistant</h2>
+            <p><strong>Version:</strong> 1.2.1</p>
+            <p><strong>Build:</strong> 20250040</p>
+            <p><strong>Developer:</strong>@RAJDEEPDEY</p>
+            <p><strong>License:</strong>none</p>
+            <br>
+            <p>Just A Rather Very Intelligent System</p>
+            <p>© 2025 Your AI. All rights reserved.</p>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn" onclick="saveSettings()">Save Changes</button>
+    </div>
+  </div>
+
+  <script>
+    // Handle sidebar tab switching
+    const tabs = document.querySelectorAll('.sidebar ul li');
+    const sections = document.querySelectorAll('.content-section');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Remove active class from all tabs and sections
+        tabs.forEach(t => t.classList.remove('active'));
+        sections.forEach(s => s.classList.remove('active'));
+        
+        // Add active class to clicked tab
+        tab.classList.add('active');
+        
+        // Show corresponding section
+        const sectionId = tab.getAttribute('data-section');
+        document.getElementById(sectionId).classList.add('active');
+      });
+    });
+
+    // Save settings function
+    function saveSettings() {
+      // Collect all form values
+      const settings = {
+        autoStart: document.getElementById('autoStart').checked,
+        notifications: document.getElementById('notifications')?.checked,
+        username: document.getElementById('username').value,
+        language: document.getElementById('language').value,
+        theme: document.getElementById('theme').value,
+        compactMode: document.getElementById('compactMode').checked,
+        animations: document.getElementById('animations')?.checked,
+        fontSize: document.getElementById('fontSize')?.value,
+        autoLock: document.getElementById('autoLock')?.checked,
+        dataCollection: document.getElementById('dataCollection')?.checked,
+        lockTimeout: document.getElementById('lockTimeout')?.value
+      };
+
+      // Simulate saving (in a real app, this would send to a server)
+      console.log('Saving settings:', settings);
+      
+      // Show success message
+      const successMessage = document.getElementById('successMessage');
+      successMessage.style.display = 'block';
+      setTimeout(() => {
+        successMessage.style.display = 'none';
+      }, 3000);
+
+      // Apply theme change immediately 
+      if (settings.theme === 'dark') {
+        document.body.style.backgroundColor = '#1f2937';
+        document.body.style.color = '#f9fafb';
+      } else {
+        document.body.style.backgroundColor = '#f4f4f5';
+        document.body.style.color = '#333';
+      }
+    }
+
+    // Load saved settings on page load 
+    window.addEventListener('load', () => {
+      console.log('JARVIS Settings Panel loaded');
+      // In a real app, you would load settings from storage here
+    });
+    function updateSetting(key, value) {
+    fetch("http://localhost:5000/update_settings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ [key]: value })
+    })
+    .then(res => res.json())
+    .then(data => console.log("Updated:", data))
+    .catch(err => console.error("Error:", err));
+    }
+
+
+  </script>
+</body>
+</html>
