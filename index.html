@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jarvis Welcome + Loader</title>
+  <title>Jarvis: Welcome</title>
   <style>
     *{margin:0;padding:0;box-sizing:border-box;}
     body,html{background:#0d1117;height:100%;font-family:'Arial',sans-serif;overflow:hidden;}
@@ -49,13 +49,15 @@
     .title.show {animation:fadeInUp 1s ease-out forwards;}
 
     .subtitle {
-      color:rgba(255,255,255,0.8);font-size:1.2rem;margin-bottom:2rem;
+      color:rgb(249, 229, 4);font-size:1.2rem;margin-bottom:2rem;
       opacity:0;
+      height: 10px;
+      width: auto;
     }
     .subtitle.show {animation:fadeInUp 1s ease-out forwards;}
 
     @keyframes fadeInUp {
-      from{opacity:0;transform:translateY(30px);}
+      from{opacity:0;transform:translateY(50px);}
       to{opacity:1;transform:translateY(0);}
     }
 
@@ -83,19 +85,34 @@
     #pageLoader.hidden {opacity:0;pointer-events:none;}
     .loader {display:flex;gap:15px;}
     .dot {
-      width:20px;height:20px;border-radius:50%;
-      background:#58a6ff;animation:bounce 1s infinite alternate;
+      width:10px;height:10px;border-radius:50%;
+      background:#3b85f5;animation:bounce 1s infinite alternate;
     }
     .dot:nth-child(2){animation-delay:0.2s;}
     .dot:nth-child(3){animation-delay:0.4s;}
-    @keyframes bounce{to{transform:translateY(-15px);}}
+    .dot:nth-child(4){animation-delay:0.8s;}
+    .dot:nth-child(5){animation-delay:1s;}
+
+
+    @keyframes bounce{
+      0%{transform:translateY(-15px);}
+      25%{background-color: #8400ff;}
+      50%{background-color: #0f45d7;}
+      75%{background-color: #0cec9e;}
+      80%{background-color: #edea10;}
+      95%{background-color: #e8a01a;}
+      100%{background-color: #f70505a8;}
+    }
     #pageLoader p {color:#58a6ff;font-size:18px;margin-top:15px;}
+    #pageLoader p {color:#e8ebef;font-size:18px;margin-top:15px;}
+
     #continueBtn {
       border:none;border-radius:8px;color:#fff;cursor:pointer;
       background:linear-gradient(270deg,#ff004c,#ffb600,#00ff6a,#00c3ff,#7a00ff);
       background-size:400% 400%;animation:rainbow 5s linear infinite;
       opacity:0;transition:opacity 0.8s ease-in;padding:10px 20px;font-size:16px;
     }
+
     #continueBtn.show{opacity:1;}
     @keyframes rainbow{
       0%{background-position:0% 50%;}
@@ -110,11 +127,11 @@
   <div id="welcomeScreen">
     <div class="particles" id="particles"></div>
     <div class="container">
-      <h1 class="title" id="welcomeText">Welcome to Jarvis</h1>
-      <p class="subtitle" id="subText">Interactive welcome site</p>
+      <h1 class="title" id="welcomeText">Welcome to</h1>
+      <p class="subtitle" id="subText">Your Ai assistant</p>
       <div class="logo-container" id="logoContainer">
         <svg class="jarvis-logo" viewbox="0 0 600 150" xmlns="http://www.w3.org/2000/svg">
-          <text x="50" y="100">JARVIS</text>
+          <text x="100" y="100">JARVIS</text>
         </svg>
       </div>
     </div>
@@ -122,7 +139,7 @@
 
   <!-- PAGE LOADER -->
   <div id="pageLoader">
-    <div class="loader"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+    <div class="loader"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
     <p>Loading, please wait...</p>
     <button id="continueBtn" onclick="goToMain()">Continue</button>
   </div>
