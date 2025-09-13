@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>JARVIS Dashboard</title>
   <link rel="stylesheet" href="style.css" />
-  <h1 class="dashboard-title">JARVIS Dashboard</h1>
-
+  <script src="script.js" ></script>
 </head>
 <body aria-label="JARVIS Dashboard" tabindex="0">
+  <h1 class="dashboard-title">JARVIS Dashboard</h1>
 
   <!-- Page Loader -->
   <div id="pageLoader">
@@ -37,11 +37,10 @@
   <!-- MAIN TABS -->
   <div class="tab-container">
     <a class="tab-btn active" href="Home.html">Home</a>
-    <a class="tab-btn" href="settings.html">SETTINGS</a>
+    <a class="tab-btn" href="settings.html">Settings</a>
+    <a class="tab-btn" href="Feedback.html">Feedback</a>
+    <a class="tab-btn" href="Setup.html">Setup</a>
   </div>
-
-  <script src="script.js"></script>
-
   <script>
     window.addEventListener("load", function () {
       const loader = document.getElementById("pageLoader");
@@ -49,6 +48,5 @@
       setTimeout(() => loader.style.display = "none", 500);
     });
   </script>
-
 </body>
 </html>
