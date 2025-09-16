@@ -453,9 +453,10 @@
                 <button onclick="showTabContent(2)" role="tab" aria-selected="false" tabindex="0">Guides</button>
                 <button onclick="showTabContent(3)" role="tab" aria-selected="false" tabindex="0">Troubleshoot</button>
                 <button onclick="showTabContent(4)" role="tab" aria-selected="false" tabindex="0">FAQ</button>
-                <button onclick="showTabContent(5)" role="tab" aria-selected="false" tabindex="0">About</button>
+                <button onclick="showTabContent(5)" role="tab" aria-selected="false" tabindex="0">Requirements</button>
+                <button onclick="showTabContent(6)" role="tab" aria-selected="false" tabindex="0">About</button>
             </div>
-
+            <hr>
             <!-- Tab 1: Home -->
             <div id="tab1" class="tab-content active">
                 <h2>Welcome to JARVIS</h2>
@@ -476,13 +477,13 @@
                     <div class="feature-card"><h4>🖼️ Image generation</h4><p>This feature is currently not available.[This feature is under development]</p></div>
                     <div class="feature-card"><h4>🔍 Web search</h4><p>Jarvis can search anything in google,ask,bing,yahoo etc.in Windows 11</p></div>
                 </div>   
-
+                <hr>
                 <!--Accordion-->
                 <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">What is JARVIS?</button>
                 <div class="panel"><p>JARVIS is a modular, open-source assistant designed to run offline with advanced voice recognition and smart home integration capabilities.</p></div>
                 
                 <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">How to Start?</button>
-                <div class="panel"><p>See download and install and setup</p></div>
+                <div class="panel"><p>See Setup tab now!</p></div>
                 
                 <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">Join Development</button>
                 <div class="panel"><p>Contribute on GitHub: <a href="https://github.com/raj0793/jarvis.ai.in" target="_blank" rel="noopener">🔗 Repository</a> You can also stay up to date through GitHub</p></div>
@@ -491,13 +492,13 @@
                 <div class="panel">
                     <div class="video-container">
                         <video controls>
-                            <source src="demo-video.mp4" type="video/mp4">
+                            <source src="JARVIS.mp4" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
                     </div>
                 </div>
             </div>
-
+            <hr>
             <!-- Tab 2: Guides -->
             <div id="tab2" class="tab-content">
                 <h2>Step-by-Step Guides</h2>
@@ -523,7 +524,7 @@
                     </ul>
                 </div>
             </div>
-
+            <hr>
             <!-- Tab 3: Troubleshoot -->
             <div id="tab3" class="tab-content">
                 <h2>Troubleshooting</h2>
@@ -537,7 +538,7 @@
                         <li>Try different microphone devices</li>
                     </ul>
                 </div>
-
+            <hr>
                 <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">Python Installation Problems</button>
                 <div class="panel">
                     <p>Resolve Python-related issues:</p>
@@ -566,7 +567,7 @@
                     <p>Check if code is incorrect.Make sure code is running in virtual environment and installed dependencies.</p>
                 </div>
             </div>
-
+            <hr>
             <!-- Tab 4: FAQ -->
             <div id="tab4" class="tab-content">
                 <h2>Frequently Asked Questions</h2>
@@ -656,9 +657,66 @@
                     <p>Yes. JARVIS is open source, allowing developers to contribute, improve, and customize it freely on GitHub.</p>
                 </div>
             </div> 
+            
 
-            <!-- Tab 5: About -->
+
+           <!-- Tab 5: --> 
             <div id="tab5" class="tab-content">
+                <table caption="Student Information">
+    <tr>
+      <th>OS</th>
+      <td>Windows 11 </td>
+    </tr>
+    <tr>
+      <th>Edition</th>
+      <td>Home/pro/enterprise etc. support</td>
+    </tr>
+    <tr>
+      <th>Physical RAM</th>
+      <td>4/8/16/32/64GB</td>
+    </tr>
+     <tr>
+      <th>Python</th>
+      <td>3.10.0 only</td>
+    </tr>
+    <tr>
+      <th>Version</th>
+      <td>22H2 or later version</td>
+    </tr>
+    <tr>
+      <th>Virtual RAM</th>
+      <td>20GB Recommended</td>
+    </tr>
+    <tr>
+      <th>SSD</th>
+      <td>1TB+ Recommended</td>
+    </tr>
+    <tr>
+      <th>Environment</th>
+      <td>Virtual envioronment</td>
+    </tr>
+    <tr>
+      <th>GPU</th>
+      <td>Nvidia Recommended or Intel iris minimum</td>
+    </tr>
+    <tr>
+      <th>CPU  </th>
+      <td>Intel i5 U minimum or Rtx 4060 minimum </td>
+    </tr>
+    <tr>
+      <th>NPU</th>
+      <td>Optional</td>
+    </tr>
+    <tr>
+      <th>Data usage for installation</th>
+      <td>8GB (including Python 3.10.0 from web and vs code from web if needed)</td>
+
+    </tr>
+  </table>
+                   
+            </div>
+            <!-- Tab 6: About -->
+            <div id="tab6" class="tab-content">
                 <h2>About JARVIS</h2>
                 <p>Discover JARVIS, the AI assistant that handles your daily tasks with ease, helping you stay productive, organized, and ahead of schedule. Built with cutting-edge technology and designed for the future.</p>
                 
