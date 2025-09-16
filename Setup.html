@@ -470,58 +470,137 @@
           Required
         </span>
       </h2>
-      <p>Download the latest version of Python from the official website. Python 3.10.0 or later is required for optimal JARVIS performance.</p>
-      <a href="https://www.python.org" target="_blank" rel="noopener">
+      <p>Download the 3.1.0 amd 64 bit version of Python from this link. Python 3.10.0 is required for optimal JARVIS performance.Check msinfo32 by run dialog(Windows + R)</p>
+      <a href="https://www.python.org/ftp/python/3.10.8/python-3.10.8-amd64.exe" target="_blank" rel="noopener">
         <i class="fab fa-python"></i>
-        Visit Python.org
+        3.10.0 Python.exe installer(64-bit)
+        <i class="fas fa-external-link-alt"></i>
+      </a>
+      <p>Download the 3.1.0 amd 32 bit version of Python from this link. Python 3.10.0 is required for optimal JARVIS performance.</p>
+      <a href="https://www.python.org/ftp/python/3.10.8/python-3.10.8-arm32.exe" target="_blank" rel="noopener">
+        <i class="fab fa-python"></i>
+        3.10.0 Python.exe installer(32-bit)
         <i class="fas fa-external-link-alt"></i>
       </a>
     </section>
 
+
+     <!--Installation instruction-->
+   
+
+
     <section>
-      <h2>
-        <i class="fas fa-cog"></i>
-        Installation Instructions
-        <span class="status-indicator status-warning">
-          <i class="fas fa-exclamation-triangle"></i>
-          Step by step
-        </span>
-      </h2>
+  <h2>
+    <i class="fas fa-cog"></i>
+    Installation Instructions
+    <span class="status-indicator status-warning">
+      <i class="fas fa-exclamation-triangle"></i>
+      Step by step
+    </span>
+  </h2>
+
+  <ol>
+    <li>
+    <strong> Python:</strong>  
+      Ensure Python 3.10.0 is installed.
+      <ol>
+      <li>
+        <strong>Download Python:</strong> 
+        Get <code>python-3.10.0.exe</code> from the link given above.
+      </li>
+      <li>
+        <strong>Install Python:</strong>   
+        Ensure Python 3.10.0 is installed.  
+        <strong>Important:</strong> ✅ Check <em>"Add Python to PATH"</em> during installation.
+      </li>
+      </ol>
+    </li>  
+    <li>
+      <strong>Download VS Code:</strong>
+      <a href="VSCodeUserSetup-x64-1.99.2.exe" download="VSCodeUserSetup-x64-1.99.2.exe">
+        VS Code Setup
+      </a> and install it manually.
+    </li>
+    <li>
+      <strong>Setup VS Code:</strong>  
+      After installation, open VS Code (search with <kbd>Windows + S</kbd>, run as administrator).  
+      Inside VS Code:
       <ol>
         <li>
-          <strong>Install Python:</strong> Ensure Python 3.10.0 or later is installed. 
-          <strong>Important:</strong> Check "Add Python to PATH" during installation.
+          Open
+           <strong>PowerShell</strong> 
+           and navigate to your 
+           <code>Jarvis</code> 
+           folder.
         </li>
         <li>
-          <strong>Get JARVIS:</strong> Download or clone the JARVIS project from 
-          <a href="https://github.com/raj0793/jarvis.ai.in" target="_blank" rel="noopener">
-            <i class="fab fa-github"></i>
-            GitHub Repository
-          </a>
-        </li>
-        <li>
-          <strong>Open Terminal:</strong> Navigate to the extracted project folder using command prompt or terminal.
-        </li>
-        <li>
-          <strong>Install Dependencies:</strong> Run 
-          <span class="code-container">
-            <code>pip install -r requirements.txt</code>
-            <button class="copy-btn" onclick="copyToClipboard('pip install -r requirements.txt')" title="Copy installation command">
-              <i class="fas fa-copy"></i>
-            </button>
-          </span>
-        </li>
-        <li>
-          <strong>Launch JARVIS:</strong> Start your AI assistant with 
-          <span class="code-container">
-            <code>python main.py</code>
-            <button class="copy-btn" onclick="copyToClipboard('python main.py')" title="Copy launch command">
-              <i class="fas fa-copy"></i>
-            </button>
-          </span>
-        </li>
+          Go to the Extensions tab (<kbd>Ctrl + Shift + X</kbd>).</li>
+        <li>Search for <strong>Python</strong> and install the official Microsoft extension.</li>
       </ol>
-    </section>
+    </li>
+
+    <li>
+      <strong>Create Virtual Environment:</strong>  
+      Navigate (cd) to your Jarvis location in VS Code terminal and run:  
+      <code>python -m venv venv</code>
+    </li>
+
+    <li>
+      <strong>Get JARVIS:</strong> Download the ZIP file or clone the project from  
+      <a href="https://github.com/raj0793/jarvis.ai.in/releases" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i> GitHub Repository
+      </a>.
+    </li>
+
+    <li>
+      <strong>Extract Project:</strong>  
+      Extract the ZIP file or navigate to the cloned folder in your custom location.
+    </li>
+
+    <li>
+      <strong>Run Setup:</strong>  
+      Inside the folder, run <code>setup.exe</code>.
+    </li>
+
+    <li>
+      <strong>Install Dependencies:</strong>  
+      Run in your virtual environment:
+      <span class="code-container">
+        <code>pip install -r requirements.txt</code>
+        <button class="copy-btn" onclick="copyToClipboard('pip install -r requirements.txt')" title="Copy installation command">
+          <i class="fas fa-copy"></i>
+        </button>
+      </span>
+    </li>
+
+    <li>
+      <strong>Launch JARVIS:</strong>  
+      Start your AI assistant with:
+      <span class="code-container">
+        <code>python AI_main.py</code>
+        <button class="copy-btn" onclick="copyToClipboard('python AI_main.py')" title="Copy launch command">
+          <i class="fas fa-copy"></i>
+        </button>
+      </span>
+    </li>
+
+    <li>
+      <strong>Pro Tips:</strong>  
+      If you find manual setup boring, use:
+      <a href="All_in_one_Setup_installer.ps1" download="All_in_one_Setup_installer.ps1">
+        All_in_one_Setup_installer.ps1
+      </a>.  
+      Run it in PowerShell (Right-click → Run as Administrator) to automatically download, install, and configure everything.
+    </li>
+  </ol>
+</section>
+
+
+
+
+
+
+
 
     <section>
       <h2>
