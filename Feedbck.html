@@ -211,114 +211,73 @@
   </div>
 
   <script>
-    const emojis = document.querySelectorAll('.emojis span');
-    const form = document.getElementById('feedbackForm');
-    const popup = document.getElementById('popup');
-    const submitBtn = document.getElementById('submitBtn');
-    const loading = document.getElementById('loading');
-    const errorMsg = document.getElementById('errorMsg');
-    
-    let selectedRating = "";
+  const emojis = document.querySelectorAll('.emojis span');
+  const form = document.getElementById('feedbackForm');
+  const popup = document.getElementById('popup');
+  const submitBtn = document.getElementById('submitBtn');
+  const loading = document.getElementById('loading');
+  const errorMsg = document.getElementById('errorMsg');
+  
+  let selectedRating = "";
 
-    // Emoji selection
-    emojis.forEach(emoji => {
-      emoji.addEventListener('click', () => {
-        selectedRating = emoji.getAttribute('data-rating');
-        
-        // Reset all emojis
-        emojis.forEach(e => e.classList.remove('selected'));
-        
-        // Mark selected emoji
-        emoji.classList.add('selected');
-        
-        // Clear any previous errors
-        hideError();
-      });
-    });
-
-    // Form submission
-    form.addEventListener('submit', async function(e) {
-      e.preventDefault();
-
-      // Validation
-      if (!selectedRating) {
-        showError('Please select a rating emoji first! 🎯');
-        return;
-      }
-
-      const feedback = document.getElementById('feedbackText').value.trim();
-      if (!feedback) {
-        showError('Please write your feedback! ✍️');
-        return;
-      }
-
-      // Show loading state
-      submitBtn.disabled = true;
-      loading.style.display = 'inline';
+  // Emoji selection
+  emojis.forEach(emoji => {
+    emoji.addEventListener('click', () => {
+      selectedRating = emoji.getAttribute('data-rating');
+      
+      // Reset all emojis
+      emojis.forEach(e => e.classList.remove('selected'));
+      
+      // Mark selected emoji
+      emoji.classList.add('selected');
+      
+      // Clear any previous errors
       hideError();
-
-      try {
-        // Prepare feedback data
-        const feedbackData = {
-          rating: selectedRating,
-          feedback: feedback,
-          email: document.getElementById('email').value.trim(),
-          timestamp: new Date().toLocaleString(),
-          userAgent: navigator.userAgent
-        };
-
-        // Method 1: EmailJS (Recommended - requires setup)
-        await sendViaEmailJS(feedbackData);
-        
-        // Method 2: Fallback to mailto (comment out EmailJS if using this)
-        // sendViaMailto(feedbackData);
-
-      } catch (error) {
-        console.error('Error sending feedback:', error);
-        showError('Failed to send feedback. Please try again! 🔄');
-        return;
-      } finally {
-        // Reset loading state
-        submitBtn.disabled = false;
-        loading.style.display = 'none';
-      }
     });
+  });
 
-    // EmailJS method (requires EmailJS account setup)
-    async function sendViaEmailJS(data) {
-      // You need to replace these with your actual EmailJS credentials
-      const SERVICE_ID = 'YOUR_SERVICE_ID';
-      const TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
-      const PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
+  // Form submission
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
 
-      // EmailJS configuration (uncomment when you have credentials)
-      /*
-      try {
-        await emailjs.send(SERVICE_ID, TEMPLATE_ID, {
-          rating: data.rating,
-          feedback: data.feedback,
-          user_email: data.email || 'Not provided',
-          timestamp: data.timestamp,
-          to_email: 'rajdeepdeyon2025@outlook.com,rajdeepdeyon2022@gmail.com'
-        }, PUBLIC_KEY);
-        
-        showSuccess();
-        resetForm();
-      } catch (error) {
-        throw error;
-      }
-      */
-
-      // For now, simulate success and use mailto fallback
-      setTimeout(() => {
-        sendViaMailto(data);
-      }, 1000);
+    // Validation
+    if (!selectedRating) {
+      showError('Please select a rating emoji first! 🎯');
+      return;
     }
 
-    // Mailto fallback method
-    function sendViaMailto(data) {
-      const subject = encodeURIComponent(`Jarvis Feedback - ${data.rating} Rating`);
-      const body = encodeURIComponent(`
+    const feedback = document.getElementById('feedbackText').value.trim();
+    if (!feedback) {
+      showError('Please write your feedback! ✍️');
+      return;
+    }
+
+    // Show loading state
+    submitBtn.disabled = true;
+    loading.style.display = 'inline';
+    hideError();
+
+    // Prepare feedback data
+    const feedbackData = {
+      rating: selectedRating,
+      feedback: feedback,
+      email: document.getElementById('email').value.trim(),
+      timestamp: new Date().toLocaleString(),
+      userAgent: navigator.userAgent
+    };
+
+    // For now, always use mailto (works on phone & desktop)
+    sendViaMailto(feedbackData);
+
+    // Reset loading state
+    submitBtn.disabled = false;
+    loading.style.display = 'none';
+  });
+
+  // Mailto fallback method
+  function sendViaMailto(data) {
+    const subject = encodeURIComponent(`Jarvis Feedback - ${data.rating} Rating`);
+    const body = encodeURIComponent(`
 🤖 JARVIS FEEDBACK RECEIVED
 
 Rating: ${data.rating}
@@ -334,48 +293,39 @@ ${data.userAgent}
 
 ---
 This feedback was submitted via Jarvis Feedback Form
-      `);
-      
-      const recipients = "rajdeepdeyon2025@outlook.com,rajdeepdeyon2022@gmail.com";
-      window.location.href = `mailto:${recipients}?subject=${subject}&body=${body}`;
-      
-      showSuccess();
-      resetForm();
-    }
+    `);
+    
+    const recipients = "rajdeepdeyon2025@outlook.com,rajdeepdeyon2022@gmail.com";
+    window.location.href = `mailto:${recipients}?subject=${subject}&body=${body}`;
+    
+    showSuccess();
+    resetForm();
+  }
 
-    function showSuccess() {
-      popup.classList.add('success');
-      popup.style.display = 'block';
-      setTimeout(() => {
-        popup.style.display = 'none';
-        popup.classList.remove('success');
-      }, 3000);
-    }
+  function showSuccess() {
+    popup.classList.add('success');
+    popup.style.display = 'block';
+    setTimeout(() => {
+      popup.style.display = 'none';
+      popup.classList.remove('success');
+    }, 3000);
+  }
 
-    function showError(message) {
-      errorMsg.textContent = message;
-      errorMsg.style.display = 'block';
-    }
+  function showError(message) {
+    errorMsg.textContent = message;
+    errorMsg.style.display = 'block';
+  }
 
-    function hideError() {
-      errorMsg.style.display = 'none';
-    }
+  function hideError() {
+    errorMsg.style.display = 'none';
+  }
 
-    function resetForm() {
-      form.reset();
-      emojis.forEach(e => e.classList.remove('selected'));
-      selectedRating = "";
-    }
+  function resetForm() {
+    form.reset();
+    emojis.forEach(e => e.classList.remove('selected'));
+    selectedRating = "";
+  }
+</script>
 
-    // Add EmailJS script dynamically (uncomment when ready to use EmailJS)
-    /*
-    const emailjsScript = document.createElement('script');
-    emailjsScript.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js';
-    emailjsScript.onload = () => {
-      emailjs.init('YOUR_PUBLIC_KEY');
-    };
-    document.head.appendChild(emailjsScript);
-    */
-  </script>
 </body>
 </html>
