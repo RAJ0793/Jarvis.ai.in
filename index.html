@@ -131,6 +131,27 @@
       100%{background-position:0% 50%;}
     }
     #continueBtn:hover{transform:scale(1.05);}
+   
+    .dots::after {
+      content: '';
+      display: inline-block;
+      width: 1em;
+      text-align: left;
+      animation: dotsAnim 1.5s steps(3, end) infinite;
+    }
+
+    .loading {
+      font-size: 16px;
+      color: white;
+      margin-top: 20px;
+      opacity: 0;
+    }
+     .loading.show {
+      animation: fadeIn 0.5s ease forwards;
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
   </style>
 </head>
 <body>
@@ -146,14 +167,13 @@
         <svg class="jarvis-logo" viewbox="0 0 600 150" xmlns="http://www.w3.org/2000/svg">
           <text x="100" y="100">JARVIS</text>
         </svg>
+      <div class="loading" id="loadingText">Website<span class="dots"></span></div>
       </div>
     </div>
   </div>
 
   <!-- PAGE LOADER -->
   <div id="pageLoader">
-    <div class="loader"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
-    <p>Loading, please wait...</p>
     <button id="continueBtn" onclick="goToMain()">Continue</button>
   </div>
 
