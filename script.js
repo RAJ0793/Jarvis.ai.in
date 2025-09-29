@@ -1,763 +1,347 @@
-// JARVIS Dashboard - Modular JavaScript with Error Handling
+// === SETTINGS ICON & OVERLAY HANDLING ===
+document.addEventListener('DOMContentLoaded', () => {
+  const settingsIcon = document.getElementById("settingsIcon");
+  const panel = document.getElementById("settingsPanel");
+  const overlay = document.getElementById("overlay");
 
-// === UTILITY MODULE ===
-const Utils = {
-  // Safe DOM selectors with error handling
-  $: (id) => {
-    try {
-      const element = document.getElementById(id);
-      if (!element) console.warn(`Element with ID '${id}' not found`);
-      return element;
-    } catch (error) {
-      console.error(`Error selecting element '${id}':`, error);
-      return null;
-    }
-  },
+  if (!settingsIcon || !panel || !overlay) return;
 
-  $$: (selector) => {
-    try {
-      return document.querySelectorAll(selector);
-    } catch (error) {
-      console.error(`Error with selector '${selector}':`, error);
-      return [];
-    }
-  },
+  // Toggle panel on icon click
+  settingsIcon.addEventListener("click", function() {
+      panel.classList.add("active");
+      overlay.style.display = "flex";
+      this.style.display = "none"; // hide icon when panel open
+  });
 
-  hide: (el) => {
-    if (!el) return;
-    try {
-      el.classList.remove('active');
-      el.style.display = 'none';
-    } catch (error) {
-      console.error('Error hiding element:', error);
-    }
-  },
+  // Close panel when overlay clicked
+  overlay.addEventListener("click", function() {
+      panel.classList.remove("active");
+      this.style.display = "none";
+      settingsIcon.style.display = "block"; // show icon again
+  });
 
-  show: (el) => {
-    if (!el) return;
-    try {
-      el.classList.add('active');
-      el.style.display = 'block';
-    } catch (error) {
-      console.error('Error showing element:', error);
-    }
-  },
-
-  safeExecute: (fn, errorMsg = 'Function execution error') => {
-    try {
-      return fn();
-    } catch (error) {
-      console.error(errorMsg, error);
-      return null;
-    }
-  }
-};
-
-// === TAB MANAGEMENT MODULE ===
-const TabManager = {
-  // Main tab switching with error handling
-  showMainTab: (tabName) => {
-    Utils.safeExecute(() => {
-      Utils.$$('.content').forEach(Utils.hide);
-      Utils.$$('.tab-btn').forEach(btn => btn.classList.remove('active'));
-      
-      const targetId = tabName.toLowerCase() === 'download and install' ? 'dwnlninstl' : 
-                       tabName.toLowerCase() === 'setup' ? 'setup' : 
-                       tabName.toLowerCase();
-      
-      const target = Utils.$(targetId);
-      if (target) {
-        Utils.show(target);
-      } else {
-        console.warn(`Target tab '${targetId}' not found`);
+  // Optional: close panel with ESC key
+  document.addEventListener("keydown", function(e) {
+      if (e.key === "Escape" && panel.classList.contains("active")) {
+          panel.classList.remove("active");
+          overlay.style.display = "none";
+          settingsIcon.style.display = "block";
       }
-      
-      const activeBtn = Array.from(Utils.$$('.tab-btn')).find(btn => 
-        btn.textContent.trim().toLowerCase() === tabName.toLowerCase());
-      if (activeBtn) {
-        activeBtn.classList.add('active');
-      }
-    }, 'Error switching main tab');
-  },
+  });
+});
 
-  // Internal tab switching with error handling
-  showTabContent: (tabNumber) => {
-    Utils.safeExecute(() => {
-      // Hide all tabs
-      for (let i = 1; i <= 5; i++) {
-        const tab = Utils.$(`tab${i}`);
-        if (tab) Utils.hide(tab);
-      }
-      
-      // Show selected tab
-      const selected = Utils.$(`tab${tabNumber}`);
-      if (selected) {
-        Utils.show(selected);
-      } else {
-        console.warn(`Tab ${tabNumber} not found`);
-        return;
-      }
-      
-      // Update button states
-      Utils.$$('.tabs button').forEach((btn, i) => {
-        const isActive = i === tabNumber - 1;
-        btn.classList.toggle('active', isActive);
-        btn.setAttribute('aria-selected', isActive);
-      });
-    }, 'Error switching tab content');
-  },
-
-  // Feedback subtabs with error handling
-  showSubtab: (subtabName) => {
-    Utils.safeExecute(() => {
-      Utils.$$('.subcontent').forEach(Utils.hide);
-      Utils.$$('.subtab-btn').forEach(btn => btn.classList.remove('active'));
-      
-      const target = Utils.$(subtabName);
-      if (target) {
-        Utils.show(target);
-      } else {
-        console.warn(`Subtab '${subtabName}' not found`);
-      }
-      
-      // Check if event is available
-      if (typeof event !== 'undefined' && event.target) {
-        event.target.classList.add('active');
-      }
-    }, 'Error switching subtab');
-  },
-
-  getCurrentTab: () => {
-    try {
-      const active = document.querySelector('.tab-content.active');
-      return active ? parseInt(active.id.replace('tab', '')) : 1;
-    } catch (error) {
-      console.error('Error getting current tab:', error);
-      return 1;
-    }
-  },
-
-  getCurrentMain: () => {
-    try {
-      const active = document.querySelector('.content.active');
-      return active ? active.id : 'home';
-    } catch (error) {
-      console.error('Error getting current main:', error);
-      return 'home';
-    }
-  }
-};
-
-// === ACCORDION MODULE ===
-const AccordionManager = {
-  toggle: (element) => {
-    if (!element) return;
-    
-    Utils.safeExecute(() => {
-      const panel = element.nextElementSibling;
-      if (!panel) {
-        console.warn('Accordion panel not found');
-        return;
-      }
-      
-      const isOpen = element.getAttribute('aria-expanded') === 'true';
-      
-      // Close others in same tab
-      const tab = element.closest('.tab-content, .subcontent');
-      if (tab) {
-        tab.querySelectorAll('.accordion').forEach(acc => {
-          if (acc !== element && acc.nextElementSibling) {
-            acc.setAttribute('aria-expanded', 'false');
-            acc.nextElementSibling.style.maxHeight = null;
-          }
-        });
-      }
-      
-      element.setAttribute('aria-expanded', !isOpen);
-      panel.style.maxHeight = isOpen ? null : panel.scrollHeight + "px";
-    }, 'Error toggling accordion');
-  }
-};
-
-// === SETTINGS MODULE ===
-const SettingsManager = {
-  get panel() { return Utils.$('settingsPanel'); },
-  get overlay() { return Utils.$('overlay'); },
-
-  animatedOpen: () => {
-    Utils.safeExecute(() => {
+// === OVERRIDE SETTINGSMANAGER FUNCTIONS TO SYNC ICON ===
+SettingsManager.animatedOpen = () => {
+  Utils.safeExecute(() => {
       const panel = SettingsManager.panel;
       const overlay = SettingsManager.overlay;
-      
-      if (panel) panel.classList.add('open');
-      if (overlay) overlay.style.display = 'block';
+      const icon = document.getElementById("settingsIcon");
+
+      if (panel) panel.classList.add('active');
+      if (overlay) overlay.style.display = 'flex';
+      if (icon) icon.style.display = 'none';
       document.body.style.overflow = 'hidden';
-    }, 'Error opening settings');
-  },
+  }, 'Error opening settings');
+};
 
-  animatedClose: () => SettingsManager.closeSettings(),
-
-  closeSettings: () => {
-    Utils.safeExecute(() => {
+SettingsManager.animatedClose = () => {
+  Utils.safeExecute(() => {
       const panel = SettingsManager.panel;
       const overlay = SettingsManager.overlay;
-      
-      if (panel) panel.classList.remove('open');
+      const icon = document.getElementById("settingsIcon");
+
+      if (panel) panel.classList.remove('active');
       if (overlay) overlay.style.display = 'none';
+      if (icon) icon.style.display = 'block';
       document.body.style.overflow = 'auto';
-    }, 'Error closing settings');
-  },
-
-  toggleVoice: () => {
-    Utils.safeExecute(() => {
-      const current = localStorage.getItem('voiceEnabled') === 'true';
-      const newStatus = !current;
-      localStorage.setItem('voiceEnabled', newStatus);
-      
-      if (newStatus) {
-        NotificationManager.show('Voice enabled! 🎤');
-        VoiceManager.init();
-      } else {
-        NotificationManager.show('Voice disabled! 🔇');
-        VoiceManager.stop();
-      }
-    }, 'Error toggling voice');
-  },
-
-  toggleTheme: () => {
-    Utils.safeExecute(() => {
-      document.body.classList.toggle('dark-theme');
-      const isDark = document.body.classList.contains('dark-theme');
-      localStorage.setItem('theme', isDark ? 'dark' : 'light');
-      NotificationManager.show(`${isDark ? 'Dark' : 'Light'} theme! 🌗`);
-    }, 'Error toggling theme');
-  },
-
-  reset: () => {
-    Utils.safeExecute(() => {
-      if (confirm('Reset all settings?')) {
-        localStorage.clear();
-        document.body.classList.remove('dark-theme');
-        NotificationManager.show('Settings reset! 🔄');
-      }
-    }, 'Error resetting settings');
-  },
-
-  save: () => {
-    Utils.safeExecute(() => {
-      const settings = {
-        theme: document.body.classList.contains('dark-theme') ? 'dark' : 'light',
-        voiceEnabled: localStorage.getItem('voiceEnabled') === 'true',
-        lastTab: TabManager.getCurrentTab(),
-        lastMain: TabManager.getCurrentMain()
-      };
-      localStorage.setItem('jarvisSettings', JSON.stringify(settings));
-    }, 'Error saving settings');
-  },
-
-  load: () => {
-    Utils.safeExecute(() => {
-      const settings = JSON.parse(localStorage.getItem('jarvisSettings') || '{}');
-      if (settings.theme === 'dark') document.body.classList.add('dark-theme');
-      if (settings.voiceEnabled) localStorage.setItem('voiceEnabled', 'true');
-      if (settings.lastMain) TabManager.showMainTab(settings.lastMain);
-      if (settings.lastTab) TabManager.showTabContent(settings.lastTab);
-    }, 'Error loading settings');
-  }
+  }, 'Error closing settings');
 };
+// Simple Requirements Tab JavaScript
 
-// === NOTIFICATION MODULE ===
-const NotificationManager = {
-  show: (msg) => {
-    Utils.safeExecute(() => {
-      const existing = document.querySelector('.notification');
-      if (existing) existing.remove();
-      
-      const notif = document.createElement('div');
-      notif.className = 'notification';
-      notif.textContent = msg;
-      document.body.appendChild(notif);
-      
-      setTimeout(() => notif.classList.add('show'), 100);
-      setTimeout(() => {
-        notif.classList.remove('show');
-        setTimeout(() => {
-          if (notif.parentNode) notif.remove();
-        }, 300);
-      }, 3000);
-    }, 'Error showing notification');
-  }
-};
+// System Check Function
+function checkSystem() {
+  const resultDiv = document.getElementById('systemResult');
+  const button = document.querySelector('.check-btn');
+  
+  // Show loading
+  button.innerHTML = '🔄 Checking...';
+  button.disabled = true;
+  resultDiv.classList.remove('hidden');
+  
+  resultDiv.innerHTML = `
+    <div style="text-align: center; padding: 20px;">
+      <div style="font-size: 2rem; margin-bottom: 10px;">⏳</div>
+      <p>Scanning your system...</p>
+    </div>
+  `;
 
-// === FEEDBACK MODULE ===
-const FeedbackManager = {
-  submitEmojiRating: (emoji) => {
-    Utils.safeExecute(() => {
-      const ratings = {
-        '😍': 'Awesome', '😆': 'Excellent', '😊': 'Well done', '😅': 'Neutral',
-        '😏': 'Not very well', '🙄': 'Ok', '😐': 'Poor', '😡': 'Very poor'
-      };
-      NotificationManager.show(`Thanks for ${ratings[emoji] || 'your'} feedback! ${emoji}`);
-    }, 'Error submitting emoji rating');
-  },
-
-  sendEmail: () => {
-    Utils.safeExecute(() => {
-      const subject = Utils.$('subject');
-      const message = Utils.$('message');
-      
-      if (!subject || !message) {
-        NotificationManager.show('Email form not found! ❌');
-        return;
-      }
-      
-      if (!subject.value.trim() || !message.value.trim()) {
-        NotificationManager.show('Fill both fields! ⚠️');
-        return;
-      }
-      
-      const mailto = `mailto:support@jarvis.ai?subject=${encodeURIComponent(subject.value)}&body=${encodeURIComponent(message.value)}`;
-      window.location.href = mailto;
-      NotificationManager.show('Email opened! 📧');
-      subject.value = message.value = '';
-    }, 'Error sending email');
-  }
-};
-
-// === VOICE MODULE ===
-const VoiceManager = {
-  recognition: null,
-
-  init: () => {
-    Utils.safeExecute(() => {
-      if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
-        NotificationManager.show('Speech not supported! ❌');
-        return;
-      }
-      
-      const Speech = window.SpeechRecognition || window.webkitSpeechRecognition;
-      VoiceManager.recognition = new Speech();
-      
-      Object.assign(VoiceManager.recognition, {
-        continuous: true,
-        interimResults: true,
-        lang: 'en-US'
-      });
-      
-      VoiceManager.recognition.onresult = (e) => {
-        if (e.results && e.results.length > 0) {
-          const transcript = e.results[e.results.length - 1][0].transcript;
-          VoiceManager.handleCommand(transcript);
-        }
-      };
-      
-      VoiceManager.recognition.onerror = () => NotificationManager.show('Voice error! 🎤');
-      VoiceManager.recognition.onstart = () => NotificationManager.show('Listening... 🎤');
-      VoiceManager.recognition.onend = () => {
-        if (localStorage.getItem('voiceEnabled') === 'true') {
-          setTimeout(() => {
-            if (VoiceManager.recognition) VoiceManager.recognition.start();
-          }, 1000);
-        }
-      };
-      
-      VoiceManager.recognition.start();
-    }, 'Error initializing voice');
-  },
-
-  stop: () => {
-    Utils.safeExecute(() => {
-      if (VoiceManager.recognition) {
-        VoiceManager.recognition.stop();
-        VoiceManager.recognition = null;
-        NotificationManager.show('Voice stopped! 🔇');
-      }
-    }, 'Error stopping voice');
-  },
-
-  handleCommand: (cmd) => {
-    Utils.safeExecute(() => {
-      const lower = cmd.toLowerCase().trim();
-      const commands = {
-        'hello jarvis': () => NotificationManager.show('Hello! 👋'),
-        'what time is it': () => NotificationManager.show(`Time: ${new Date().toLocaleTimeString()} ⏰`),
-        'open settings': () => { SettingsManager.animatedOpen(); NotificationManager.show('Settings opened ⚙️'); },
-        'close settings': () => { SettingsManager.animatedClose(); NotificationManager.show('Settings closed ✅'); },
-        'switch theme': SettingsManager.toggleTheme,
-        'toggle theme': SettingsManager.toggleTheme,
-        'show home': () => { TabManager.showTabContent(1); NotificationManager.show('Home 🏠'); },
-        'go home': () => { TabManager.showTabContent(1); NotificationManager.show('Home 🏠'); },
-        'show guides': () => { TabManager.showTabContent(2); NotificationManager.show('Guides 📖'); },
-        'show troubleshoot': () => { TabManager.showTabContent(3); NotificationManager.show('Troubleshoot 🔧'); },
-        'show faq': () => { TabManager.showTabContent(4); NotificationManager.show('FAQ ❓'); },
-        'feedback': () => { TabManager.showMainTab('feedback'); NotificationManager.show('Feedback 💬'); },
-        'launch jarvis': JarvisManager.launch
-      };
-      
-      Object.keys(commands).forEach(key => {
-        if (lower.includes(key) && typeof commands[key] === 'function') {
-          commands[key]();
-        }
-      });
-    }, 'Error handling voice command');
-  }
-};
-
-// === FAQ MODULE ===
-const FAQManager = {
-  search: () => {
-    Utils.safeExecute(() => {
-      const searchInput = Utils.$('searchInput');
-      if (!searchInput) return;
-      
-      const term = searchInput.value.toLowerCase();
-      Utils.$$('#tab4 .accordion').forEach(acc => {
-        const text = acc.textContent.toLowerCase();
-        const panel = acc.nextElementSibling;
-        const panelText = panel ? panel.textContent.toLowerCase() : '';
-        const match = text.includes(term) || panelText.includes(term);
-        
-        acc.style.display = !term || match ? 'block' : 'none';
-        if (panel) panel.style.display = !term || match ? 'block' : 'none';
-        acc.classList.toggle('highlight', term && match);
-      });
-    }, 'Error searching FAQ');
-  },
-
-  clearSearch: () => {
-    Utils.safeExecute(() => {
-      const input = Utils.$('searchInput');
-      if (input) {
-        input.value = '';
-        FAQManager.search();
-      }
-    }, 'Error clearing search');
-  },
-
-  load: () => {
-    Utils.safeExecute(() => {
-      const container = Utils.$('dynamicFAQs');
-      if (!container) return;
-      
-      const faqs = [
-        { q: "How to contribute to JARVIS source code?", a: "Fork the repository on GitHub, make changes, and submit a pull request with proper documentation." },
-        { q: "Voice recognition not accurate?", a: "Use clear pronunciation, reduce noise, keep mic close. Train the system for better accuracy." },
-        { q: "Can JARVIS control smart home devices?", a: "Yes! With Arduino integration, JARVIS can control lights, fans, sensors, and IoT devices." },
-        { q: "How to add custom voice commands?", a: "Edit conversation.py and add commands in appropriate functions. Modify qna.json for Q&A pairs." },
-        { q: "JARVIS consuming too much CPU?", a: "Reduce voice recognition sensitivity or optimize processing interval in settings." },
-        { q: "Which platforms does JARVIS support?", a: "Works on Windows, Linux, macOS, and Android. Some features are platform-specific." },
-        { q: "How to enable offline mode?", a: "Enable in settings. Some AI features may have limited functionality offline." },
-        { q: "Can JARVIS send emails?", a: "Yes! Configure credentials in email_settings.json. Use 'send email' command." },
-        { q: "Multiple language support?", a: "Currently English only. Additional languages coming in future updates." },
-        { q: "How to update JARVIS?", a: "Pull latest from GitHub or use built-in update command if available." }
-      ];
-      
-      faqs.forEach(faq => {
-        const btn = document.createElement('button');
-        btn.className = 'accordion';
-        btn.setAttribute('aria-expanded', 'false');
-        btn.onclick = () => AccordionManager.toggle(btn);
-        btn.textContent = faq.q;
-        
-        const panel = document.createElement('div');
-        panel.className = 'panel';
-        panel.innerHTML = `<p>${faq.a}</p>`;
-        
-        container.append(btn, panel);
-      });
-    }, 'Error loading FAQs');
-  },
-
-  addSearch: () => {
-    Utils.safeExecute(() => {
-      const faqTab = Utils.$('tab4');
-      const title = faqTab?.querySelector('h2');
-      if (!title) return;
-      
-      const search = document.createElement('div');
-      search.className = 'search-container';
-      search.innerHTML = `
-        <input type="text" id="searchInput" placeholder="Search FAQs..." onkeyup="FAQManager.search()" />
-        <button onclick="FAQManager.clearSearch()">Clear</button>
-      `;
-      title.parentNode.insertBefore(search, title.nextSibling);
-    }, 'Error adding search');
-  }
-};
-
-// === JARVIS CORE MODULE ===
-const JarvisManager = {
-  launch: () => {
-    Utils.safeExecute(() => {
-      NotificationManager.show('🚀 JARVIS launching...');
-      setTimeout(() => NotificationManager.show('✅ JARVIS ready!'), 2000);
-    }, 'Error launching JARVIS');
-  }
-};
-
-// === KEYBOARD HANDLER MODULE ===
-const KeyboardManager = {
-  handleKeys: (e) => {
-    Utils.safeExecute(() => {
-      // Tab switching shortcuts
-      if (e.ctrlKey && e.key >= '1' && e.key <= '4') {
-        e.preventDefault();
-        TabManager.showTabContent(parseInt(e.key));
-      }
-      
-      // Close settings with Escape
-      if (e.key === 'Escape') {
-        SettingsManager.closeSettings();
-      }
-      
-      // Focus search in FAQ tab
-      if (e.ctrlKey && e.key === '/' && TabManager.getCurrentTab() === 4) {
-        e.preventDefault();
-        const searchInput = Utils.$('searchInput');
-        if (searchInput) searchInput.focus();
-      }
-      
-      // Alt shortcuts for main tabs
-      if (e.altKey && e.key.toLowerCase() === 'h') {
-        e.preventDefault();
-        TabManager.showMainTab('home');
-      }
-      if (e.altKey && e.key.toLowerCase() === 'f') {
-        e.preventDefault();
-        TabManager.showMainTab('feedback');
-      }
-    }, 'Error handling keyboard shortcut');
-  }
-};
-
-// === GLOBAL FUNCTIONS (for backward compatibility) ===
-window.showMainTab = TabManager.showMainTab;
-window.showTabContent = TabManager.showTabContent;
-window.showSubtab = TabManager.showSubtab;
-window.toggleAccordion = AccordionManager.toggle;
-window.animatedOpen = SettingsManager.animatedOpen;
-window.animatedClose = SettingsManager.animatedClose;
-window.closeSettings = SettingsManager.closeSettings;
-window.toggleVoice = SettingsManager.toggleVoice;
-window.toggleTheme = SettingsManager.toggleTheme;
-window.resetSettings = SettingsManager.reset;
-window.launchJARVIS = JarvisManager.launch;
-window.submitEmojiRating = FeedbackManager.submitEmojiRating;
-window.sendEmail = FeedbackManager.sendEmail;
-window.searchFAQ = FAQManager.search;
-window.clearSearch = FAQManager.clearSearch;
-
-// === INITIALIZATION MODULE ===
-const AppInitializer = {
-  init: () => {
-    Utils.safeExecute(() => {
-      // Load settings first
-      SettingsManager.load();
-      
-      // Load dynamic content
-      FAQManager.load();
-      FAQManager.addSearch();
-      
-      // Setup event listeners
-      AppInitializer.setupEventListeners();
-      
-      // Setup periodic saves
-      setInterval(SettingsManager.save, 30000);
-      
-      // Welcome notification
-      setTimeout(() => NotificationManager.show('Welcome to JARVIS! 🤖'), 1000);
-      
-      // Initialize voice if enabled
-      if (localStorage.getItem('voiceEnabled') === 'true') {
-        setTimeout(VoiceManager.init, 2000);
-      }
-    }, 'Error during app initialization');
-  },
-
-  setupEventListeners: () => {
-    // Keyboard shortcuts
-    document.addEventListener('keydown', KeyboardManager.handleKeys);
-    
-    // Save settings before unload
-    window.addEventListener('beforeunload', SettingsManager.save);
-    
-    // Handle visibility change for voice
-    document.addEventListener('visibilitychange', () => {
-      Utils.safeExecute(() => {
-        if (document.hidden && VoiceManager.recognition) {
-          VoiceManager.recognition.stop();
-        } else if (!document.hidden && localStorage.getItem('voiceEnabled') === 'true' && !VoiceManager.recognition) {
-          setTimeout(VoiceManager.init, 1000);
-        }
-      }, 'Error handling visibility change');
-    });
-  }
-};
-
-// === MAIN INITIALIZATION ===
-document.addEventListener('DOMContentLoaded', AppInitializer.init);
-// Global variables
-let isGlowing = false;
-let backgroundIndex = 0;
-let particleInterval;
-
-// Array of background gradients
-const backgrounds = [
-    'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-    'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-    'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-    'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
-    'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
-    'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)'
-];
-
-/**
- * Replays the logo drawing animation
- */
-function replayAnimation() {
-    const paths = document.querySelectorAll('.logo-path');
-    paths.forEach(path => {
-        path.style.animation = 'none';
-        path.offsetHeight; // Trigger reflow to restart animation
-        path.style.animation = null;
-    });
+  // Simulate system check
+  setTimeout(() => {
+    performSystemCheck(resultDiv, button);
+  }, 2000);
 }
 
-/**
- * Toggles the glow effect on the logo
- */
-function toggleGlow() {
-    const logo = document.querySelector('.animista-logo');
-    if (isGlowing) {
-        logo.classList.remove('glow');
-        isGlowing = false;
-    } else {
-        logo.classList.add('glow');
-        isGlowing = true;
-    }
+function performSystemCheck(resultDiv, button) {
+  // Get system information
+  const userAgent = navigator.userAgent;
+  const platform = navigator.platform;
+  const memory = navigator.deviceMemory || 'Unknown';
+  const cores = navigator.hardwareConcurrency || 'Unknown';
+  const connection = navigator.connection;
+  
+  // Check requirements
+  const results = {
+    os: checkOS(userAgent),
+    ram: checkRAM(memory),
+    cpu: checkCPU(cores),
+    browser: checkBrowser(userAgent),
+    connection: checkConnection(connection)
+  };
+  
+  // Display results
+  displayResults(resultDiv, results);
+  
+  // Reset button
+  button.innerHTML = '🔍 Check My System';
+  button.disabled = false;
 }
 
-/**
- * Changes the background gradient
- */
-function changeBackground() {
-    backgroundIndex = (backgroundIndex + 1) % backgrounds.length;
-    document.body.style.background = backgrounds[backgroundIndex];
-    
-    // Add a smooth transition effect
-    document.body.style.transition = 'background 0.5s ease';
+function checkOS(userAgent) {
+  if (userAgent.includes('Windows NT 10.0')) {
+    return { status: 'good', text: 'Windows 10/11 ✓' };
+  } else if (userAgent.includes('Windows')) {
+    return { status: 'warning', text: 'Older Windows ⚠️' };
+  } else {
+    return { status: 'error', text: 'Non-Windows OS ❌' };
+  }
+}
+
+function checkRAM(memory) {
+  if (memory >= 16) {
+    return { status: 'good', text: `${memory}GB - Excellent ✓` };
+  } else if (memory >= 8) {
+    return { status: 'good', text: `${memory}GB - Good ✓` };
+  } else if (memory >= 4) {
+    return { status: 'warning', text: `${memory}GB - Minimum ⚠️` };
+  } else if (memory === 'Unknown') {
+    return { status: 'warning', text: 'Cannot detect ⚠️' };
+  } else {
+    return { status: 'error', text: `${memory}GB - Too low ❌` };
+  }
+}
+
+function checkCPU(cores) {
+  if (cores >= 8) {
+    return { status: 'good', text: `${cores} cores - Excellent ✓` };
+  } else if (cores >= 4) {
+    return { status: 'good', text: `${cores} cores - Good ✓` };
+  } else if (cores >= 2) {
+    return { status: 'warning', text: `${cores} cores - Minimum ⚠️` };
+  } else {
+    return { status: 'error', text: `${cores} cores - Too low ❌` };
+  }
+}
+
+function checkBrowser(userAgent) {
+  if (userAgent.includes('Chrome') || userAgent.includes('Edge')) {
+    return { status: 'good', text: 'Modern browser ✓' };
+  } else if (userAgent.includes('Firefox') || userAgent.includes('Safari')) {
+    return { status: 'good', text: 'Compatible browser ✓' };
+  } else {
+    return { status: 'warning', text: 'Update recommended ⚠️' };
+  }
+}
+
+function checkConnection(connection) {
+  if (!connection) {
+    return { status: 'warning', text: 'Cannot detect speed ⚠️' };
+  }
+  
+  const effectiveType = connection.effectiveType;
+  if (effectiveType === '4g') {
+    return { status: 'good', text: '4G - Fast ✓' };
+  } else if (effectiveType === '3g') {
+    return { status: 'warning', text: '3G - Slow ⚠️' };
+  } else if (effectiveType === '2g') {
+    return { status: 'error', text: '2G - Too slow ❌' };
+  } else {
+    return { status: 'good', text: `${effectiveType} - Good ✓` };
+  }
+}
+
+function displayResults(resultDiv, results) {
+  resultDiv.innerHTML = `
+    <h4 style="color: #667eea; margin-bottom: 15px; text-align: center;">
+      📊 System Check Results
+    </h4>
+    <div class="result-item">
+      <span class="result-label">Operating System:</span>
+      <span class="result-value status-${results.os.status}">${results.os.text}</span>
+    </div>
+    <div class="result-item">
+      <span class="result-label">Available RAM:</span>
+      <span class="result-value status-${results.ram.status}">${results.ram.text}</span>
+    </div>
+    <div class="result-item">
+      <span class="result-label">CPU Cores:</span>
+      <span class="result-value status-${results.cpu.status}">${results.cpu.text}</span>
+    </div>
+    <div class="result-item">
+      <span class="result-label">Browser:</span>
+      <span class="result-value status-${results.browser.status}">${results.browser.text}</span>
+    </div>
+    <div class="result-item">
+      <span class="result-label">Connection:</span>
+      <span class="result-value status-${results.connection.status}">${results.connection.text}</span>
+    </div>
+    <div style="margin-top: 15px; padding: 12px; background: rgba(102,126,234,0.1); border-radius: 8px; text-align: center;">
+      <strong style="color: #667eea;">
+        ${getOverallStatus(results)}
+      </strong>
+    </div>
+  `;
+}
+
+function getOverallStatus(results) {
+  const statuses = Object.values(results).map(r => r.status);
+  const goodCount = statuses.filter(s => s === 'good').length;
+  const warningCount = statuses.filter(s => s === 'warning').length;
+  const errorCount = statuses.filter(s => s === 'error').length;
+  
+  if (errorCount > 0) {
+    return '❌ System may not meet minimum requirements';
+  } else if (warningCount > 2) {
+    return '⚠️ System meets basic requirements with limitations';
+  } else if (goodCount >= 3) {
+    return '✅ System is compatible for JARVIS!';
+  } else {
+    return '⚠️ System compatibility is moderate';
+  }
+}
+
+// Show notification function
+function showNotification(message, type = 'info') {
+  // Remove existing notifications
+  const existing = document.querySelectorAll('.notification');
+  existing.forEach(n => n.remove());
+
+  const notification = document.createElement('div');
+  notification.className = 'notification';
+  notification.textContent = message;
+  
+  const colors = {
+    success: '#28a745',
+    error: '#dc3545',
+    warning: '#ffc107',
+    info: '#667eea'
+  };
+  
+  notification.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: ${colors[type] || colors.info};
+    color: white;
+    padding: 15px 25px;
+    border-radius: 25px;
+    font-weight: 600;
+    z-index: 10000;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    max-width: 300px;
+  `;
+  
+  document.body.appendChild(notification);
+  
+  // Show notification
+  setTimeout(() => {
+    notification.style.transform = 'translateX(0)';
+  }, 100);
+  
+  // Hide notification
+  setTimeout(() => {
+    notification.style.transform = 'translateX(100%)';
     setTimeout(() => {
-        document.body.style.transition = '';
-    }, 500);
+      if (notification.parentNode) {
+        notification.parentNode.removeChild(notification);
+      }
+    }, 300);
+  }, 4000);
 }
 
-/**
- * Creates a single particle element
- */
-function createParticle() {
-    const particle = document.createElement('div');
-    particle.className = 'particle';
-    
-    // Random horizontal position
-    particle.style.left = Math.random() * 100 + '%';
-    
-    // Random animation duration and delay
-    particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
-    particle.style.animationDelay = Math.random() * 2 + 's';
-    
-    // Add particle to container
-    document.getElementById('particles').appendChild(particle);
-
-    // Remove particle after animation completes
-    setTimeout(() => {
-        if (particle.parentNode) {
-            particle.remove();
-        }
-    }, 8000);
+// Check Python version (simulation)
+function checkPython() {
+  showNotification('Python version check requires terminal access', 'warning');
 }
 
-/**
- * Toggles the particle system on/off
- */
-function addParticles() {
-    if (particleInterval) {
-        // Stop particles
-        clearInterval(particleInterval);
-        particleInterval = null;
-        document.getElementById('particles').innerHTML = '';
-    } else {
-        // Start particles
-        particleInterval = setInterval(createParticle, 200);
-    }
+// Download system checker
+function downloadSystemChecker() {
+  const content = `
+JARVIS System Requirements Checker
+=================================
+
+To check your system manually:
+
+1. Windows Version:
+   - Press Win + R, type "winver"
+   - Check if Windows 11 22H2 or later
+
+2. RAM Check:
+   - Open Task Manager (Ctrl + Shift + Esc)
+   - Go to Performance > Memory
+   - Check total physical memory
+
+3. Python Check:
+   - Open Command Prompt
+   - Type: python --version
+   - Should show Python 3.10.0
+
+4. Storage Check:
+   - Open This PC
+   - Check available space on C: drive
+   - Need at least 50GB free
+
+5. GPU Check:
+   - Right-click desktop > Display settings
+   - Scroll down > Advanced display settings
+   - Check adapter properties
+
+Date: ${new Date().toLocaleDateString()}
+  `;
+  
+  const blob = new Blob([content], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'jarvis-system-check.txt';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  
+  showNotification('System checker downloaded!', 'success');
 }
 
-/**
- * Initialize the page when DOM is loaded
- */
+// Initialize when page loads
 document.addEventListener('DOMContentLoaded', function() {
-    // Add some initial particles after a delay
-    setTimeout(() => {
-        for (let i = 0; i < 10; i++) {
-            setTimeout(createParticle, i * 100);
-        }
-    }, 2000);
-
-    // Add click animation to logo
-    const logo = document.querySelector('.animista-logo');
-    if (logo) {
-        logo.addEventListener('click', function() {
-            this.style.transform = 'scale(0.95) rotate(5deg)';
-            setTimeout(() => {
-                this.style.transform = 'scale(1) rotate(0deg)';
-            }, 150);
-        });
-    }
-
-    // Add keyboard shortcuts
-    document.addEventListener('keydown', function(event) {
-        switch(event.key) {
-            case 'r':
-            case 'R':
-                replayAnimation();
-                break;
-            case 'g':
-            case 'G':
-                toggleGlow();
-                break;
-            case 'b':
-            case 'B':
-                changeBackground();
-                break;
-            case 'p':
-            case 'P':
-                addParticles();
-                break;
-        }
-    });
+  console.log('JARVIS Requirements Tab loaded');
+  
+  // Add download checker button if needed
+  const checkSection = document.querySelector('.check-section');
+  if (checkSection) {
+    const downloadBtn = document.createElement('button');
+    downloadBtn.innerHTML = '📥 Download Checker';
+    downloadBtn.className = 'check-btn';
+    downloadBtn.style.marginLeft = '10px';
+    downloadBtn.style.background = 'linear-gradient(135deg, #667eea, #764ba2)';
+    downloadBtn.onclick = downloadSystemChecker;
+    checkSection.appendChild(downloadBtn);
+  }
 });
 
-/**
- * Handle window resize for responsive behavior
- */
-window.addEventListener('resize', function() {
-    // Clear particles on resize to prevent overflow issues
-    if (particleInterval) {
-        document.getElementById('particles').innerHTML = '';
-    }
+// Error handling
+window.addEventListener('error', function(event) {
+  console.error('Requirements Tab Error:', event.error);
+  showNotification('Error occurred while checking system', 'error');
 });
-
-  function createParticle() {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.left = Math.random() * 100 + '%';
-            particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
-            particle.style.animationDelay = Math.random() * 2 + 's';
-            document.getElementById('particles').appendChild(particle);
-            setTimeout(() => particle.remove(), 8000);
-        }
-
-        setTimeout(() => {
-            for (let i = 0; i < 10; i++) {
-                setTimeout(createParticle, i * 100);
-            }
-        }, 2000);
