@@ -1,56 +1,41 @@
 <!DOCTYPE html>
-<!-- ============================= -->
-<!-- ENHANCED JARVIS main.html -->
-<!-- ============================= -->
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=5.0"/>
   <meta name="description" content="JARVIS AI Dashboard - Your Personal AI Assistant Interface" />
-  <meta name="keywords" content="JARVIS, AI, Dashboard, Assistant, Voice Recognition" />
-  <meta name="author" content="JARVIS AI Team" />
-  <meta name="theme-color" content="#667eea" />
-  <title> Jarvis Dashboard</title>
+  <title>Jarvis Dashboard</title>
   
-  <!-- Preload CSS for better performance -->
-  <link rel="preload" href="style.css" as="style" />
-  <link rel="stylesheet" href="style.css" />
-  
-  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
   
-  <!-- Preload JavaScript -->
-  <link rel="preload" href="script.js" as="script" />
-  
-  <!-- Enhanced Meta Tags -->
-  <meta property="og:title" content="JARVIS Dashboard" />
-  <meta property="og:description" content="Advanced AI Assistant Dashboard" />
-  <meta property="og:type" content="website" />
-  
   <style>
-    /* ============================= */
-    /* INLINE STYLES */
-    /* ============================= */
-    
-
-    /* Performance optimizations */
+    /* CSS Reset for cross-browser compatibility */
     * {
+      margin: 0;
+      padding: 0;
       box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+    
+    html {
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+      font-size: 16px;
     }
     
     body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
       width: 100%;
       min-height: 100vh;
       position: relative;
       overflow-x: hidden;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       background-attachment: fixed;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
-    /* Settings Icon Styling - Updated for navigation */
+    /* Settings Icon - Cross-browser compatible */
     #settingsIcon {
       position: fixed;
       top: 20px;
@@ -64,14 +49,19 @@
       font-size: 1.5rem;
       cursor: pointer;
       z-index: 1000;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.3s ease;
       box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
       backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       border: 2px solid rgba(255, 255, 255, 0.2);
       display: flex;
       align-items: center;
       justify-content: center;
       text-decoration: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
     }
 
     #settingsIcon:hover {
@@ -84,7 +74,7 @@
       transform: translateY(0) rotate(180deg) scale(0.95);
     }
 
-    /* Enhanced Title */
+    /* Dashboard Title */
     .dashboard-title {
       text-align: center;
       font-size: clamp(2rem, 5vw, 4rem);
@@ -93,11 +83,12 @@
       background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      background-size: 200% auto;
       font-weight: 900;
       letter-spacing: 2px;
-      text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
       animation: titleGlow 3s ease-in-out infinite alternate;
       position: relative;
+      padding: 0 20px;
     }
 
     .dashboard-title::after {
@@ -123,7 +114,7 @@
       50% { opacity: 1; width: 150px; }
     }
 
-    /* Enhanced Loader */
+    /* Page Loader */
     #pageLoader {
       display: flex;
       flex-direction: column;
@@ -142,6 +133,7 @@
     #pageLoader.hidden {
       opacity: 0;
       visibility: hidden;
+      pointer-events: none;
     }
 
     .loader {
@@ -179,6 +171,7 @@
       font-weight: 600;
       text-align: center;
       animation: pulse 2s infinite;
+      padding: 0 20px;
     }
 
     @keyframes pulse {
@@ -186,7 +179,7 @@
       50% { opacity: 1; }
     }
 
-    /* Enhanced Tab Container */
+    /* Tab Container - Mobile-first approach */
     .tab-container {
       display: flex;
       flex-wrap: wrap;
@@ -195,6 +188,7 @@
       padding: 20px;
       background: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border-radius: 30px;
       margin: 30px 20px;
       box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
@@ -222,28 +216,20 @@
       border-radius: 25px;
       font-weight: 600;
       font-size: 1rem;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.3s ease;
       flex: 1 1 auto;
       text-align: center;
       min-width: 120px;
       backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       position: relative;
       overflow: hidden;
-    }
-
-    .tab-btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      transition: left 0.5s;
-    }
-
-    .tab-btn:hover::before {
-      left: 100%;
+      cursor: pointer;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      touch-action: manipulation;
     }
 
     .tab-btn:hover,
@@ -253,6 +239,10 @@
       transform: translateY(-3px) scale(1.02);
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
       border-color: rgba(255, 255, 255, 0.8);
+    }
+
+    .tab-btn:active {
+      transform: translateY(-1px) scale(0.98);
     }
 
     /* Status Indicator */
@@ -267,15 +257,19 @@
       font-size: 0.9rem;
       font-weight: 600;
       backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
       z-index: 1000;
       animation: statusPulse 2s infinite;
+      cursor: pointer;
+      transition: all 0.3s ease;
     }
     
-    .status-indicator:hover{
-      border-radius: 25%;
-      color:#113ef5;
+    .status-indicator:hover {
+      border-radius: 15px;
+      color: #113ef5;
       background: #4ecdc4;
+      transform: scale(1.05);
     }
 
     @keyframes statusPulse {
@@ -292,6 +286,7 @@
       padding: 25px;
       background: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
       border-radius: 20px;
       border: 1px solid rgba(255, 255, 255, 0.2);
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
@@ -309,7 +304,7 @@
       }
     }
 
-    /* Notification styles */
+    /* Notification */
     .notification {
       position: fixed;
       top: 20px;
@@ -320,9 +315,11 @@
       font-weight: 600;
       z-index: 10000;
       transform: translateX(350px);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 0.3s ease;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
       backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      max-width: calc(100vw - 40px);
     }
 
     .notification.show {
@@ -331,20 +328,30 @@
 
     .notification.success {
       background: linear-gradient(135deg, #48bb78, #38a169);
-      border: 1px solid rgba(72, 187, 120, 0.5);
     }
 
     .notification.error {
       background: linear-gradient(135deg, #f56565, #e53e3e);
-      border: 1px solid rgba(245, 101, 101, 0.5);
     }
 
     .notification.info {
       background: linear-gradient(135deg, #4299e1, #3182ce);
-      border: 1px solid rgba(66, 153, 225, 0.5);
     }
 
-    /* Enhanced Media Queries */
+    /* Tablet Responsive (iPad, Android tablets) */
+    @media (max-width: 1024px) {
+      .tab-container {
+        margin: 25px 15px;
+        padding: 18px;
+      }
+
+      .tab-btn {
+        min-width: 110px;
+        padding: 14px 22px;
+      }
+    }
+
+    /* Mobile Responsive (smartphones) */
     @media (max-width: 768px) {
       .dashboard-title {
         font-size: clamp(1.5rem, 6vw, 2.5rem);
@@ -368,6 +375,7 @@
 
       .tab-btn {
         min-width: auto;
+        width: 100%;
         padding: 12px 20px;
         font-size: 0.9rem;
       }
@@ -388,24 +396,86 @@
       .notification {
         right: 15px;
         top: 15px;
-        max-width: calc(100vw - 30px);
       }
     }
 
+    /* Small mobile devices */
     @media (max-width: 480px) {
       .tab-btn {
         padding: 10px 15px;
-        font-size: 0.8rem;
+        font-size: 0.85rem;
       }
 
       .dashboard-title {
         margin: 15px 0 20px 0;
+        font-size: 1.8rem;
+      }
+
+      #settingsIcon {
+        width: 45px;
+        height: 45px;
+        top: 10px;
+        left: 10px;
+      }
+
+      .welcome-message {
+        font-size: 0.9rem;
+        padding: 15px;
       }
     }
 
-    /* Accessibility improvements */
+    /* Large screens (desktops) */
+    @media (min-width: 1440px) {
+      .tab-container {
+        max-width: 1200px;
+        margin: 30px auto;
+      }
+
+      .welcome-message {
+        max-width: 1000px;
+        margin: 40px auto;
+      }
+    }
+
+    /* Landscape orientation for mobile */
+    @media (max-width: 768px) and (orientation: landscape) {
+      .dashboard-title {
+        font-size: 1.5rem;
+        margin: 15px 0 20px 0;
+      }
+
+      .welcome-message {
+        margin: 15px 15px;
+        padding: 15px;
+      }
+
+      #settingsIcon {
+        width: 45px;
+        height: 45px;
+        top: 10px;
+        left: 10px;
+      }
+    }
+
+    /* Safari-specific fixes */
+    @supports (-webkit-touch-callout: none) {
+      body {
+        min-height: -webkit-fill-available;
+      }
+    }
+
+    /* Firefox-specific adjustments */
+    @-moz-document url-prefix() {
+      .tab-btn {
+        background-clip: padding-box;
+      }
+    }
+
+    /* Accessibility - Reduced motion */
     @media (prefers-reduced-motion: reduce) {
-      * {
+      *,
+      *::before,
+      *::after {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
@@ -416,6 +486,13 @@
     @media (prefers-contrast: high) {
       .tab-btn {
         border-width: 3px;
+      }
+    }
+
+    /* Dark mode support */
+    @media (prefers-color-scheme: dark) {
+      body {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
       }
     }
 
@@ -431,220 +508,170 @@
   </style>
 </head>
 
-<body aria-label="JARVIS Dashboard Interface" tabindex="0" role="main">
-  <!-- Enhanced Dashboard Title with Animation -->
+<body>
   <header>
-    <h1 class="dashboard-title" id="mainTitle" role="banner">
+    <h1 class="dashboard-title" id="mainTitle">
       🤖 JARVIS Dashboard
     </h1>
   </header>
 
-  <!-- Enhanced Page Loader -->
-  <div id="pageLoader" role="status" aria-live="polite" aria-label="Loading JARVIS Dashboard">
-    <div class="loader" aria-hidden="true">
+  <div id="pageLoader">
+    <div class="loader">
       <div class="dot"></div>
       <div class="dot"></div>
       <div class="dot"></div>
     </div>
     <p class="loader-text">Initializing JARVIS Systems...</p>
-    <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem; margin-top: 10px;">
-      Please wait while system prepare your AI assistant website
+    <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem; margin-top: 10px; padding: 0 20px; text-align: center;">
+      Please wait while system prepares your AI assistant website
     </p>
   </div>
 
-  <!-- Settings Icon - Now navigates to settings.html -->
-  <a id="settingsIcon" 
-     href="intro.html" 
-     aria-label="Go to Settings Page" 
-     title="Settings" 
-     tabindex="0">
+  <a id="settingsIcon" href="intro.html" title="Settings">
     ⚙️
   </a>
 
-  <!-- Welcome Message -->
-  <section class="welcome-message" role="complementary">
+  <section class="welcome-message">
     <h2 style="margin-bottom: 15px; color: #fff; font-size: 1.4rem;">
-      Welcome to JARVIS Ai assistant's Website 🚀
+      Welcome to JARVIS AI assistant's Website 🚀
     </h2>
     <p style="margin: 0; opacity: 0.9; line-height: 1.5;">
-      Your intelligent personal assistant is ready to help. Navigate through different sections using the tabs below.Double tab to home tab to navigate subtabs
+      Your intelligent personal assistant is ready to help. Navigate through different sections using the tabs below. Double tap home tab to navigate subtabs.
     </p>
   </section>
 
-  <!-- Enhanced Navigation Tabs -->
-  <nav class="tab-container" role="navigation" aria-label="Main Navigation">
-    <a class="tab-btn active" 
-       href="Home.html" 
-       aria-current="page"
-       title="Home Dashboard">
-       Home
-    </a>
-    <a class="tab-btn" 
-       href="JarSetting.html"
-       title="System Settings">
-       Settings
-    </a>
-    <a class="tab-btn" 
-       href="Feedback.html"
-       title="User Feedback">
-       Feedback
-    </a>
-    <a class="tab-btn" 
-       href="setup.html"
-       title="Initial Setup">
-       Setup
-    </a>
-    <a class="tab-btn" 
-       href="requirements.html"
-       title="About JARVIS">
-      Requirements
-    </a>
-    <a class="tab-btn" 
-       href="about.html"
-       title="About JARVIS">
-       About
-    </a>
+  <nav class="tab-container">
+    <a class="tab-btn active" href="Home.html">Home</a>
+    <a class="tab-btn" href="JarSetting.html">Settings</a>
+    <a class="tab-btn" href="Feedback.html">Feedback</a>
+    <a class="tab-btn" href="setup.html">Setup</a>
+    <a class="tab-btn" href="requirements.html">Requirements</a>
+    <a class="tab-btn" href="about.html">About</a>
   </nav>
 
-  <!-- Status Indicator -->
-  <div class="status-indicator" id="statusIndicator" role="status" aria-live="polite">
+  <div class="status-indicator" id="statusIndicator">
     🟢 System Online
   </div>
 
-  <!-- Enhanced JavaScript -->
   <script>
-    // Performance optimized loading
-    document.addEventListener('DOMContentLoaded', function() {
-      console.log('🤖 JARVIS Dashboard Loading...');
-      
-      // Initialize systems
-      initializeJARVIS();
-    });
+    // Cross-browser compatible initialization
+    (function() {
+      'use strict';
 
-    // Main initialization function
-    function initializeJARVIS() {
-      // Enhanced loader with progress
-      setTimeout(() => {
-        const loader = document.getElementById("pageLoader");
+      // Wait for DOM to be ready
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeJARVIS);
+      } else {
+        initializeJARVIS();
+      }
+
+      function initializeJARVIS() {
+        console.log('🤖 JARVIS Dashboard Loading...');
+        
+        const loader = document.getElementById('pageLoader');
         const loaderText = document.querySelector('.loader-text');
         
-        // Update loading messages
         const messages = [
-          'Loading User Interface(UI)...',
+          'Loading User Interface (UI)...',
           'Initializing pages...',
           'Preparing dashboard...',
           'JARVIS website ready!'
         ];
         
         let messageIndex = 0;
-        const messageInterval = setInterval(() => {
+        
+        const messageInterval = setInterval(function() {
           if (messageIndex < messages.length - 1) {
             loaderText.textContent = messages[messageIndex++];
           } else {
             clearInterval(messageInterval);
             loaderText.textContent = messages[messages.length - 1];
             
-            setTimeout(() => {
-              loader.classList.add("hidden");
-              setTimeout(() => {
-                loader.style.display = "none";
+            setTimeout(function() {
+              loader.classList.add('hidden');
+              setTimeout(function() {
+                loader.style.display = 'none';
                 showWelcomeAnimation();
               }, 500);
             }, 800);
           }
         }, 600);
-      }, 100);
-    }
-
-    // Welcome animation
-    function showWelcomeAnimation() {
-      const title = document.getElementById('mainTitle');
-      title.style.animation = 'fadeInUp 1s ease';
-      
-      // Show notification
-      setTimeout(() => {
-        showNotification('Welcome to JARVIS! 🤖', 'success');
-      }, 1000);
-    }
-
-    // Enhanced notification system
-    function showNotification(message, type = 'info') {
-      // Remove existing notifications
-      const existingNotifications = document.querySelectorAll('.notification');
-      existingNotifications.forEach(notification => notification.remove());
-
-      const notification = document.createElement('div');
-      notification.className = `notification ${type}`;
-      notification.textContent = message;
-      notification.setAttribute('role', 'alert');
-      notification.setAttribute('aria-live', 'polite');
-
-      document.body.appendChild(notification);
-
-      // Show notification
-      setTimeout(() => notification.classList.add('show'), 100);
-
-      // Hide notification
-      setTimeout(() => {
-        notification.classList.remove('show');
-        setTimeout(() => notification.remove(), 300);
-      }, 2000);
-    }
-
-    // Settings icon click effect (optional visual feedback)
-    document.getElementById('settingsIcon').addEventListener('click', function(e) {
-      // Add a subtle click effect
-      this.style.transform = 'translateY(0) rotate(180deg) scale(0.95)';
-      
-      // Show navigation notification
-      showNotification('Navigating to Settings...', 'info');
-      
-      // Reset transform after a short delay
-      setTimeout(() => {
-        this.style.transform = '';
-      }, 150);
-    });
-
-    // Keyboard navigation
-    document.addEventListener('keydown', function(event) {
-      // Alt + S to go to settings
-      if (event.altKey && event.key === 's') {
-        event.preventDefault();
-        window.location.href = 'settings.html';
       }
-    });
 
-    // Performance monitoring
-    window.addEventListener('load', function() {
-      const loadTime = performance.now();
-      console.log(`🚀 JARVIS loaded in ${Math.round(loadTime)}ms`);
-    });
+      function showWelcomeAnimation() {
+        const title = document.getElementById('mainTitle');
+        title.style.animation = 'fadeInUp 1s ease';
+        
+        setTimeout(function() {
+          showNotification('Welcome to JARVIS! 🤖', 'success');
+        }, 1000);
+      }
 
-    // Error handling
-    window.addEventListener('error', function(event) {
-      console.error('JARVIS Error:', event.error);
-      showNotification('System error detected. Please refresh the page.', 'error');
-    });
+      function showNotification(message, type) {
+        type = type || 'info';
+        
+        const existingNotifications = document.querySelectorAll('.notification');
+        existingNotifications.forEach(function(notification) {
+          notification.remove();
+        });
 
-    // Preload settings page for better performance
-    const settingsLink = document.createElement('link');
-    settingsLink.rel = 'prefetch';
-    settingsLink.href = 'settings.html';
-    document.head.appendChild(settingsLink);
+        const notification = document.createElement('div');
+        notification.className = 'notification ' + type;
+        notification.textContent = message;
 
-    // Add hover effect for settings icon
-    const settingsIcon = document.getElementById('settingsIcon');
-    
-    settingsIcon.addEventListener('mouseenter', function() {
-      showNotification('Click to open Settings', 'info');
-      setTimeout(() => {
-        const notification = document.querySelector('.notification');
-        if (notification) notification.remove();
-      }, 1500);
-    });
+        document.body.appendChild(notification);
+
+        setTimeout(function() {
+          notification.classList.add('show');
+        }, 100);
+
+        setTimeout(function() {
+          notification.classList.remove('show');
+          setTimeout(function() {
+            notification.remove();
+          }, 300);
+        }, 3000);
+      }
+
+      // Settings icon click handler
+      var settingsIcon = document.getElementById('settingsIcon');
+      if (settingsIcon) {
+        settingsIcon.addEventListener('click', function(e) {
+          this.style.transform = 'translateY(0) rotate(180deg) scale(0.95)';
+          showNotification('Navigating to Settings...', 'info');
+          
+          var self = this;
+          setTimeout(function() {
+            self.style.transform = '';
+          }, 150);
+        });
+      }
+
+      // Keyboard shortcuts
+      document.addEventListener('keydown', function(event) {
+        if (event.altKey && event.key === 's') {
+          event.preventDefault();
+          window.location.href = 'settings.html';
+        }
+      });
+
+      // Performance monitoring
+      window.addEventListener('load', function() {
+        if (window.performance && window.performance.now) {
+          var loadTime = performance.now();
+          console.log('🚀 JARVIS loaded in ' + Math.round(loadTime) + 'ms');
+        }
+      });
+
+      // Error handling
+      window.addEventListener('error', function(event) {
+        console.error('JARVIS Error:', event.error);
+        showNotification('System error detected. Please refresh the page.', 'error');
+      });
+
+      // Make showNotification globally accessible for demo
+      window.showNotification = showNotification;
+    })();
   </script>
-
-  <!-- Load external script -->
-  <script src="script.js" defer></script>
 </body>
 </html>
