@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<!-- ============================= -->
+<!-- JARVIS Home.html -->
+<!-- ============================= -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -453,8 +456,8 @@
                 <button onclick="showTabContent(2)" role="tab" aria-selected="false" tabindex="0">Guides</button>
                 <button onclick="showTabContent(3)" role="tab" aria-selected="false" tabindex="0">Troubleshoot</button>
                 <button onclick="showTabContent(4)" role="tab" aria-selected="false" tabindex="0">FAQ</button>
-                <button onclick="showTabContent(5)" role="tab" aria-selected="false" tabindex="0">Requirements</button>
-                <button onclick="showTabContent(6)" role="tab" aria-selected="false" tabindex="0">About</button>
+                <button onclick="showTabContent(5)" role="tab" aria-selected="false" tabindex="0">Automation</button>
+                
             </div>
             <hr>
             <!-- Tab 1: Home -->
@@ -476,6 +479,11 @@
                     <div class="feature-card"><h4>💬 Chatbot</h4><p>Jarvis is also used for Windows 11 as a Chatbot</p></div>
                     <div class="feature-card"><h4>🖼️ Image generation</h4><p>This feature is currently not available.[This feature is under development]</p></div>
                     <div class="feature-card"><h4>🔍 Web search</h4><p>Jarvis can search anything in google,ask,bing,yahoo etc.in Windows 11</p></div>
+                    <div class="feature-card"><h4>🚀 Performance</h4><p>Optimized for lightning-fast responses and minimal resource usage</p></div>
+                    <div class="feature-card"><h4>🔒 Privacy</h4><p>Your data stays on your device - complete privacy guaranteed</p></div> 
+                    <div class="feature-card"><h4>🎯 Customization</h4><p>Tailor JARVIS to your specific needs and preferences</p></div>
+                    <div class="feature-card"><h4>🌟 Innovation</h4><p>Regular updates with cutting-edge AI features and improvements</p></div>
+                    </div>
                 </div>   
                 <hr>
                 <!--Accordion-->
@@ -568,13 +576,19 @@
                 </div>
             </div>
             <hr>
+
             <!-- Tab 4: FAQ -->
             <div id="tab4" class="tab-content">
                 <h2>Frequently Asked Questions</h2>
 
                 <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">What is JARVIS?</button>
                 <div class="panel">
-                    <p>JARVIS is an AI-powered assistant designed to run both online and offline, offering personalized features such as voice commands, smart search, and system automation.</p>
+                    <p>JARVIS is an AI-assistant designed to run both online and offline, offering personalized features such as voice commands, smart search, and system automation.</p>
+                </div>
+                
+                <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">What is JarOS?</button>
+                <div class="panel">
+                    <p>JarOS is an AI-powered operating system designed to run both online and offline, offering personalized features such as voice commands, smart search, and system automation and based on linux and android UI(Coming very soon).</p>
                 </div>
 
                 <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">What makes JARVIS unique?</button>
@@ -584,7 +598,7 @@
 
                 <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">Does JARVIS require the internet?</button>
                 <div class="panel">
-                    <p>No. JARVIS works perfectly offline for most features like commands, memory recall, and system tasks. Internet is only required for online search or cloud-based APIs.</p>
+                    <p>Yes. JARVIS works perfectly offline for most features like commands, memory recall, and system tasks. Internet is only required for online search or cloud-based APIs.(offline capable feature coming soon)</p>
                 </div>
 
                 <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">Can JARVIS control my PC?</button>
@@ -660,91 +674,489 @@
             
 
 
-           <!-- Tab 5: --> 
-            <div id="tab5" class="tab-content">
-                <table caption="Student Information">
-    <tr>
-      <th>OS</th>
-      <td>Windows 11 </td>
-    </tr>
-    <tr>
-      <th>Edition</th>
-      <td>Home/pro/enterprise etc. support</td>
-    </tr>
-    <tr>
-      <th>Physical RAM</th>
-      <td>4/8/16/32/64GB</td>
-    </tr>
-     <tr>
-      <th>Python</th>
-      <td>3.10.0 only</td>
-    </tr>
-    <tr>
-      <th>Version</th>
-      <td>22H2 or later version</td>
-    </tr>
-    <tr>
-      <th>Virtual RAM</th>
-      <td>20GB Recommended</td>
-    </tr>
-    <tr>
-      <th>SSD</th>
-      <td>1TB+ Recommended</td>
-    </tr>
-    <tr>
-      <th>Environment</th>
-      <td>Virtual envioronment</td>
-    </tr>
-    <tr>
-      <th>GPU</th>
-      <td>Nvidia Recommended or Intel iris minimum</td>
-    </tr>
-    <tr>
-      <th>CPU  </th>
-      <td>Intel i5 U minimum or Rtx 4060 minimum </td>
-    </tr>
-    <tr>
-      <th>NPU</th>
-      <td>Optional</td>
-    </tr>
-    <tr>
-      <th>Data usage for installation</th>
-      <td>8GB (including Python 3.10.0 from web and vs code from web if needed)</td>
-
-    </tr>
-  </table>
-                   
-            </div>
-            <!-- Tab 6: About -->
-            <div id="tab6" class="tab-content">
-                <h2>About JARVIS</h2>
-                <p>Discover JARVIS, the AI assistant that handles your daily tasks with ease, helping you stay productive, organized, and ahead of schedule. Built with cutting-edge technology and designed for the future.</p>
-                
-                <div class="feature-grid">
-                    <div class="feature-card">
-                        <h4>🚀 Performance</h4>
-                        <p>Optimized for lightning-fast responses and minimal resource usage</p>
-                    </div>
-                    <div class="feature-card">
-                        <h4>🔒 Privacy</h4>
-                        <p>Your data stays on your device - complete privacy guaranteed</p>
-                    </div>
-                    <div class="feature-card">
-                        <h4>🎯 Customization</h4>
-                        <p>Tailor JARVIS to your specific needs and preferences</p>
-                    </div>
-                    <div class="feature-card">
-                        <h4>🌟 Innovation</h4>
-                        <p>Regular updates with cutting-edge AI features and improvements</p>
-                    </div>
-                </div>
-            </div>
-        </main>
-
-        <div class="center-button">
-            <button onclick="launchJARVIS()" class="pulse" aria-label="Launch JARVIS" tabindex="0">🚀 Launch JARVIS</button>
-        </div>
+         
+    <!-- Tab 5: Automation -->
+<div id="tab5" class="tab-content">
+    <div class="hero-section">
+      <h2 class="main-title">🤖 Arduino – Your Friendly Gateway to Innovation</h2>
+      <p class="hero-description">
+        Arduino is not just a microcontroller—it's your <span class="highlight">creative companion</span>.  
+        From blinking LEDs to building robots, it helps you bring imagination to life through the magic of electronics.
+      </p>
+      <div class="image-container">
+        <img src="image5.webp" alt="Arduino Board showcasing versatility" class="hero-image">
+        <div class="image-caption">The versatile Arduino platform that powers millions of projects worldwide</div>
+      </div>
     </div>
+  
+    <div class="content-grid">
+      <section class="content-card">
+        <div class="card-header">
+          <h3 class="card-title">✨ What is Arduino?</h3>
+          <div class="card-subtitle">Understanding the Foundation</div>
+        </div>
+        <div class="card-content">
+          <p>
+            Arduino is an <span class="highlight">open-source electronics platform</span> designed to make learning easy, fun, and affordable.  
+            It acts as a <span class="highlight">bridge</span> between your creative ideas and real-world interactive machines.
+          </p>
+          <div class="feature-list">
+            <div class="feature-item">
+              <span class="feature-icon">🔧</span>
+              <span>Hardware & Software Combined</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-icon">🎯</span>
+              <span>Beginner to Expert Friendly</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-icon">🌐</span>
+              <span>Global Community Support</span>
+            </div>
+          </div>
+          <div class="image-container">
+            <img src="images/arduino_creativity.png" alt="Arduino enabling creativity in electronics" class="content-img">
+            <div class="image-caption">Arduino: Where creativity meets technology</div>
+          </div>
+        </div>
+      </section>
+  
+      <section class="content-card">
+        <div class="card-header">
+          <h3 class="card-title">👨‍🏫 Who created it & why?</h3>
+          <div class="card-subtitle">The Story Behind Arduino</div>
+        </div>
+        <div class="card-content">
+          <div class="timeline-item">
+            <div class="timeline-marker">📍</div>
+            <div class="timeline-content">
+              <h4>Born in 2005 in Ivrea, Italy</h4>
+              <p>Founded by <span class="highlight">Massimo Banzi</span> and his visionary team of educators and engineers.</p>
+            </div>
+          </div>
+          <div class="mission-box">
+            <h4>🎯 Their Mission</h4>
+            <p>To provide a <span class="highlight">low-cost, beginner-friendly tool</span> that democratizes electronics education for students, artists, designers, and makers worldwide.</p>
+          </div>
+          <div class="image-container">
+            <img src="images/arduino_founders.webp" alt="Arduino founders and their vision" class="content-img">
+            <div class="image-caption">The visionaries who made electronics accessible to everyone</div>
+          </div>
+        </div>
+      </section>
+  
+      <section class="content-card">
+        <div class="card-header">
+          <h3 class="card-title">🚀 Evolution of Arduino</h3>
+          <div class="card-subtitle">From Classroom to Global Innovation</div>
+        </div>
+        <div class="card-content">
+          <div class="evolution-timeline">
+            <div class="evolution-step">
+              <span class="step-number">1</span>
+              <h4>Interaction Design</h4>
+              <p>Started as a tool for design students</p>
+            </div>
+            <div class="evolution-arrow">→</div>
+            <div class="evolution-step">
+              <span class="step-number">2</span>
+              <h4>Global Spread</h4>
+              <p>Adopted by makers worldwide</p>
+            </div>
+            <div class="evolution-arrow">→</div>
+            <div class="evolution-step">
+              <span class="step-number">3</span>
+              <h4>Industry Impact</h4>
+              <p>Powers professional applications</p>
+            </div>
+          </div>
+          <div class="applications-grid">
+            <div class="app-item">🏠 IoT & Smart Homes</div>
+            <div class="app-item">🤖 Robotics & Automation</div>
+            <div class="app-item">🏥 Healthcare Monitoring</div>
+            <div class="app-item">🌱 Smart Agriculture</div>
+            <div class="app-item">🚀 Aerospace Projects</div>
+            <div class="app-item">🎨 Interactive Art</div>
+          </div>
+          <div class="image-container">
+            <img src="images/arduino_projects.png" alt="Diverse Arduino project applications" class="content-img">
+            <div class="image-caption">Arduino powers innovation across countless industries</div>
+          </div>
+        </div>
+      </section>
+  
+      <section class="content-card technical-card">
+        <div class="card-header">
+          <h3 class="card-title">🧠 What is a Microcontroller?</h3>
+          <div class="card-subtitle">The Brain Behind the Magic</div>
+        </div>
+        <div class="card-content">
+          <p class="intro-text">A microcontroller is like a tiny computer that can control things in the real world.</p>
+          <div class="components-grid">
+            <div class="component-item">
+              <div class="component-icon">⚡</div>
+              <h4>Processor</h4>
+              <p>Executes instructions and makes decisions</p>
+            </div>
+            <div class="component-item">
+              <div class="component-icon">💾</div>
+              <h4>Memory</h4>
+              <p>Stores programs, data, and variables</p>
+            </div>
+            <div class="component-item">
+              <div class="component-icon">🔌</div>
+              <h4>I/O Pins</h4>
+              <p>Connect sensors, motors, LEDs, and displays</p>
+            </div>
+          </div>
+          <div class="brain-analogy">
+            <span class="brain-icon">🧠</span>
+            <p><span class="highlight">Think of it as the intelligent brain of Arduino</span> - it receives information, processes it, and controls outputs accordingly.</p>
+          </div>
+          <div class="image-container">
+            <img src="image7.avif" alt="Detailed microcontroller architecture diagram" class="content-img">
+            <div class="image-caption">Inside a microcontroller: The components that make it work</div>
+          </div>
+        </div>
+      </section>
+  
+      <section class="content-card">
+        <div class="card-header">
+          <h3 class="card-title">💡 Why Binary?</h3>
+          <div class="card-subtitle">The Language of Digital Electronics</div>
+        </div>
+        <div class="card-content">
+          <div class="binary-explanation">
+            <p>Microcontrollers understand only <span class="highlight">0s and 1s</span> - the simplest possible language.</p>
+            <div class="binary-demo">
+              <div class="binary-bit on">
+                <span class="bit-value">1</span>
+                <span class="bit-meaning">ON / TRUE / HIGH</span>
+                <span class="bit-voltage">5V</span>
+              </div>
+              <div class="binary-bit off">
+                <span class="bit-value">0</span>
+                <span class="bit-meaning">OFF / FALSE / LOW</span>
+                <span class="bit-voltage">0V</span>
+              </div>
+            </div>
+            <div class="binary-benefits">
+              <h4>Why This Simple System Works So Well:</h4>
+              <ul class="benefits-list">
+                <li>⚡ <strong>Fast Processing:</strong> Simple decisions = rapid execution</li>
+                <li>🛡️ <strong>Reliable Communication:</strong> Less chance for errors</li>
+                <li>🔋 <strong>Energy Efficient:</strong> Clear on/off states save power</li>
+                <li>📡 <strong>Noise Resistant:</strong> Easy to distinguish between states</li>
+              </ul>
+            </div>
+          </div>
+          <div class="image-container">
+            <img src="image6.webp" alt="Binary code visualization and digital communication" class="content-img">
+            <div class="image-caption">Binary: The universal language of all digital devices</div>
+          </div>
+        </div>
+      </section>
+  
+      <section class="content-card">
+        <div class="card-header">
+          <h3 class="card-title">⚡ Why DC Power?</h3>
+          <div class="card-subtitle">Understanding Power Requirements</div>
+        </div>
+        <div class="card-content">
+          <div class="power-comparison">
+            <div class="power-type dc">
+              <h4>🔋 DC (Direct Current)</h4>
+              <div class="power-description">
+                <p>Flows steadily in one direction, like water from a battery</p>
+                <div class="power-wave dc-wave">→→→→→→→</div>
+                <div class="power-features">
+                  <span class="feature">Stable Voltage</span>
+                  <span class="feature">Predictable Flow</span>
+                  <span class="feature">Arduino Safe</span>
+                </div>
+              </div>
+            </div>
+            <div class="vs-divider">VS</div>
+            <div class="power-type ac">
+              <h4>🏠 AC (Alternating Current)</h4>
+              <div class="power-description">
+                <p>Constantly switches direction, like ocean waves</p>
+                <div class="power-wave ac-wave">∿∿∿∿∿∿∿</div>
+                <div class="power-features">
+                  <span class="feature">Variable Voltage</span>
+                  <span class="feature">Changing Direction</span>
+                  <span class="feature">Can Damage Arduino</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="safety-note">
+            <span class="safety-icon">⚠️</span>
+            <p>Arduino needs <span class="highlight">stable DC power</span> (3.3V or 5V) to work safely without component damage.</p>
+          </div>
+          <div class="image-container">
+            <img src="images/dc_vs_ac.webp" alt="Visual comparison of DC vs AC current flow patterns" class="content-img">
+            <div class="image-caption">Understanding the difference: DC flows steadily, AC alternates</div>
+          </div>
+        </div>
+      </section>
+  
+      <section class="content-card">
+        <div class="card-header">
+          <h3 class="card-title">🔌 Types of Arduino Boards</h3>
+          <div class="card-subtitle">Choose Your Perfect Match</div>
+        </div>
+        <div class="card-content">
+          <div class="boards-comparison">
+            <div class="board-item uno">
+              <div class="board-icon">🎯</div>
+              <h4>Arduino UNO</h4>
+              <div class="board-specs">
+                <span class="spec">14 Digital Pins</span>
+                <span class="spec">6 Analog Pins</span>
+                <span class="spec">32KB Flash Memory</span>
+              </div>
+              <p class="board-description">The classic choice - perfect for beginners and most projects</p>
+              <div class="board-ideal">Ideal for: Learning, basic automation, LED projects</div>
+            </div>
+            
+            <div class="board-item nano">
+              <div class="board-icon">📱</div>
+              <h4>Arduino Nano</h4>
+              <div class="board-specs">
+                <span class="spec">14 Digital Pins</span>
+                <span class="spec">8 Analog Pins</span>
+                <span class="spec">32KB Flash Memory</span>
+              </div>
+              <p class="board-description">Same power as UNO but in a compact, breadboard-friendly size</p>
+              <div class="board-ideal">Ideal for: Wearables, compact projects, permanent installations</div>
+            </div>
+            
+            <div class="board-item mega">
+              <div class="board-icon">💪</div>
+              <h4>Arduino Mega</h4>
+              <div class="board-specs">
+                <span class="spec">54 Digital Pins</span>
+                <span class="spec">16 Analog Pins</span>
+                <span class="spec">256KB Flash Memory</span>
+              </div>
+              <p class="board-description">The powerhouse - when you need more pins and memory</p>
+              <div class="board-ideal">Ideal for: Robotics, complex automation, multiple sensors</div>
+            </div>
+          </div>
+          <div class="board-summary">
+            <p>👉 <span class="highlight">Same programming language and principles</span> - just different sizes, memory capacity, and pin count to match your project needs.</p>
+          </div>
+          <div class="image-container">
+            <img src="images/arduino_boards.webp" alt="Arduino UNO, Nano, and Mega boards comparison" class="content-img">
+            <div class="image-caption">Three popular Arduino boards: UNO, Nano, and Mega</div>
+          </div>
+        </div>
+      </section>
+  
+      <section class="content-card technical-card">
+        <div class="card-header">
+          <h3 class="card-title">❤️ The Heart – ATmega Microcontrollers</h3>
+          <div class="card-subtitle">The Chip That Powers Your Dreams</div>
+        </div>
+        <div class="card-content">
+          <div class="chip-info">
+            <p>Most Arduino boards are powered by reliable <span class="highlight">ATmega microcontroller chips</span>:</p>
+            <div class="chip-mapping">
+              <div class="chip-pair">
+                <span class="board-name">Arduino UNO</span>
+                <span class="arrow">→</span>
+                <span class="chip-name">ATmega328P</span>
+                <div class="chip-details">8-bit, 16MHz, Perfect for beginners</div>
+              </div>
+              <div class="chip-pair">
+                <span class="board-name">Arduino Mega</span>
+                <span class="arrow">→</span>
+                <span class="chip-name">ATmega2560</span>
+                <div class="chip-details">8-bit, 16MHz, More pins & memory</div>
+              </div>
+            </div>
+            <div class="chip-benefits">
+              <h4>Why ATmega Chips Are Perfect:</h4>
+              <div class="benefits-grid">
+                <div class="benefit-item">
+                  <span class="benefit-icon">💰</span>
+                  <span>Affordable pricing for everyone</span>
+                </div>
+                <div class="benefit-item">
+                  <span class="benefit-icon">🔋</span>
+                  <span>Low power consumption</span>
+                </div>
+                <div class="benefit-item">
+                  <span class="benefit-icon">📚</span>
+                  <span>Extensive documentation</span>
+                </div>
+                <div class="benefit-item">
+                  <span class="benefit-icon">🎓</span>
+                  <span>Perfect learning curve</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="image-container">
+            <img src="images/atmega_chip.png" alt="ATmega microcontroller chip architecture and features" class="content-img">
+            <div class="image-caption">The ATmega chip: Small in size, big in capabilities</div>
+          </div>
+        </div>
+      </section>
+  
+      <section class="content-card">
+        <div class="card-header">
+          <h3 class="card-title">💻 Role of Coding</h3>
+          <div class="card-subtitle">Bringing Your Ideas to Life</div>
+        </div>
+        <div class="card-content">
+          <div class="coding-intro">
+            <p>Arduino uses a simplified, beginner-friendly version of <span class="highlight">C/C++</span> programming language.</p>
+          </div>
+          <div class="code-example">
+            <h4>🌟 Simple Example: Light up an LED</h4>
+            <div class="code-block">
+              <div class="code-line">
+                <span class="code-function">digitalWrite</span><span class="code-punctuation">(</span><span class="code-number">13</span><span class="code-punctuation">,</span> <span class="code-constant">HIGH</span><span class="code-punctuation">);</span>
+              </div>
+            </div>
+            <div class="code-explanation">
+              <div class="explanation-item">
+                <span class="term">digitalWrite</span>
+                <span class="definition">Function to control a pin</span>
+              </div>
+              <div class="explanation-item">
+                <span class="term">13</span>
+                <span class="definition">Pin number (LED location)</span>
+              </div>
+              <div class="explanation-item">
+                <span class="term">HIGH</span>
+                <span class="definition">Turn ON (send power)</span>
+              </div>
+            </div>
+          </div>
+          <div class="coding-benefits">
+            <div class="benefit-row">
+              <span class="level">🎓 Beginners:</span>
+              <span class="description">Simple syntax, lots of examples, forgiving errors</span>
+            </div>
+            <div class="benefit-row">
+              <span class="level">🧠 Experts:</span>
+              <span class="description">Full C/C++ power, advanced libraries, optimization</span>
+            </div>
+          </div>
+          <div class="image-container">
+            <img src="images/arduino_coding.webp" alt="Arduino IDE coding environment and syntax highlighting" class="content-img">
+            <div class="image-caption">Arduino IDE: Where code meets creativity</div>
+          </div>
+        </div>
+      </section>
+  
+      <section class="content-card highlight-card">
+        <div class="card-header">
+          <h3 class="card-title">🌟 Why Arduino is Special</h3>
+          <div class="card-subtitle">The Magic Behind the Movement</div>
+        </div>
+        <div class="card-content">
+          <div class="special-features">
+            <div class="feature-card">
+              <div class="feature-header">
+                <span class="feature-emoji">🔓</span>
+                <h4>Open-Source Freedom</h4>
+              </div>
+              <p>Complete transparency - hardware designs, software code, and community contributions are freely available to everyone.</p>
+              <div class="feature-impact">Impact: Innovation without barriers</div>
+            </div>
+            
+            <div class="feature-card">
+              <div class="feature-header">
+                <span class="feature-emoji">👥</span>
+                <h4>Massive Global Community</h4>
+              </div>
+              <p>Millions of makers, educators, and innovators sharing knowledge, projects, and solutions worldwide.</p>
+              <div class="feature-impact">Impact: Never code alone - help is always available</div>
+            </div>
+            
+            <div class="feature-card">
+              <div class="feature-header">
+                <span class="feature-emoji">💰</span>
+                <h4>Incredibly Affordable</h4>
+              </div>
+              <p>Professional-grade development tools and hardware at student-friendly prices - starting from just a few dollars.</p>
+              <div class="feature-impact">Impact: Technology education for everyone</div>
+            </div>
+            
+            <div class="feature-card">
+              <div class="feature-header">
+                <span class="feature-emoji">🎯</span>
+                <h4>Beginner-Friendly Design</h4>
+              </div>
+              <p>No prior engineering knowledge required - designed to be your first step into the world of electronics and programming.</p>
+              <div class="feature-impact">Impact: Empowering the next generation of innovators</div>
+            </div>
+          </div>
+          <div class="community-stats">
+            <div class="stat-item">
+              <span class="stat-number">10M+</span>
+              <span class="stat-label">Active Users</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">100K+</span>
+              <span class="stat-label">Online Tutorials</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">1M+</span>
+              <span class="stat-label">Shared Projects</span>
+            </div>
+          </div>
+          <div class="image-container">
+            <img src="images/arduino_community.png" alt="Arduino global community collaboration and sharing" class="content-img">
+            <div class="image-caption">A global community united by creativity and innovation</div>
+          </div>
+        </div>
+      </section>
+  
+      <section class="final-thought-card">
+        <div class="thought-content">
+          <h3 class="thought-title">💭 Final Thought</h3>
+          <div class="thought-text">
+            <p>
+              Arduino is more than just hardware and software—it's a <span class="highlight">teacher that guides you</span>, 
+              a <span class="highlight">friend that encourages experimentation</span>, and a <span class="highlight">partner in bringing your wildest ideas to life</span>.
+            </p>
+            <p class="inspiration-text">
+              With Arduino, your imagination doesn't just stay locked in your mind—it transforms into blinking lights, 
+              moving robots, smart sensors, and interactive experiences that can change the world.
+            </p>
+          </div>
+          <div class="call-to-action">
+            <span class="cta-emoji">🚀</span>
+            <p>Ready to turn your ideas into reality? Your Arduino journey starts now!</p>
+          </div>
+          <div class="image-container">
+            <img src="images/arduino_future.webp" alt="Arduino enabling future innovations and creative projects" class="content-img">
+            <div class="image-caption">The future is yours to create - one line of code at a time</div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+  
+  <!-- Launch Button -->
+  <div class="center-button">
+    <button onclick="launchJARVIS()" class="launch-button pulse" aria-label="Launch JARVIS" tabindex="0">
+      <span class="button-icon">🚀</span>
+      <span class="button-text">Launch JARVIS</span>
+      <div class="button-glow"></div>
+    </button>
+  </div>  
+  <!-- Launch Button -->
+  <div class="center-button">
+    <button onclick="launchJARVIS()" class="pulse" aria-label="Launch JARVIS" tabindex="0">🚀 Launch JARVIS</button>
+  </div>
+  
+
 
     <script>
         // Tab switching functionality
