@@ -1,30 +1,30 @@
 <!DOCTYPE html>
-<!-- ============================= -->
-<!--  JARVIS Feedback.html -->
-<!-- ============================= -->
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=5.0" />
+  <meta name="description" content="Submit feedback for JARVIS AI Assistant" />
   <title>Jarvis Feedback</title>
+  
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💬</text></svg>">
+
   <style>
-    /* Basic styling for page */
+    /* CSS Reset */
+    * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color: transparent;}
+    html { font-size:16px; }
     body {
-      font-family: Arial, sans-serif;
+      font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,'Helvetica Neue',Arial,sans-serif;
       background: #1a1a1a;
       color: #f5f5f5;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      margin: 0;
       padding: 20px;
-      box-sizing: border-box;
     }
 
-    /* Feedback container */
     .container {
-      background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+      background: linear-gradient(145deg,#2a2a2a,#1a1a1a);
       padding: 30px;
       border-radius: 20px;
       width: 100%;
@@ -32,303 +32,156 @@
       text-align: center;
       box-shadow: 0 10px 30px rgba(0,0,0,0.3);
       border: 1px solid #333;
+      animation: fadeIn 0.5s ease;
     }
+
+    @keyframes fadeIn { from { opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
 
     h1 {
-      margin-bottom: 10px; 
-      font-size: 28px;
-      background: linear-gradient(45deg, #00c3ff, #0099cc);
+      margin-bottom:10px;
+      font-size: clamp(24px,5vw,28px);
+      background: linear-gradient(45deg,#00c3ff,#0099cc);
       -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
       background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight:bold;
     }
 
-    p {
-      margin-bottom: 20px;
-      color: #ccc;
-    }
+    p { margin-bottom:20px; color:#ccc; font-size:clamp(14px,3vw,16px); }
 
-    /* Emoji rating row */
     .emojis {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      font-size: 35px;
-      margin-bottom: 25px;
-      cursor: pointer;
+      display:flex;
+      justify-content:center;
+      gap:15px;
+      font-size:35px;
+      margin-bottom:25px;
+      cursor:pointer;
+      flex-wrap:wrap;
     }
+
     .emojis span {
       transition: all 0.3s ease;
-      padding: 10px;
-      border-radius: 50%;
+      padding:10px;
+      border-radius:50%;
       background: rgba(255,255,255,0.05);
-    }
-    .emojis span:hover {
-      transform: scale(1.3);
-      background: rgba(0,195,255,0.2);
-    }
-    .emojis span.selected {
-      transform: scale(1.5);
-      background: rgba(0,195,255,0.3);
-      box-shadow: 0 0 20px rgba(0,195,255,0.5);
+      display:flex; align-items:center; justify-content:center;
+      width:60px; height:60px;
+      user-select:none;
+      cursor:pointer;
     }
 
-    /* Feedback text + email input */
+    .emojis span:hover { transform: scale(1.3); background: rgba(0,195,255,0.2);}
+    .emojis span:active { transform: scale(1.2);}
+    .emojis span.selected { transform: scale(1.4); background: rgba(0,195,255,0.3); box-shadow:0 0 20px rgba(0,195,255,0.5); }
+
     textarea, input[type="email"] {
-      width: 100%;
-      padding: 15px;
-      border-radius: 12px;
-      border: 2px solid #333;
-      margin-bottom: 20px;
-      resize: none;
-      font-size: 14px;
-      background: #2a2a2a;
-      color: #f5f5f5;
-      box-sizing: border-box;
-      transition: border-color 0.3s;
+      width:100%;
+      padding:15px;
+      border-radius:12px;
+      border:2px solid #333;
+      margin-bottom:20px;
+      font-size:14px;
+      background:#2a2a2a;
+      color:#f5f5f5;
+      font-family:inherit;
+      resize:vertical;
+      transition:border-color 0.3s, box-shadow 0.3s;
     }
 
-    textarea:focus, input[type="email"]:focus {
-      outline: none;
-      border-color: #00c3ff;
-      box-shadow: 0 0 10px rgba(0,195,255,0.3);
-    }
+    textarea { min-height:100px; max-height:300px; }
 
-    /* Submit button */
+    textarea:focus, input[type="email"]:focus { outline:none; border-color:#00c3ff; box-shadow:0 0 10px rgba(0,195,255,0.3); }
+
     button {
-      background: linear-gradient(45deg, #00c3ff, #0099cc);
-      border: none;
-      padding: 15px 30px;
-      border-radius: 12px;
-      cursor: pointer;
-      font-size: 16px;
-      color: white;
-      font-weight: bold;
-      transition: all 0.3s;
-      width: 100%;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(0,195,255,0.4);
+      background: linear-gradient(45deg,#00c3ff,#0099cc);
+      border:none; padding:15px 30px;
+      border-radius:12px; cursor:pointer;
+      font-size:16px; color:white; font-weight:bold;
+      width:100%; position:relative; overflow:hidden;
     }
 
-    button:disabled {
-      background: #666;
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
-    }
+    button:hover { transform: translateY(-2px); box-shadow:0 5px 15px rgba(0,195,255,0.4);}
+    button:active { transform: translateY(0);}
+    button:disabled { background:#666; cursor:not-allowed; opacity:0.6; }
 
-    .loading {
-      display: none;
-      margin-left: 10px;
-    }
+    .loading { display:none; margin-left:10px; animation:spin 1s linear infinite; }
+    @keyframes spin { from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
 
-    /* Popup confirmation */
     .popup {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-      text-align: center;
-      color: #fff;
-      z-index: 999;
-      border: 1px solid #00c3ff;
-      min-width: 300px;
+      display:none; position:fixed; top:50%; left:50%;
+      transform:translate(-50%,-50%);
+      background: linear-gradient(145deg,#2a2a2a,#1a1a1a);
+      padding:30px; border-radius:20px;
+      box-shadow:0 10px 40px rgba(0,0,0,0.6);
+      text-align:center; color:#fff; z-index:999;
+      border:2px solid #00c3ff; min-width:280px; max-width:90vw;
     }
 
-    .popup h3 {
-      margin: 0 0 15px 0;
-      color: #00c3ff;
-      font-size: 24px;
-    }
+    .popup.success { animation: successPulse 0.5s ease-out; }
+    @keyframes successPulse { 0% { transform:translate(-50%,-50%) scale(0.8); opacity:0;} 50% {transform:translate(-50%,-50%) scale(1.05); opacity:1;} 100% {transform:translate(-50%,-50%) scale(1); opacity:1;} }
 
-    .popup p {
-      margin: 0;
-      color: #ccc;
-      font-size: 16px;
+    .overlay {
+      display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+      background: rgba(0,0,0,0.7); z-index:998; backdrop-filter:blur(5px);
     }
+    .overlay.show { display:block; }
 
-    /* Error message */
     .error {
-      background: #ff4444;
-      color: white;
-      padding: 10px;
-      border-radius: 8px;
-      margin-bottom: 15px;
-      display: none;
+      background: linear-gradient(135deg,#ff4444,#cc0000);
+      color:white; padding:12px; border-radius:8px;
+      margin-bottom:15px; display:none; font-size:14px; border:1px solid rgba(255,255,255,0.2);
     }
 
-    /* Success animation */
-    @keyframes successPulse {
-      0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
-      50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
-      100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    /* Responsive */
+    @media(max-width:600px){
+      body{padding:15px;}
+      .container{padding:25px 20px; border-radius:15px; max-height:90vh; overflow-y:auto;}
+      .emojis{gap:10px;font-size:30px;}
+      .emojis span{width:50px;height:50px;padding:8px;}
+      textarea,input[type="email"]{padding:12px;font-size:14px;}
+      button{padding:12px 25px;font-size:15px;}
+      .popup{padding:25px 20px; min-width:260px;}
     }
 
-    .popup.success {
-      animation: successPulse 0.5s ease-out;
+    @media(max-width:400px){
+      .container{padding:20px 15px;}
+      .emojis{gap:8px;font-size:28px;}
+      .emojis span{width:45px;height:45px;}
+      h1{font-size:22px;}
     }
   </style>
 </head>
 <body>
+  <div class="overlay" id="overlay"></div>
+
   <div class="container">
     <h1>Jarvis Feedback</h1>
     <p>How was your experience with Jarvis?</p>
 
-    <!-- Error message -->
-    <div class="error" id="errorMsg"></div>
+    <div class="error" id="errorMsg" role="alert"></div>
 
-    <!-- Emoji rating row -->
-    <div class="emojis">
-      <span data-rating="😡" title="Very Bad">😡</span>
-      <span data-rating="😕" title="Bad">😕</span>
-      <span data-rating="😐" title="Neutral">😐</span>
-      <span data-rating="😊" title="Good">😊</span>
-      <span data-rating="🤩" title="Excellent">🤩</span>
+    <div class="emojis" role="radiogroup" aria-label="Rating">
+      <span data-rating="😡" title="Very Bad" role="radio" aria-label="Very Bad" tabindex="0">😡</span>
+      <span data-rating="😕" title="Bad" role="radio" aria-label="Bad" tabindex="0">😕</span>
+      <span data-rating="😐" title="Neutral" role="radio" aria-label="Neutral" tabindex="0">😐</span>
+      <span data-rating="😊" title="Good" role="radio" aria-label="Good" tabindex="0">😊</span>
+      <span data-rating="🤩" title="Excellent" role="radio" aria-label="Excellent" tabindex="0">🤩</span>
     </div>
 
-    <!-- Feedback form -->
     <form id="feedbackForm">
-      <textarea id="feedbackText" rows="4" placeholder="Tell us about your experience with Jarvis..." required></textarea>
-      <input type="email" id="email" placeholder="Your Email (optional for updates)" />
+      <textarea id="feedbackText" placeholder="Tell us about your experience..." required minlength="10" maxlength="1000"></textarea>
       <button type="submit" id="submitBtn">
         Submit Feedback
-        <span class="loading" id="loading">⏳</span>
+        <span class="loading" id="loading" aria-hidden="true">⏳</span>
       </button>
     </form>
   </div>
 
-  <!-- Success popup -->
-  <div class="popup" id="popup">
-    <h3>Thank You! 🙌</h3>
+  <div class="popup" id="popup" role="dialog" aria-modal="true">
+    <h3 id="popupTitle">Thank You! 🙌</h3>
     <p>Your feedback has been submitted successfully.<br>We appreciate your input!</p>
   </div>
 
-  <script>
-  const emojis = document.querySelectorAll('.emojis span');
-  const form = document.getElementById('feedbackForm');
-  const popup = document.getElementById('popup');
-  const submitBtn = document.getElementById('submitBtn');
-  const loading = document.getElementById('loading');
-  const errorMsg = document.getElementById('errorMsg');
-  
-  let selectedRating = "";
-
-  // Emoji selection
-  emojis.forEach(emoji => {
-    emoji.addEventListener('click', () => {
-      selectedRating = emoji.getAttribute('data-rating');
-      
-      // Reset all emojis
-      emojis.forEach(e => e.classList.remove('selected'));
-      
-      // Mark selected emoji
-      emoji.classList.add('selected');
-      
-      // Clear any previous errors
-      hideError();
-    });
-  });
-
-  // Form submission
-  form.addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    // Validation
-    if (!selectedRating) {
-      showError('Please select a rating emoji first! 🎯');
-      return;
-    }
-
-    const feedback = document.getElementById('feedbackText').value.trim();
-    if (!feedback) {
-      showError('Please write your feedback! ✍️');
-      return;
-    }
-
-    // Show loading state
-    submitBtn.disabled = true;
-    loading.style.display = 'inline';
-    hideError();
-
-    // Prepare feedback data
-    const feedbackData = {
-      rating: selectedRating,
-      feedback: feedback,
-      email: document.getElementById('email').value.trim(),
-      timestamp: new Date().toLocaleString(),
-      userAgent: navigator.userAgent
-    };
-
-    // For now, always use mailto (works on phone & desktop)
-    sendViaMailto(feedbackData);
-
-    // Reset loading state
-    submitBtn.disabled = false;
-    loading.style.display = 'none';
-  });
-
-  // Mailto fallback method
-  function sendViaMailto(data) {
-    const subject = encodeURIComponent(`Jarvis Feedback - ${data.rating} Rating`);
-    const body = encodeURIComponent(`
-🤖 JARVIS FEEDBACK RECEIVED
-
-Rating: ${data.rating}
-Timestamp: ${data.timestamp}
-
-📝 Feedback:
-${data.feedback}
-
-👤 User Email: ${data.email || 'Not provided'}
-
-🔧 Technical Info:
-${data.userAgent}
-
----
-This feedback was submitted via Jarvis Feedback Form
-    `);
-    
-    const recipients = "rajdeepdeyon2025@outlook.com,rajdeepdeyon2022@gmail.com";
-    window.location.href = `mailto:${recipients}?subject=${subject}&body=${body}`;
-    
-    showSuccess();
-    resetForm();
-  }
-
-  function showSuccess() {
-    popup.classList.add('success');
-    popup.style.display = 'block';
-    setTimeout(() => {
-      popup.style.display = 'none';
-      popup.classList.remove('success');
-    }, 3000);
-  }
-
-  function showError(message) {
-    errorMsg.textContent = message;
-    errorMsg.style.display = 'block';
-  }
-
-  function hideError() {
-    errorMsg.style.display = 'none';
-  }
-
-  function resetForm() {
-    form.reset();
-    emojis.forEach(e => e.classList.remove('selected'));
-    selectedRating = "";
-  }
-</script>
-
+  <script src="feedback.js"></script>
 </body>
 </html>
