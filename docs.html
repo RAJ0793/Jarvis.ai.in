@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JARVIS v1.0 Documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background: #1e293b;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .menu-btn {
+            background: none;
+            border: none;
+            color: #e2e8f0;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .menu-btn:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        header h1 {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .version-badge {
+            background: #3b82f6;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: -280px;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: #111827;
+            padding: 70px 0 20px 0;
+            transition: left 0.3s ease;
+            z-index: 99;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.5);
+            overflow-y: auto;
+        }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+        .sidebar nav {
+            padding: 0 20px;
+        }
+
+        .sidebar nav a {
+            display: block;
+            color: #93c5fd;
+            text-decoration: none;
+            margin: 8px 0;
+            font-size: 14px;
+            padding: 10px 15px;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+
+        .sidebar nav a:hover {
+            background: rgba(147, 197, 253, 0.1);
+            color: white;
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            z-index: 98;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 70px;
+            padding: 30px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            border-radius: 12px;
+            margin-bottom: 40px;
+        }
+
+        .hero h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #60a5fa;
+        }
+
+        .hero .tagline {
+            color: #94a3b8;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+
+        .hero .description {
+            max-width: 700px;
+            margin: 0 auto;
+            color: #cbd5e1;
+        }
+
+        section {
+            margin-bottom: 50px;
+        }
+
+        h2 {
+            color: #60a5fa;
+            border-bottom: 2px solid #334155;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        h3 {
+            color: #93c5fd;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .quote {
+            background: #1e293b;
+            border-left: 4px solid #3b82f6;
+            padding: 15px 20px;
+            margin: 20px 0;
+            font-style: italic;
+            color: #94a3b8;
+        }
+
+        .philosophy-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .philosophy-item {
+            background: #1e293b;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid #3b82f6;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: #1e293b;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th {
+            background: #334155;
+            padding: 12px;
+            text-align: left;
+            color: #60a5fa;
+            font-weight: bold;
+        }
+
+        td {
+            padding: 12px;
+            border-top: 1px solid #334155;
+        }
+
+        tr:hover {
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .feature-card {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 3px solid #3b82f6;
+        }
+
+        .feature-card h4 {
+            color: #60a5fa;
+            margin-bottom: 8px;
+        }
+
+        code {
+            background: #0f172a;
+            padding: 3px 8px;
+            border-radius: 4px;
+            color: #facc15;
+            font-family: 'Courier New', monospace;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #334155;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            margin: 5px 5px 5px 0;
+            color: #93c5fd;
+        }
+
+        .status-planned {
+            background: #7c3aed;
+        }
+
+        .status-dev {
+            background: #f59e0b;
+        }
+
+        .status-ready {
+            background: #10b981;
+        }
+
+        @media(max-width: 768px) {
+            header h1 {
+                font-size: 16px;
+            }
+            
+            .hero h1 {
+                font-size: 1.8em;
+            }
+            
+            main {
+                padding: 20px;
+            }
+
+            .philosophy-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+    <h1>🤖 JARVIS</h1>
+    <span class="version-badge">v1.0</span>
+</header>
+
+<div class="overlay" onclick="toggleSidebar()"></div>
+
+<div class="sidebar">
+    <nav>
+        <a href="#intro" onclick="closeSidebar()">🏠 Introduction</a>
+        <a href="#philosophy" onclick="closeSidebar()">🧠 Philosophy</a>
+        <a href="#features" onclick="closeSidebar()">🚀 Current Features</a>
+        <a href="#development" onclick="closeSidebar()">🛠️ In Development</a>
+        <a href="#future" onclick="closeSidebar()">🔮 Future Plans</a>
+        <a href="#architecture" onclick="closeSidebar()">🧩 Architecture Goal</a>
+        <a href="#tech" onclick="closeSidebar()">🖥️ Tech Stack</a>
+    </nav>
+</div>
+
+<main>
+
+    <div class="hero">
+        <h1>🤖 JARVIS v1.0</h1>
+        <p class="tagline"><strong>Lightweight • Offline-Friendly • Future-Ready</strong></p>
+        <p class="description">
+            JARVIS is a personal AI assistant built to provide essential productivity tools while remaining lightweight and usable without constant internet access. 
+            Version 1.0 focuses on building a <strong>strong and reliable foundation</strong> for a much larger AI ecosystem planned in future releases.
+        </p>
+    </div>
+
+    <section id="philosophy">
+        <h2>🧠 Philosophy Behind JARVIS</h2>
+        <p>JARVIS is designed with a different mindset compared to modern cloud-based assistants.</p>
+        
+        <div class="philosophy-list">
+            <div class="philosophy-item">⚡ Lightweight first</div>
+            <div class="philosophy-item">🔌 Offline priority</div>
+            <div class="philosophy-item">🧱 Strong architectural base</div>
+            <div class="philosophy-item">🧩 Modular and expandable design</div>
+        </div>
+
+        <div class="quote">
+            Small in size. Big in vision.
+        </div>
+    </section>
+
+    <section id="features">
+        <h2>🚀 Features in v1.0</h2>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>🧮 Basic Calculations</td>
+                    <td>Perform arithmetic operations instantly</td>
+                </tr>
+                <tr>
+                    <td>🌐 Basic Web Search</td>
+                    <td>Opens search results in the default browser</td>
+                </tr>
+                <tr>
+                    <td>🗂️ Mini Agent (Limited)</td>
+                    <td>Handles reminders and simple tasks</td>
+                </tr>
+                <tr>
+                    <td>🎤 Voice Assistance</td>
+                    <td>Speech input and voice output</td>
+                </tr>
+                <tr>
+                    <td>🎵 Music Playback</td>
+                    <td>Play local music through commands</td>
+                </tr>
+                <tr>
+                    <td>💻 Lightweight Core</td>
+                    <td>Optimized for low system usage</td>
+                </tr>
+                <tr>
+                    <td>🔌 Offline Friendly</td>
+                    <td>Works without constant internet</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section id="development">
+        <h2>🛠️ In Development (Next Updates)</h2>
+        
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h4>⚙️ JarSetting</h4>
+                <span class="badge status-dev">In Progress</span>
+                <p>GUI settings panel for easy configuration</p>
+            </div>
+            <div class="feature-card">
+                <h4>🧠 Improved Agent</h4>
+                <span class="badge status-dev">In Progress</span>
+                <p>Enhanced intelligence and task handling</p>
+            </div>
+            <div class="feature-card">
+                <h4>🎨 UI/UX Enhancements</h4>
+                <span class="badge status-dev">In Progress</span>
+                <p>Better visual design and user experience</p>
+            </div>
+            <div class="feature-card">
+                <h4>📦 Modular Structure</h4>
+                <span class="badge status-dev">In Progress</span>
+                <p>Better organized feature modules</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="future">
+        <h2>🔮 Planned Future Capabilities</h2>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Planned Feature</th>
+                    <th>Purpose</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>🖼️ Image Generation</td>
+                    <td>AI image creation</td>
+                </tr>
+                <tr>
+                    <td>🌍 WebView Support</td>
+                    <td>Built-in browser inside JARVIS</td>
+                </tr>
+                <tr>
+                    <td>🔌 Arduino / IoT Control</td>
+                    <td>Smart device integration</td>
+                </tr>
+                <tr>
+                    <td>🖥️ Cross-Platform</td>
+                    <td>Windows, Android, Linux, macOS</td>
+                </tr>
+                <tr>
+                    <td>🧠 Advanced Context Agent</td>
+                    <td>Memory + Recall system</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section id="architecture">
+        <h2>🧩 Long-Term Architecture Goal</h2>
+        <p>JARVIS is being developed as a <strong>system companion</strong>, not just an app.</p>
+        
+        <div class="quote">
+            Future direction includes:
+        </div>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h4>🖥️ OS-level Assistance</h4>
+                <span class="badge status-planned">Planned</span>
+                <p>Deep system integration</p>
+            </div>
+            <div class="feature-card">
+                <h4>🎮 Device Control</h4>
+                <span class="badge status-planned">Planned</span>
+                <p>Comprehensive hardware management</p>
+            </div>
+            <div class="feature-card">
+                <h4>🧠 Context Awareness</h4>
+                <span class="badge status-planned">Planned</span>
+                <p>Understanding user patterns and needs</p>
+            </div>
+            <div class="feature-card">
+                <h4>🌐 Hybrid Intelligence</h4>
+                <span class="badge status-planned">Planned</span>
+                <p>Online + Offline capabilities</p>
+            </div>
+            <div class="feature-card">
+                <h4>🚀 Own Ecosystem</h4>
+                <span class="badge status-planned">Planned</span>
+                <p>Complete AI platform expansion</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="tech">
+        <h2>🖥️ Tech Stack</h2>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Component</th>
+                    <th>Technology</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Core Logic</td>
+                    <td>Python</td>
+                </tr>
+                <tr>
+                    <td>Voice Engine</td>
+                    <td>pyttsx3, SpeechRecognition</td>
+                </tr>
+                <tr>
+                    <td>UI (Planned)</td>
+                    <td>Tkinter / Custom GUI</td>
+                </tr>
+                <tr>
+                    <td>Memory System (Planned)</td>
+                    <td>JSON-based recall</td>
+                </tr>
+                <tr>
+                    <td>Hardware Integration (Planned)</td>
+                    <td>Arduino</td>
+                </tr>
+                <tr>
+                    <td>Web Features (Planned)</td>
+                    <td>WebView / Browser control</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+</main>
+
+<script>
+    function toggleSidebar() {
+        const sidebar = document.querySelector('.sidebar');
+        const overlay = document.querySelector('.overlay');
+        
+        sidebar.classList.toggle('active');
+        overlay.classList.toggle('active');
+    }
+
+    function closeSidebar() {
+        const sidebar = document.querySelector('.sidebar');
+        const overlay = document.querySelector('.overlay');
+        
+        sidebar.classList.remove('active');
+        overlay.classList.remove('active');
+    }
+
+    // Smooth scroll to sections
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
