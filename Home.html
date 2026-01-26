@@ -746,14 +746,7 @@
     </div>
 
 </div>
-                
-
-
-
-                
-
-
-                
+                         
                 </div>   
                 <hr>
                 <!--Accordion-->
@@ -778,7 +771,135 @@
             </div>
             <hr>
 
+<!-- Tab 2: Guides -->
+<div id="tab2" class="tab-content">
+    <h2>Step-by-Step Guides</h2>
 
+    <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">
+        Setup Python Environment
+    </button>
+    <div class="panel">
+        <ol>
+            <li>Download Python 3.10 from python.org</li>
+            <li>Install with <b>PATH option enabled</b></li>
+            <li>Verify: <code>python --version</code></li>
+            <li>Upgrade pip: <code>python -m pip install --upgrade pip</code></li>
+            <li>Verify pip: <code>pip --version</code></li>
+        </ol>
+    </div>
+
+    <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">
+        Create & Activate Virtual Environment
+    </button>
+    <div class="panel">
+        <ol>
+            <li>Create: <code>python -m venv jarvis_env</code></li>
+            <li>Activate: <code>jarvis_env\Scripts\activate</code></li>
+            <li>Check if terminal shows <b>(jarvis_env)</b></li>
+        </ol>
+    </div>
+
+    <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">
+        Install Jarvis Requirements
+    </button>
+    <div class="panel">
+        <ol>
+            <li><code>pip install SpeechRecognition pyttsx3 pyaudio</code></li>
+            <li><code>pip install wikipedia pywhatkit</code></li>
+            <li><code>pip install pyautogui psutil</code></li>
+        </ol>
+    </div>
+
+    <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">
+        Voice Recognition Setup
+    </button>
+    <div class="panel">
+        <ul>
+            <li>Check microphone permissions</li>
+            <li>Adjust microphone sensitivity</li>
+            <li>Test mic before running Jarvis</li>
+        </ul>
+    </div>
+
+    <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">
+        How to Run Jarvis
+    </button>
+    <div class="panel">
+        <ol>
+            <li>Activate virtual environment</li>
+            <li>Open Jarvis folder</li>
+            <li>Run: <code>python main.py</code></li>
+        </ol>
+    </div>
+</div>
+
+<hr>
+
+<!-- Tab 3: Troubleshoot -->
+<div id="tab3" class="tab-content">
+    <h2>Troubleshooting</h2>
+
+    <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">
+        Python Not Recognized / PATH Issue
+    </button>
+    <div class="panel">
+        <ul>
+            <li>Reinstall Python with PATH enabled</li>
+            <li>Restart system</li>
+            <li>Check: <code>python --version</code></li>
+        </ul>
+    </div>
+
+    <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">
+        Microphone Issues
+    </button>
+    <div class="panel">
+        <ul>
+            <li>Check microphone permissions</li>
+            <li>Test with other apps</li>
+            <li>Update audio drivers</li>
+        </ul>
+    </div>
+
+    <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">
+        Virtual Environment Not Working
+    </button>
+    <div class="panel">
+        <ul>
+            <li>Ensure VS Code shows <b>(jarvis_env)</b></li>
+            <li>Activate again: <code>jarvis_env\Scripts\activate</code></li>
+            <li>Reinstall packages inside env</li>
+        </ul>
+    </div>
+
+    <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">
+        Pyttsx3 Problems
+    </button>
+    <div class="panel">
+        <ul>
+            <li>Check if installed in virtual environment</li>
+            <li>Run <code>pip list</code></li>
+            <li>Reinstall if needed</li>
+        </ul>
+    </div>
+
+    <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">
+        Pyaudio Installation Error
+    </button>
+    <div class="panel">
+        <ul>
+            <li>Install: <code>pip install pipwin</code></li>
+            <li>Then: <code>pipwin install pyaudio</code></li>
+        </ul>
+    </div>
+
+    <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">
+        In-built Games Not Working
+    </button>
+    <div class="panel">
+        <p>Check if code is correct and dependencies are installed in virtual environment.</p>
+    </div>
+    </div>
 
 
 
