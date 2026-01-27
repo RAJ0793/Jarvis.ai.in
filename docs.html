@@ -2,9 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>JARVIS v1.0 Documentation</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <title>JARVIS Documentation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,545 +14,627 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary-blue: #0175c2;
+            --dark-blue: #02569b;
+            --light-blue: #13b9fd;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f5f5;
+            --text-primary: #1a1a1a;
+            --text-secondary: #666666;
+            --border-color: #e0e0e0;
+            --sidebar-width: 280px;
+            --header-height: 64px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: #0f172a;
-            color: #e2e8f0;
+            font-family: 'Google Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: var(--text-primary);
+            background: var(--bg-primary);
             line-height: 1.6;
         }
 
         /* Header */
-        header {
-            background: #1e293b;
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
+        .header {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            height: var(--header-height);
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
         }
 
-        .menu-btn {
-            background: none;
+        .menu-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: transparent;
             border: none;
-            color: #e2e8f0;
-            font-size: 24px;
+            border-radius: 4px;
             cursor: pointer;
-            padding: 5px 10px;
-            border-radius: 5px;
-            transition: background 0.3s;
+            margin-right: 16px;
+            transition: background 0.2s;
         }
 
-        .menu-btn:hover {
-            background: rgba(255,255,255,0.1);
+        .menu-toggle:hover {
+            background: var(--bg-secondary);
         }
 
-        header h1 {
+        .menu-icon {
+            width: 24px;
+            height: 24px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .menu-icon span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: var(--text-primary);
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        .menu-toggle.active .menu-icon span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .menu-toggle.active .menu-icon span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active .menu-icon span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             font-size: 20px;
-            font-weight: bold;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
         }
 
-        .version-badge {
-            background: #3b82f6;
-            padding: 3px 10px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: bold;
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
         }
 
         /* Sidebar */
         .sidebar {
             position: fixed;
-            left: -280px;
-            top: 0;
-            width: 280px;
-            height: 100vh;
-            background: #111827;
-            padding: 70px 0 20px 0;
-            transition: left 0.3s ease;
-            z-index: 99;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.5);
-            overflow-y: auto;
-        }
-
-        .sidebar.active {
+            top: var(--header-height);
             left: 0;
+            width: var(--sidebar-width);
+            height: calc(100vh - var(--header-height));
+            background: var(--bg-primary);
+            border-right: 1px solid var(--border-color);
+            overflow-y: auto;
+            transform: translateX(-100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 999;
         }
 
-        .sidebar nav {
-            padding: 0 20px;
+        .sidebar.open {
+            transform: translateX(0);
         }
 
-        .sidebar nav a {
-            display: block;
-            color: #93c5fd;
+        .sidebar-content {
+            padding: 24px 0;
+        }
+
+        .nav-section {
+            margin-bottom: 24px;
+        }
+
+        .nav-section-title {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            padding: 0 24px;
+            margin-bottom: 8px;
+        }
+
+        .nav-list {
+            list-style: none;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 10px 24px;
+            color: var(--text-primary);
             text-decoration: none;
-            margin: 8px 0;
             font-size: 14px;
-            padding: 10px 15px;
-            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-link:hover {
+            background: var(--bg-secondary);
+            color: var(--primary-blue);
+        }
+
+        .nav-link.active {
+            background: rgba(1, 117, 194, 0.08);
+            color: var(--primary-blue);
+            border-left-color: var(--primary-blue);
+        }
+
+        .sub-nav-list {
+            list-style: none;
+            display: none;
+            background: var(--bg-secondary);
+        }
+
+        .sub-nav-list.open {
+            display: block;
+        }
+
+        .sub-nav-link {
+            display: block;
+            padding: 8px 24px 8px 48px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .sub-nav-link:hover {
+            color: var(--primary-blue);
+            background: rgba(1, 117, 194, 0.05);
+        }
+
+        .sub-nav-link.active {
+            color: var(--primary-blue);
+            font-weight: 500;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 0;
+            margin-top: var(--header-height);
+            padding: 48px 24px;
+            max-width: 1200px;
+            transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .main-content.sidebar-open {
+            margin-left: var(--sidebar-width);
+        }
+
+        .content-header {
+            margin-bottom: 32px;
+        }
+
+        .content-title {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .content-subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .content-section {
+            margin-bottom: 48px;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .section-subtitle {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 24px 0 12px;
+        }
+
+        .text-block {
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin: 24px 0;
+        }
+
+        .feature-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
             transition: all 0.3s;
         }
 
-        .sidebar nav a:hover {
-            background: rgba(147, 197, 253, 0.1);
+        .feature-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+
+        .feature-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .feature-description {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Google Sans Mono', 'Courier New', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            margin: 16px 0;
+            line-height: 1.6;
+        }
+
+        .note-box {
+            background: rgba(1, 117, 194, 0.08);
+            border-left: 4px solid var(--primary-blue);
+            padding: 16px 20px;
+            border-radius: 4px;
+            margin: 16px 0;
+        }
+
+        .note-title {
+            font-weight: 600;
+            color: var(--primary-blue);
+            margin-bottom: 8px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: var(--primary-blue);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn:hover {
+            background: var(--dark-blue);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary-blue);
             color: white;
         }
 
-        /* Overlay */
         .overlay {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.5);
-            display: none;
-            z-index: 98;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            z-index: 998;
         }
 
         .overlay.active {
-            display: block;
+            opacity: 1;
+            visibility: visible;
         }
 
-        /* Main Content */
-        main {
-            margin-top: 70px;
-            padding: 30px;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .hero {
-            text-align: center;
-            padding: 40px 20px;
-            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-            border-radius: 12px;
-            margin-bottom: 40px;
-        }
-
-        .hero h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            color: #60a5fa;
-        }
-
-        .hero .tagline {
-            color: #94a3b8;
-            font-size: 1.1em;
-            margin-bottom: 20px;
-        }
-
-        .hero .description {
-            max-width: 700px;
-            margin: 0 auto;
-            color: #cbd5e1;
-        }
-
-        section {
-            margin-bottom: 50px;
-        }
-
-        h2 {
-            color: #60a5fa;
-            border-bottom: 2px solid #334155;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            font-size: 1.8em;
-        }
-
-        h3 {
-            color: #93c5fd;
-            margin-top: 25px;
-            margin-bottom: 15px;
-        }
-
-        .quote {
-            background: #1e293b;
-            border-left: 4px solid #3b82f6;
-            padding: 15px 20px;
-            margin: 20px 0;
-            font-style: italic;
-            color: #94a3b8;
-        }
-
-        .philosophy-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
-        }
-
-        .philosophy-item {
-            background: #1e293b;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 3px solid #3b82f6;
-            text-align: center;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            background: #1e293b;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        th {
-            background: #334155;
-            padding: 12px;
-            text-align: left;
-            color: #60a5fa;
-            font-weight: bold;
-        }
-
-        td {
-            padding: 12px;
-            border-top: 1px solid #334155;
-        }
-
-        tr:hover {
-            background: rgba(59, 130, 246, 0.05);
-        }
-
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
-        }
-
-        .feature-card {
-            background: #1e293b;
-            padding: 20px;
-            border-radius: 8px;
-            border-left: 3px solid #3b82f6;
-        }
-
-        .feature-card h4 {
-            color: #60a5fa;
-            margin-bottom: 8px;
-        }
-
-        code {
-            background: #0f172a;
-            padding: 3px 8px;
-            border-radius: 4px;
-            color: #facc15;
-            font-family: 'Courier New', monospace;
-        }
-
-        .badge {
-            display: inline-block;
-            background: #334155;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 0.85em;
-            margin: 5px 5px 5px 0;
-            color: #93c5fd;
-        }
-
-        .status-planned {
-            background: #7c3aed;
-        }
-
-        .status-dev {
-            background: #f59e0b;
-        }
-
-        .status-ready {
-            background: #10b981;
-        }
-
-        @media(max-width: 768px) {
-            header h1 {
-                font-size: 16px;
-            }
-            
-            .hero h1 {
-                font-size: 1.8em;
-            }
-            
-            main {
-                padding: 20px;
+        /* Responsive */
+        @media (min-width: 1024px) {
+            .sidebar {
+                transform: translateX(0);
             }
 
-            .philosophy-list {
-                grid-template-columns: 1fr;
+            .main-content {
+                margin-left: var(--sidebar-width);
+            }
+
+            .menu-toggle {
+                display: none;
+            }
+
+            .overlay {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .content-title {
+                font-size: 36px;
+            }
+
+            .section-title {
+                font-size: 24px;
+            }
+
+            .main-content {
+                padding: 24px 16px;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
+    <header class="header">
+        <button class="menu-toggle" id="menuToggle">
+            <div class="menu-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </button>
+        <a href="index.html" class="logo">
+            <div class="logo-icon">J</div>
+            <span>JARVIS</span>
+        </a>
+    </header>
 
-<header>
-    <button class="menu-btn" onclick="toggleSidebar()">☰</button>
-    <h1>🤖 JARVIS</h1>
-    <span class="version-badge">v1.0</span>
-</header>
+    <!-- Overlay for mobile -->
+    <div class="overlay" id="overlay"></div>
 
-<div class="overlay" onclick="toggleSidebar()"></div>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <nav class="sidebar-content">
+            <!-- General Section -->
+            <div class="nav-section">
+                <div class="nav-section-title">General</div>
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="#jarvis" class="nav-link active">JARVIS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#jaros" class="nav-link">JarOS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#jarui" class="nav-link">JarUI</a>
+                    </li>
+                </ul>
+            </div>
 
-<div class="sidebar">
-    <nav>
-        <a href="#intro" onclick="closeSidebar()">🏠 Introduction</a>
-        <a href="#philosophy" onclick="closeSidebar()">🧠 Philosophy</a>
-        <a href="#features" onclick="closeSidebar()">🚀 Current Features</a>
-        <a href="#development" onclick="closeSidebar()">🛠️ In Development</a>
-        <a href="#future" onclick="closeSidebar()">🔮 Future Plans</a>
-        <a href="#architecture" onclick="closeSidebar()">🧩 Architecture Goal</a>
-        <a href="#tech" onclick="closeSidebar()">🖥️ Tech Stack</a>
-    </nav>
-</div>
+            <!-- Others Section -->
+            <div class="nav-section">
+                <div class="nav-section-title">Others</div>
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="#about" class="nav-link">About</a>
+                        <ul class="sub-nav-list" id="aboutSubNav">
+                            <li><a href="#about-project" class="sub-nav-link">Project Overview</a></li>
+                            <li><a href="#about-team" class="sub-nav-link">Team</a></li>
+                            <li><a href="#about-vision" class="sub-nav-link">Vision</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </aside>
 
-<main>
-
-    <div class="hero">
-        <h1>🤖 JARVIS v1.0</h1>
-        <p class="tagline"><strong>Lightweight • Offline-Friendly • Future-Ready</strong></p>
-        <p class="description">
-            JARVIS is a personal AI assistant built to provide essential productivity tools while remaining lightweight and usable without constant internet access. 
-            Version 1.0 focuses on building a <strong>strong and reliable foundation</strong> for a much larger AI ecosystem planned in future releases.
-        </p>
-    </div>
-
-    <section id="philosophy">
-        <h2>🧠 Philosophy Behind JARVIS</h2>
-        <p>JARVIS is designed with a different mindset compared to modern cloud-based assistants.</p>
-        
-        <div class="philosophy-list">
-            <div class="philosophy-item">⚡ Lightweight first</div>
-            <div class="philosophy-item">🔌 Offline priority</div>
-            <div class="philosophy-item">🧱 Strong architectural base</div>
-            <div class="philosophy-item">🧩 Modular and expandable design</div>
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+        <!-- Welcome Section -->
+        <div class="content-header">
+            <h1 class="content-title">JARVIS Documentation</h1>
+            <p class="content-subtitle">Your comprehensive guide to building and using the JARVIS AI ecosystem</p>
         </div>
 
-        <div class="quote">
-            Small in size. Big in vision.
-        </div>
-    </section>
+        <!-- JARVIS Section -->
+        <section class="content-section" id="jarvis">
+            <h2 class="section-title">🤖 JARVIS</h2>
+            <p class="text-block">
+                JARVIS is a lightweight, offline-friendly personal AI assistant designed to provide essential productivity tools 
+                while maintaining a strong foundation for future AI capabilities.
+            </p>
 
-    <section id="features">
-        <h2>🚀 Features in v1.0</h2>
-        
-        <table>
-            <thead>
-                <tr>
-                    <th>Feature</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>🧮 Basic Calculations</td>
-                    <td>Perform arithmetic operations instantly</td>
-                </tr>
-                <tr>
-                    <td>🌐 Basic Web Search</td>
-                    <td>Opens search results in the default browser</td>
-                </tr>
-                <tr>
-                    <td>🗂️ Mini Agent (Limited)</td>
-                    <td>Handles reminders and simple tasks</td>
-                </tr>
-                <tr>
-                    <td>🎤 Voice Assistance</td>
-                    <td>Speech input and voice output</td>
-                </tr>
-                <tr>
-                    <td>🎵 Music Playback</td>
-                    <td>Play local music through commands</td>
-                </tr>
-                <tr>
-                    <td>💻 Lightweight Core</td>
-                    <td>Optimized for low system usage</td>
-                </tr>
-                <tr>
-                    <td>🔌 Offline Friendly</td>
-                    <td>Works without constant internet</td>
-                </tr>
-            </tbody>
-        </table>
-    </section>
-
-    <section id="development">
-        <h2>🛠️ In Development (Next Updates)</h2>
-        
-        <div class="feature-grid">
-            <div class="feature-card">
-                <h4>⚙️ JarSetting</h4>
-                <span class="badge status-dev">In Progress</span>
-                <p>GUI settings panel for easy configuration</p>
+            <h3 class="section-subtitle">Core Features</h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎤</div>
+                    <h4 class="feature-title">Voice Assistance</h4>
+                    <p class="feature-description">
+                        Natural speech input and output using advanced text-to-speech and speech recognition technologies.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🧮</div>
+                    <h4 class="feature-title">Smart Calculations</h4>
+                    <p class="feature-description">
+                        Perform complex arithmetic operations instantly through voice or text commands.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h4 class="feature-title">Web Integration</h4>
+                    <p class="feature-description">
+                        Seamless web search capabilities that open results directly in your default browser.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎵</div>
+                    <h4 class="feature-title">Music Control</h4>
+                    <p class="feature-description">
+                        Play and control your local music library with simple voice commands.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🗂️</div>
+                    <h4 class="feature-title">Mini Agent</h4>
+                    <p class="feature-description">
+                        Handle reminders and simple task management efficiently.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h4 class="feature-title">Lightweight Core</h4>
+                    <p class="feature-description">
+                        Optimized for minimal system resource usage without compromising functionality.
+                    </p>
+                </div>
             </div>
-            <div class="feature-card">
-                <h4>🧠 Improved Agent</h4>
-                <span class="badge status-dev">In Progress</span>
-                <p>Enhanced intelligence and task handling</p>
+
+            <h3 class="section-subtitle">Getting Started</h3>
+            <p class="text-block">
+                To get started with JARVIS, follow these simple steps:
+            </p>
+
+            <div class="note-box">
+                <div class="note-title">💡 Quick Tip</div>
+                <p>Make sure you have Python 3.8 or higher installed on your system before proceeding with the installation.</p>
             </div>
-            <div class="feature-card">
-                <h4>🎨 UI/UX Enhancements</h4>
-                <span class="badge status-dev">In Progress</span>
-                <p>Better visual design and user experience</p>
+
+            <div class="code-block">
+# Clone the repository
+git clone https://github.com/RAJ0793/Jarvis.ai.in.git
+
+# Navigate to the directory
+cd Jarvis.ai.in
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run JARVIS
+python main.py
             </div>
-            <div class="feature-card">
-                <h4>📦 Modular Structure</h4>
-                <span class="badge status-dev">In Progress</span>
-                <p>Better organized feature modules</p>
+
+            <h3 class="section-subtitle">Configuration</h3>
+            <p class="text-block">
+                JARVIS can be configured through the settings panel. Access it by running:
+            </p>
+            <div class="code-block">
+python JarSetting.py
             </div>
-        </div>
-    </section>
 
-    <section id="future">
-        <h2>🔮 Planned Future Capabilities</h2>
-        
-        <table>
-            <thead>
-                <tr>
-                    <th>Planned Feature</th>
-                    <th>Purpose</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>🖼️ Image Generation</td>
-                    <td>AI image creation</td>
-                </tr>
-                <tr>
-                    <td>🌍 WebView Support</td>
-                    <td>Built-in browser inside JARVIS</td>
-                </tr>
-                <tr>
-                    <td>🔌 Arduino / IoT Control</td>
-                    <td>Smart device integration</td>
-                </tr>
-                <tr>
-                    <td>🖥️ Cross-Platform</td>
-                    <td>Windows, Android, Linux, macOS</td>
-                </tr>
-                <tr>
-                    <td>🧠 Advanced Context Agent</td>
-                    <td>Memory + Recall system</td>
-                </tr>
-            </tbody>
-        </table>
-    </section>
-
-    <section id="architecture">
-        <h2>🧩 Long-Term Architecture Goal</h2>
-        <p>JARVIS is being developed as a <strong>system companion</strong>, not just an app.</p>
-        
-        <div class="quote">
-            Future direction includes:
-        </div>
-
-        <div class="feature-grid">
-            <div class="feature-card">
-                <h4>🖥️ OS-level Assistance</h4>
-                <span class="badge status-planned">Planned</span>
-                <p>Deep system integration</p>
+            <div style="margin-top: 24px;">
+                <a href="#" class="btn">Download JARVIS</a>
+                <a href="#" class="btn btn-outline" style="margin-left: 12px;">View on GitHub</a>
             </div>
-            <div class="feature-card">
-                <h4>🎮 Device Control</h4>
-                <span class="badge status-planned">Planned</span>
-                <p>Comprehensive hardware management</p>
+        </section>
+
+        <!-- JarOS Section -->
+        <section class="content-section" id="jaros">
+            <h2 class="section-title">🖥️ JarOS</h2>
+            <p class="text-block">
+                JarOS is the upcoming operating system layer that will provide deep system integration and OS-level assistance capabilities.
+            </p>
+
+            <div class="note-box">
+                <div class="note-title">🚧 Under Development</div>
+                <p>JarOS is currently in active development. Check back soon for updates and early access opportunities.</p>
             </div>
-            <div class="feature-card">
-                <h4>🧠 Context Awareness</h4>
-                <span class="badge status-planned">Planned</span>
-                <p>Understanding user patterns and needs</p>
+
+            <h3 class="section-subtitle">Planned Features</h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h4 class="feature-title">System Integration</h4>
+                    <p class="feature-description">
+                        Deep OS-level integration for seamless system control and automation.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h4 class="feature-title">Cross-Platform</h4>
+                    <p class="feature-description">
+                        Support for Windows, macOS, Linux, and Android platforms.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔌</div>
+                    <h4 class="feature-title">IoT Control</h4>
+                    <p class="feature-description">
+                        Arduino and IoT device integration for smart home automation.
+                    </p>
+                </div>
             </div>
-            <div class="feature-card">
-                <h4>🌐 Hybrid Intelligence</h4>
-                <span class="badge status-planned">Planned</span>
-                <p>Online + Offline capabilities</p>
-            </div>
-            <div class="feature-card">
-                <h4>🚀 Own Ecosystem</h4>
-                <span class="badge status-planned">Planned</span>
-                <p>Complete AI platform expansion</p>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="tech">
-        <h2>🖥️ Tech Stack</h2>
-        
-        <table>
-            <thead>
-                <tr>
-                    <th>Component</th>
-                    <th>Technology</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Core Logic</td>
-                    <td>Python</td>
-                </tr>
-                <tr>
-                    <td>Voice Engine</td>
-                    <td>pyttsx3, SpeechRecognition</td>
-                </tr>
-                <tr>
-                    <td>UI (Planned)</td>
-                    <td>Tkinter / Custom GUI</td>
-                </tr>
-                <tr>
-                    <td>Memory System (Planned)</td>
-                    <td>JSON-based recall</td>
-                </tr>
-                <tr>
-                    <td>Hardware Integration (Planned)</td>
-                    <td>Arduino</td>
-                </tr>
-                <tr>
-                    <td>Web Features (Planned)</td>
-                    <td>WebView / Browser control</td>
-                </tr>
-            </tbody>
-        </table>
-    </section>
+        <!-- JarUI Section -->
+        <section class="content-section" id="jarui">
+            <h2 class="section-title">🎨 JarUI</h2>
+            <p class="text-block">
+                JarUI is the modern, intuitive user interface framework designed specifically for JARVIS applications.
+            </p>
 
-</main>
-
-<script>
-    function toggleSidebar() {
-        const sidebar = document.querySelector('.sidebar');
-        const overlay = document.querySelector('.overlay');
-        
-        sidebar.classList.toggle('active');
-        overlay.classList.toggle('active');
-    }
-
-    function closeSidebar() {
-        const sidebar = document.querySelector('.sidebar');
-        const overlay = document.querySelector('.overlay');
-        
-        sidebar.classList.remove('active');
-        overlay.classList.remove('active');
-    }
-
-    // Smooth scroll to sections
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-</script>
-
-</body>
-</html>
+            <h3 class="section-subtitle">Design Philosophy</h3>
+            <p class="text-block">
+                JarUI follows a clean, minimalist design approach that prioritizes usability and accessibility while maintaining 
+                a modern, professional aesthetic.
+  
