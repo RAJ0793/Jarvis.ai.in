@@ -1,1 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JARVIS Settings</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
+    h2{
+      margin-bottom: 8px;
+    }
+    #Update{
+      margin-top: 32px;
+    }
+    #sub-massage{
+      margin-top: 32px; 
+      padding-top: 24px; 
+      border-top: 1px solid var(--border-color); 
+      color: var(--text-secondary);
+      font-size: 0.9em;
+    }
+    :root {
+      --primary-color: #667eea;
+      --primary-dark: #764ba2;
+      --accent-color: #2563eb;
+      --accent-dark: #1e40af;
+      --success-color: #10b981;
+      --warning-color: #f59e0b;
+      --danger-color: #ef4444;
+      --bg-primary: #ffffff;
+      --bg-secondary: #f8fafc;
+      --bg-tertiary: #f1f5f9;
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
+      --border-color: #e2e8f0;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+      --radius-sm: 6px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+    }
+
+    [data-theme="dark"] {
+      --bg-primary: #1e293b;
+      --bg-secondary: #0f172a;
+      --bg-tertiary: #334155;
+      --text-primary: #f1f5f9;
+      --text-secondary: #cbd5e1;
+      --border-color: #475569;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+      color: var(--text-primary);
+      line-height: 1.6;
+      transition: all 0.3s ease;
+    }
+
+    .container {
+      display: flex;
+      min-height: 100vh;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* Mobile Menu Toggle */
+    .mobile-menu-toggle {
+      display: none;
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      background: var(--accent-color);
+      color: white;
+      border: none;
+      border-radius: var(--radius-md);
+      padding: 12px;
+      cursor: pointer;
+      box-shadow: var(--shadow-lg);
+      transition: all 0.3s ease;
+    }
+
+    .mobile-menu-toggle:hover {
+      transform: scale(1.05);
+    }
+
+    .sidebar {
+      width: 280px;
+      background: var(--bg-primary);
+      border-right: 1px solid var(--border-color);
+      box-shadow: var(--shadow-lg);
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 100;
+    }
+
+    #successMasage{
+      display: none;
+    }
+    .sidebar-header {
+      padding: 24px 20px;
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sidebar-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>') repeat;
+    }
+
+    .sidebar-header h2 {
+      margin: 0;
+      font-size: 1.4em;
+      font-weight: 700;
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .status-indicator {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--success-color);
+      animation: pulse 2s infinite;
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.1); }
+    }
+
+    .nav-menu {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .nav-item {
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      padding: 18px 24px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: var(--text-primary);
+      font-weight: 500;
+      gap: 12px;
+      position: relative;
+    }
+
+    .nav-link::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 0;
+      background: var(--accent-color);
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover {
+      background: var(--bg-secondary);
+      padding-left: 32px;
+    }
+
+    .nav-link.active {
+      background: linear-gradient(90deg, var(--accent-color), rgba(37, 99, 235, 0.1));
+      color: var(--accent-color);
+      font-weight: 600;
+    }
+
+    .nav-link.active::before {
+      width: 4px;
+    }
+
+    .nav-icon {
+      font-size: 1.1em;
+      min-width: 20px;
+    }
+
+    .main-content {
+      flex: 1;
+      padding: 32px;
+      overflow-y: auto;
+      background: var(--bg-secondary);
+    }
+
+    .content-header {
+      margin-bottom: 32px;
+    }
+
+    .content-title {
+      font-size: 2em;
+      font-weight: 700;
+      margin: 0 0 8px 0;
+      color: var(--text-primary);
+    }
+
+    .content-subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1em;
+    }
+
+    .content-section {
+      display: none;
+      animation: fadeInUp 0.4s ease;
+    }
+
+    .content-section.active {
+      display: block;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .setting-card {
+      background: var(--bg-primary);
+      margin-bottom: 24px;
+      padding: 28px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border-color);
+      transition: all 0.3s ease;
+    }
+
+    .setting-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .setting-card h3 {
+      margin: 0 0 24px 0;
+      font-size: 1.3em;
+      font-weight: 600;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .card-icon {
+      font-size: 1.2em;
+      color: var(--accent-color);
+    }
+
+    .setting-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding: 16px;
+      background: var(--bg-secondary);
+      border-radius: var(--radius-md);
+      transition: all 0.2s ease;
+    }
+
+    .setting-row:hover {
+      background: var(--bg-tertiary);
+    }
+
+    .setting-info {
+      flex: 1;
+    }
+
+    .setting-label {
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .setting-description {
+      font-size: 0.9em;
+      color: var(--text-secondary);
+    }
+
+    .setting-control {
+      margin-left: 16px;
+    }
+
+    /* Custom Toggle Switch */
+    .toggle-switch {
+      position: relative;
+      width: 52px;
+      height: 28px;
+      background: #cbd5e1;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .toggle-switch.active {
+      background: var(--accent-color);
+    }
+
+    .toggle-switch::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 24px;
+      height: 24px;
+      background: white;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .toggle-switch.active::after {
+      transform: translateX(24px);
+    }
+
+    .form-input, .form-select {
+      width: 100%;
+      max-width: 280px;
+      padding: 12px 16px;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      transition: all 0.3s ease;
+    }
+
+    .form-input:focus, .form-select:focus {
+      outline: none;
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .btn {
+      padding: 14px 28px;
+      background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-dark) 100%);
+      color: white;
+      border: none;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn-secondary {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      border: 2px solid var(--border-color);
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-secondary);
+      box-shadow: var(--shadow-md);
+    }
+
+    .alert {
+      padding: 16px 20px;
+      border-radius: var(--radius-md);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 500;
+    }
+
+    .alert-warning {
+      background: #fef3c7;
+      border: 1px solid var(--warning-color);
+      color: #92400e;
+    }
+
+    .alert-success {
+      background: #d1fae5;
+      border: 1px solid var(--success-color);
+      color: #065f46;
+    }
+
+    .version-card {
+      text-align: center;
+      padding: 40px;
+      background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-color);
+    }
+
+    .version-logo {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+      border-radius: 50%;
+      margin: 0 auto 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2em;
+      color: white;
+      font-weight: bold;
+    }
+
+    .floating-save-btn {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      z-index: 999;
+      border-radius: 50px;
+      padding: 16px 24px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .mobile-menu-toggle {
+        display: block;
+      }
+
+      .container {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        position: fixed;
+        top: 0;
+        left: -280px;
+        height: 100vh;
+        z-index: 999;
+        transition: left 0.3s ease;
+      }
+
+      .sidebar.active {
+        left: 0;
+      }
+
+      .sidebar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 998;
+        display: none;
+      }
+
+      .sidebar-overlay.active {
+        display: block;
+      }
+
+      .main-content {
+        padding: 80px 16px 32px;
+        margin-left: 0;
+      }
+
+      .content-title {
+        font-size: 1.6em;
+      }
+
+      .setting-card {
+        padding: 20px;
+      }
+
+      .setting-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .setting-control {
+        margin-left: 0;
+        align-self: flex-end;
+      }
+
+      .form-input, .form-select {
+        max-width: 100%;
+      }
+
+      .floating-save-btn {
+        bottom: 20px;
+        right: 20px;
+        padding: 14px 20px;
+      }
+    }
+
+    /* Dark mode specific styles */
+    [data-theme="dark"] .toggle-switch {
+      background: #475569;
+    }
+
+    [data-theme="dark"] .alert-warning {
+      background: #451a03;
+      border-color: #a16207;
+      color: #fbbf24;
+    }
+
+    [data-theme="dark"] .alert-success {
+      background: #022c22;
+      border-color: #047857;
+      color: #34d399;
+    }
+
+    .version-info-text {
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+    }
+
+    .grid-info {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      text-align: left;
+      margin: 24px 0;
+    }
+  </style>
+</head>
+<body>
+  <button class="mobile-menu-toggle" id="mobileMenuToggle">
+    <span class="nav-icon">☰</span>
+  </button>
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <div class="container">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h2>
+          <span>🤖</span>
+          JARVIS
+          <span class="status-indicator"></span>
+        </h2>
+      </div>
+      <nav>
+        <ul class="nav-menu">
+          <li class="nav-item">
+            <a href="#" class="nav-link active" data-section="general">
+              <span class="nav-icon">⚙️</span>
+              <span>General</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link" data-section="appearance">
+              <span class="nav-icon">🎨</span>
+              <span>Appearance</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link" data-section="security">
+              <span class="nav-icon">🔐</span>
+              <span>Security</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link" data-section="about">
+              <span class="nav-icon">ℹ️</span>
+              <span>About</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <div class="alert alert-success" id="successMessage">
+        <span>✅</span>
+        Settings saved successfully!
+      </div>
+
+      <!-- General Section -->
+      <section class="content-section active" id="general">
+        <div class="content-header">
+          <h1 class="content-title">General Settings</h1>
+          <p class="content-subtitle">Configure your JARVIS system preferences</p>
+        </div>
+
+        <div class="setting-card">
+          <h3>
+            <span class="card-icon">🚀</span>
+            System Behavior
+          </h3>
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Auto-start on boot</div>
+              <div class="setting-description">Launch JARVIS automatically when your system starts</div>
+            </div>
+            <div class="setting-control">
+              <div class="toggle-switch active" data-setting="autoStart">
+              </div>
+            </div>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Desktop notifications</div>
+              <div class="setting-description">Show system notifications for important events</div>
+            </div>
+            <div class="setting-control">
+              <div class="toggle-switch active" data-setting="notifications">
+              </div>
+            </div>
+          </div>
+          
+           <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Auto update</div>
+              <div class="setting-description">Enabled,if you want to keep your Jarvis updated</div>
+            </div>
+            <div class="setting-control">
+              <div class="toggle-switch active" data-setting="autoUpdate">
+              </div>
+            </div> 
+          </div>
+          
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Username</div>
+              <div class="setting-description">How JARVIS should address you</div>
+            </div>
+            <div class="setting-control">
+              <input type="text" class="form-input" id="username" value="User" placeholder="Enter your name">
+            </div>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Language</div>
+              <div class="setting-description">Interface and response language</div>
+            </div>
+            <div class="setting-control">
+              <select class="form-select" id="language" aria-label="Select interface language" title="Interface language">
+                <option value="en">English</option>
+                <option value="es">Español</option>
+                <option value="fr">Français</option>
+                <option value="de">Deutsch</option>
+                <option value="hi">हिंदी</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Appearance Section -->
+      <section class="content-section" id="appearance">
+        <div class="content-header">
+          <h1 class="content-title">Appearance</h1>
+          <p class="content-subtitle">Customize the visual experience</p>
+        </div>
+
+        <div class="setting-card">
+          <h3>
+            <span class="card-icon">🌙</span>
+            Theme Settings
+          </h3>
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Theme mode</div>
+              <div class="setting-description">Choose your preferred color scheme</div>
+            </div>
+            <div class="setting-control">
+              <select class="form-select" id="themeSelect">
+                <option value="light">Light Mode</option>
+                <option value="dark">Dark Mode</option>
+                <option value="system">System Default</option>
+              </select>
+            </div>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Compact layout</div>
+              <div class="setting-description">Use less spacing for a denser interface</div>
+            </div>
+            <div class="setting-control">
+              <div class="toggle-switch" data-setting="compactMode">
+              </div>
+            </div>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Smooth animations</div>
+              <div class="setting-description">Enable interface animations and transitions</div>
+            </div>
+            <div class="setting-control">
+              <div class="toggle-switch active" data-setting="animations">
+              </div>
+            </div>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Font size</div>
+              <div class="setting-description">Adjust text size for better readability</div>
+            </div>
+            <div class="setting-control">
+              <select class="form-select" id="fontSize">
+                <option value="small">Small</option>
+                <option value="medium" selected>Medium</option>
+                <option value="large">Large</option>
+                <option value="xl">Extra Large</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Security Section -->
+      <section class="content-section" id="security">
+        <div class="content-header">
+          <h1 class="content-title">Security & Privacy</h1>
+          <p class="content-subtitle">Protect your data and control access</p>
+        </div>
+
+        <div class="alert alert-warning">
+          <span>⚠️</span>
+          These security settings affect your system protection. Review changes carefully.
+        </div>
+
+        <div class="setting-card">
+          <h3>
+            <span class="card-icon">🛡️</span>
+            Access Control
+          </h3>
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Auto-lock system</div>
+              <div class="setting-description">Lock JARVIS after period of inactivity</div>
+            </div>
+            <div class="setting-control">
+              <div class="toggle-switch active" data-setting="autoLock">
+              </div>
+            </div>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Lock timeout</div>
+              <div class="setting-description">Time before automatic system lock</div>
+            </div>
+            <div class="setting-control">
+              <select class="form-select" id="lockTimeout">
+                <option value="5">5 minutes</option>
+                <option value="10" selected>10 minutes</option>
+                <option value="30">30 minutes</option>
+                <option value="60">1 hour</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="setting-card">
+          <h3>
+            <span class="card-icon">📊</span>
+            Data & Privacy
+          </h3>
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Analytics collection</div>
+              <div class="setting-description">Help improve JARVIS by sharing anonymous usage data</div>
+            </div>
+            <div class="setting-control">
+              <div class="toggle-switch" data-setting="dataCollection">
+              </div>
+            </div>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Cloud backup</div>
+              <div class="setting-description">Store encrypted settings backup in cloud</div>
+            </div>
+            <div class="setting-control">
+              <div class="toggle-switch" data-setting="cloudBackup">
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- About Section -->
+      <section class="content-section" id="about">
+        <div class="content-header">
+          <h1 class="content-title">About JARVIS</h1>
+          <p class="content-subtitle">System information and credits</p>
+        </div>
+
+        <div class="version-card">
+          <div class="version-logo">J</div>
+          <h2>JARVIS AI Assistant</h2>
+          <p class="version-info-text">Just A Rather Very Intelligent System</p>
+          
+          <div class="grid-info">
+            <div>
+              <strong>Version:</strong> 2.1.0
+            </div>
+            <div>
+              <strong>Build:</strong> 20250914
+            </div>
+            <div>
+              <strong>Developer:</strong> @RAJDEEPDEY
+            </div>
+            <div>
+              <strong>License:</strong> Proprietary
+            </div>
+          </div>
+
+          <div id="Update">
+            <button class="btn btn-secondary" onclick="checkUpdates()">
+              <span>🔄</span>
+              Check for Updates
+            </button>
+          </div>
+
+          <div id="sub-massage">
+            <p>© 2025 Your AI. All rights reserved.</p>
+            <p>Built with ❤️ for enhanced productivity</p>
+          </div>
+        </div>
+      </section>
+
+      <button class="btn floating-save-btn" onclick="saveAllSettings()">
+        <span>💾</span>
+        Save Changes
+      </button>
+    </main>
+  </div>
+
+  <script>
+    // Settings state management
+    let settings = {
+      autoStart: true,
+      notifications: true,
+      autoUpdate: true,
+      username: 'Tony Stark',
+      language: 'en',
+      theme: 'dark',
+      compactMode: false,
+      animations: true,
+      fontSize: 'medium',
+      autoLock: true,
+      lockTimeout: '10',
+      dataCollection: false,
+      cloudBackup: false
+    };
+
+    // Mobile menu functionality
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const sidebar = document.getElementById('sidebar');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+    mobileMenuToggle.addEventListener('click', () => {
+      sidebar.classList.add('active');
+      sidebarOverlay.classList.add('active');
+    });
+
+    sidebarOverlay.addEventListener('click', () => {
+      sidebar.classList.remove('active');
+      sidebarOverlay.classList.remove('active');
+    });
+
+    // Navigation functionality
+    const navLinks = document.querySelectorAll('.nav-link');
+    const contentSections = document.querySelectorAll('.content-section');
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        // Close mobile menu
+        sidebar.classList.remove('active');
+        sidebarOverlay.classList.remove('active');
+        
+        // Remove active class from all links and sections
+        navLinks.forEach(l => l.classList.remove('active'));
+        contentSections.forEach(s => s.classList.remove('active'));
+        
+        // Add active class to clicked link
+        link.classList.add('active');
+        
+        // Show corresponding section
+        const sectionId = link.getAttribute('data-section');
+        document.getElementById(sectionId).classList.add('active');
+      });
+    });
+
+    // Toggle switch functionality
+    const toggleSwitches = document.querySelectorAll('.toggle-switch');
+    
+    toggleSwitches.forEach(toggle => {
+      toggle.addEventListener('click', () => {
+        const setting = toggle.getAttribute('data-setting');
+        const isActive = toggle.classList.contains('active');
+        
+        if (isActive) {
+          toggle.classList.remove('active');
+          settings[setting] = false;
+        } else {
+          toggle.classList.add('active');
+          settings[setting] = true;
+        }
+        
+        // Apply immediate changes for certain settings
+        if (setting === 'theme') {
+          applyTheme();
+        }
+        
+        showSettingsChanged();
+      });
+    });
+
+    // Theme functionality
+    const themeSelect = document.getElementById('themeSelect');
+    
+    themeSelect.addEventListener('change', (e) => {
+      settings.theme = e.target.value;
+      applyTheme();
+      showSettingsChanged();
+    });
+
+    function applyTheme() {
+      const theme = settings.theme;
+      
+      if (theme === 'dark') {
+        document.body.setAttribute('data-theme', 'dark');
+      } else if (theme === 'light') {
+        document.body.removeAttribute('data-theme');
+      } else if (theme === 'system') {
+        // Detect system preference
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          document.body.setAttribute('data-theme', 'dark');
+        } else {
+          document.body.removeAttribute('data-theme');
+        }
+      }
+    }
+
+    // Input change handlers
+    function setupInputHandlers() {
+      const inputs = document.querySelectorAll('.form-input, .form-select');
+      
+      inputs.forEach(input => {
+        input.addEventListener('change', (e) => {
+          const setting = e.target.id;
+          settings[setting] = e.target.value;
+          showSettingsChanged();
+        });
+      });
+    }
+
+    // Settings changed indicator
+    let settingsChangedTimeout;
+    
+    function showSettingsChanged() {
+      const saveBtn = document.querySelector('.floating-save-btn');
+      saveBtn.style.background = 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)';
+      saveBtn.innerHTML = '<span>⚠️</span> Unsaved Changes';
+      
+      clearTimeout(settingsChangedTimeout);
+      settingsChangedTimeout = setTimeout(() => {
+        saveBtn.style.background = 'linear-gradient(135deg, var(--accent-color) 0%, var(--accent-dark) 100%)';
+        saveBtn.innerHTML = '<span>💾</span> Save Changes';
+      }, 5000);
+    }
+
+    // Save settings function
+    async function saveAllSettings() {
+      const saveBtn = document.querySelector('.floating-save-btn');
+      const successMessage = document.getElementById('successMessage');
+      
+      // Show loading state
+      saveBtn.innerHTML = '<span>⏳</span> Saving...';
+      saveBtn.disabled = true;
+      
+      try {
+        // Simulate API call
+        const response = await fetch('http://localhost:5000/update_settings', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(settings)
+        });
+        
+        if (response.ok) {
+          // Success
+          successMessage.style.display = 'flex';
+          setTimeout(() => {
+            successMessage.style.display = 'none';
+          }, 3000);
+          
+          // Apply settings immediately
+          applyTheme();
+          
+          // Reset save button
+          saveBtn.innerHTML = '<span>✅</span> Saved!';
+          setTimeout(() => {
+            saveBtn.innerHTML = '<span>💾</span> Save Changes';
+          }, 2000);
+          
+        } else {
+          throw new Error('Failed to save settings');
+        }
+        
+      } catch (error) {
+        console.error('Error saving settings:', error);
+        
+        // Show error state
+        saveBtn.innerHTML = '<span>❌</span> Error - Retry';
+        saveBtn.style.background = 'linear-gradient(135deg, var(--danger-color) 0%, #dc2626 100%)';
+        
+        setTimeout(() => {
+          saveBtn.innerHTML = '<span>💾</span> Save Changes';
+          saveBtn.style.background = 'linear-gradient(135deg, var(--accent-color) 0%, var(--accent-dark) 100%)';
+        }, 3000);
+      } finally {
+        saveBtn.disabled = false;
+      }
+    }
+
+    // Update individual setting (for real-time updates)
+    async function updateSetting(key, value) {
+      try {
+        const response = await fetch('http://localhost:5000/update_settings', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ [key]: value })
+        });
+        
+        if (response.ok) {
+          settings[key] = value;
+          console.log(`Updated ${key}:`, value);
+        }
+      } catch (error) {
+        console.error('Error updating setting:', error);
+      }
+    }
+
+    // Check for updates function
+    async function checkUpdates() {
+      const btn = event.target;
+      const originalText = btn.innerHTML;
+      
+      btn.innerHTML = '<span>🔄</span> Checking...';
+      btn.disabled = true;
+      
+      // Simulate update check
+      setTimeout(() => {
+        btn.innerHTML = '<span>✅</span> Up to date';
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+          btn.disabled = false;
+        }, 2000);
+      }, 1500);
+    }
+
+    // Load settings from localStorage or server
+    function loadSettings() {
+      try {
+        const savedSettings = localStorage.getItem('jarvis-settings');
+        if (savedSettings) {
+          settings = { ...settings, ...JSON.parse(savedSettings) };
+        }
+      } catch (error) {
+        console.error('Error loading settings:', error);
+      }
+      
+      // Apply loaded settings to UI
+      applySettingsToUI();
+    }
+
+    function applySettingsToUI() {
+      // Set input values
+      Object.keys(settings).forEach(key => {
+        const element = document.getElementById(key);
+        if (element) {
+          if (element.type === 'checkbox') {
+            element.checked = settings[key];
+          } else {
+            element.value = settings[key];
+          }
+        }
+      });
+      
+      // Set toggle switches
+      toggleSwitches.forEach(toggle => {
+        const setting = toggle.getAttribute('data-setting');
+        if (settings[setting]) {
+          toggle.classList.add('active');
+        } else {
+          toggle.classList.remove('active');
+        }
+      });
+      
+      // Apply theme
+      themeSelect.value = settings.theme || 'dark';
+      applyTheme();
+    }
+
+    // Backup settings to localStorage
+    function backupSettings() {
+      try {
+        localStorage.setItem('jarvis-settings', JSON.stringify(settings));
+      } catch (error) {
+        console.error('Error backing up settings:', error);
+      }
+    }
+
+    // Auto-save settings periodically
+    setInterval(() => {
+      backupSettings();
+    }, 30000); // Every 30 seconds
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+      // Ctrl/Cmd + S to save
+      if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+        e.preventDefault();
+        saveAllSettings();
+      }
+      
+      // Escape to close mobile menu
+      if (e.key === 'Escape') {
+        sidebar.classList.remove('active');
+        sidebarOverlay.classList.remove('active');
+      }
+    });
+
+    // System theme change detection
+    if (window.matchMedia) {
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (settings.theme === 'system') {
+          applyTheme();
+        }
+      });
+    }
+
+    // Performance monitoring
+    function monitorPerformance() {
+      const observer = new PerformanceObserver((list) => {
+        for (const entry of list.getEntries()) {
+          if (entry.entryType === 'navigation') {
+            console.log('Page load time:', entry.loadEventEnd - entry.loadEventStart, 'ms');
+          }
+        }
+      });
+      
+      observer.observe({ entryTypes: ['navigation'] });
+    }
+
+    // Accessibility enhancements
+    function enhanceAccessibility() {
+      // Add focus indicators for keyboard navigation
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Tab') {
+          document.body.classList.add('keyboard-navigation');
+        }
+      });
+      
+      document.addEventListener('mousedown', () => {
+        document.body.classList.remove('keyboard-navigation');
+      });
+      
+      // Screen reader announcements
+      function announceToScreenReader(message) {
+        const announcement = document.createElement('div');
+        announcement.setAttribute('aria-live', 'polite');
+        announcement.setAttribute('aria-atomic', 'true');
+        announcement.setAttribute('class', 'sr-only');
+        announcement.style.position = 'absolute';
+        announcement.style.left = '-10000px';
+        announcement.style.width = '1px';
+        announcement.style.height = '1px';
+        announcement.style.overflow = 'hidden';
+        
+        document.body.appendChild(announcement);
+        announcement.textContent = message;
+        
+        setTimeout(() => {
+          document.body.removeChild(announcement);
+        }, 1000);
+      }
+      
+      // Announce when settings are saved
+      const originalSaveFunction = saveAllSettings;
+      saveAllSettings = async function() {
+        await originalSaveFunction();
+        announceToScreenReader('Settings have been saved successfully');
+      };
+    }
+
+    // Initialize everything when page loads
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('🤖 JARVIS Settings Panel Initialized');
+      
+      loadSettings();
+      setupInputHandlers();
+      enhanceAccessibility();
+      monitorPerformance();
+      
+      // Add smooth scrolling for better UX
+      document.documentElement.style.scrollBehavior = 'smooth';
+      
+      console.log('✅ All systems ready!');
+    });
+
+    // Export settings for external use
+    window.JARVIS = {
+      settings: settings,
+      updateSetting: updateSetting,
+      saveSettings: saveAllSettings,
+      loadSettings: loadSettings,
+      applyTheme: applyTheme
+    };
+  </script>
+</body>
+</html>
