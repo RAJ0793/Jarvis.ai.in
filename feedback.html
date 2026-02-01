@@ -1,1 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Jarvis Feedback</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:system-ui,Segoe UI,Roboto,Arial;
+  background:#111;
+  color:#fff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  padding:16px;
+}
+.container{
+  width:100%;
+  max-width:520px;
+  background:#1b1b1b;
+  border-radius:18px;
+  padding:22px;
+  box-shadow:0 10px 30px rgba(0,0,0,.4);
+}
+h1{font-size:clamp(22px,5vw,28px);text-align:center;margin-bottom:8px}
+p{opacity:.8;text-align:center;margin-bottom:18px}
+
+/* Emoji + label row */
+.emoji-row{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:14px;
+  margin-bottom:22px;
+}
+
+.emoji-swipe{
+  width:110px;
+  height:110px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:14px;
+  background:#222;
+  font-size:64px;
+  user-select:none;
+  touch-action:pan-y;
+}
+
+.label-box{
+  min-width:90px;
+  padding:10px 14px;
+  background:#222;
+  border-radius:8px;
+  text-align:center;
+  font-weight:600;
+  animation: cube 0.6s ease;
+}
+
+@keyframes cube{
+  0%{transform:translateY(-12px) rotateX(90deg);opacity:0}
+  100%{transform:translateY(0) rotateX(0);opacity:1}
+}
+
+textarea{
+  width:100%;
+  min-height:100px;
+  resize:vertical;
+  border-radius:12px;
+  border:2px solid #333;
+  background:#222;
+  color:#fff;
+  padding:14px;
+  font-size:14px;
+  transition:.35s ease;
+}
+
+textarea.typing{
+  transform:scale(1.04);
+  animation:rainbow 2s linear infinite;
+}
+
+@keyframes rainbow{
+  0%{box-shadow:0 0 0 3px red}
+  14%{box-shadow:0 0 0 3px orange}
+  28%{box-shadow:0 0 0 3px yellow}
+  42%{box-shadow:0 0 0 3px lime}
+  57%{box-shadow:0 0 0 3px cyan}
+  71%{box-shadow:0 0 0 3px blue}
+  85%{box-shadow:0 0 0 3px violet}
+  100%{box-shadow:0 0 0 3px red}
+}
+
+button{
+  margin-top:16px;
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  font-weight:bold;
+  background:#00c3ff;
+  color:#000;
+}
+
+@media(max-width:420px){
+  .emoji-row{flex-direction:column}
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Jarvis Feedback</h1>
+  <p>Swipe emoji from Too Bad → So Cool</p>
+
+  <div class="emoji-row">
+    <div class="emoji-swipe" id="emojiArea">😡</div>
+    <div class="label-box" id="labelBox">Very Angry</div>
+  </div>
+
+  <textarea id="feedbackText" placeholder="Type your experience..."></textarea>
+  <button>Submit Feedback</button>
+</div>
+
+<script>
+const emojis=["😡","😕","😐","🙂","😊","😄","😃","🤩","😎","🚀"];
+const labels={
+  "😡":"Very Angry",
+  "😕":"Not Good",
+  "😐":"Okay",
+  "🙂":"Fine",
+  "😊":"Good",
+  "😄":"Happy",
+  "😃":"Great",
+  "🤩":"Amazing",
+  "😎":"Awesome",
+  "🚀":"So Cool"
+};
+
+let index=0;
+const area=document.getElementById('emojiArea');
+const label=document.getElementById('labelBox');
+
+let startX=0;
+area.addEventListener('pointerdown',e=>startX=e.clientX);
+area.addEventListener('pointerup',e=>{
+  let diff=e.clientX-startX;
+  if(Math.abs(diff)>40){
+    index = diff<0 ? (index+1)%emojis.length : (index-1+emojis.length)%emojis.length;
+    update();
+  }
+});
+
+function update(){
+  area.textContent=emojis[index];
+  label.textContent=labels[emojis[index]];
+  label.style.animation='none';
+  void label.offsetWidth;
+  label.style.animation='cube .6s ease';
+}
+
+// typing effect
+const ta=document.getElementById('feedbackText');
+let timer;
+ta.addEventListener('input',()=>{
+  ta.classList.add('typing');
+  clearTimeout(timer);
+  timer=setTimeout(()=>ta.classList.remove('typing'),1200);
+});
+</script>
+</body>
+</html>
 
