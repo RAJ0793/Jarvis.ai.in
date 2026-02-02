@@ -33,13 +33,27 @@
     #continueBtn{border:none;border-radius:8px;color:#fff;cursor:pointer;background:linear-gradient(270deg,#ff004c,#ffb600,#00ff6a,#00c3ff,#7a00ff);background-size:400% 400%;animation:rainbow 5s linear infinite;opacity:0;transition:opacity 0.8s ease-in;padding:10px 20px;font-size:16px;}
     #continueBtn.show{opacity:1;}
     @keyframes rainbow{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+
+    /* Loading indicator for audio */
+    .audio-status{color:rgba(255,255,255,0.6);font-size:0.9rem;margin-top:1rem;display:none;}
+    .audio-status.show{display:block;}
   </style>
 </head>
 
 <body>
 
-  <!-- 🔊 Lambo Sound -->
-  <audio id="lamboSound" src="Lambo.mp3" preload="auto"></audio>
+  <!-- 🔊 Lambo Sound - Preloaded in background thread -->
+  <!-- 
+    GITHUB PAGES SETUP:
+    1. Place Lambo.mp3 in the same directory as this HTML file
+    2. Or create an 'assets' folder and update src to "assets/Lambo.mp3"
+    3. Ensure the mp3 file is committed to your repository
+    4. File size should be under 100MB (GitHub limit)
+  -->
+  <audio id="lamboSound" preload="auto" style="display:none;">
+    <source src="Lambo.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
 
   <!-- WELCOME SCREEN -->
   <div id="welcomeScreen">
@@ -51,6 +65,7 @@
           <text x="100" y="100">JARVIS</text>
         </svg>
       </div>
+      <div id="audioStatus" class="audio-status">Loading audio...</div>
     </div>
   </div>
 
@@ -61,6 +76,7 @@
 
   <script>
     const sound = document.getElementById('lamboSound');
+    const audioStatus = document.getElementById('audioStatus');
 
     const welcome=document.getElementById("welcomeText"),
           subtitle=document.getElementById("subText"),
@@ -69,10 +85,38 @@
           loader=document.getElementById("pageLoader"),
           btn=document.getElementById("continueBtn");
 
+    let audioLoaded = false;
+    let userInteracted = false;
+
+    // Monitor audio loading status
+    sound.addEventListener('loadeddata', function() {
+      audioLoaded = true;
+      console.log('✅ Audio loaded successfully');
+      if(audioStatus) audioStatus.textContent = 'Audio ready';
+    });
+
+    sound.addEventListener('canplaythrough', function() {
+      console.log('✅ Audio can play through without interruption');
+    });
+
+    sound.addEventListener('error', function(e) {
+      console.error('❌ Audio loading error:', e);
+      if(audioStatus) {
+        audioStatus.textContent = 'Audio loading failed (will continue without sound)';
+        audioStatus.style.color = 'rgba(255,100,100,0.8)';
+      }
+    });
+
+    // Preload audio immediately when page loads (background thread)
+    sound.load();
+
     // Welcome animations
     setTimeout(()=>welcome.classList.add("show"),200);
     setTimeout(()=>logoContainer.classList.add("draw-animation"),1600);
-    setTimeout(()=>subtitle.classList.add("show"),3000);
+    setTimeout(()=>{
+      subtitle.classList.add("show");
+      audioStatus.classList.add("show");
+    },3000);
 
     // After Welcome -> Show Loader + Play Sound
     setTimeout(()=>{
@@ -82,9 +126,8 @@
         welcomeScreen.style.display="none";
         loader.style.display="flex";
 
-        // 🔊 START LAMBO SOUND
-        sound.currentTime = 0;
-        sound.play().catch(()=>{});
+        // 🔊 START LAMBO SOUND (only if loaded and user interacted)
+        playAudioSafely();
 
         // Show button after 4s
         setTimeout(()=>{
@@ -98,23 +141,69 @@
 
     },8000);
 
-    function goToMain(){
-      // 🔇 STOP SOUND WHEN LEAVING
-      sound.pause();
-      sound.currentTime = 0;
+    function playAudioSafely() {
+      if (!audioLoaded) {
+        console.warn('⚠️ Audio not yet loaded, skipping playback');
+        return;
+      }
 
-      loader.classList.add("hidden");
-      setTimeout(()=>location.href="main.html",2000);
+      sound.currentTime = 0;
+      const playPromise = sound.play();
+      
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            console.log('🔊 Audio playing successfully');
+          })
+          .catch(error => {
+            console.warn('⚠️ Autoplay prevented by browser:', error);
+            console.log('💡 Audio will play on user interaction');
+          });
+      }
     }
 
-    // Mobile autoplay fix
-    document.addEventListener('click',function first(){
-      sound.play().catch(()=>{});
-      document.removeEventListener('click',first);
-    });
+    function goToMain(){
+      // 🔇 STOP SOUND WHEN LEAVING
+      if (sound && !sound.paused) {
+        sound.pause();
+        sound.currentTime = 0;
+      }
 
+      loader.classList.add("hidden");
+      setTimeout(()=>{
+        // For GitHub Pages: update this to your main page filename
+        window.location.href="main.html";
+      },2000);
+    }
+
+    // Enable audio on first user interaction (for mobile/autoplay policy)
+    function enableAudio() {
+      if (!userInteracted) {
+        userInteracted = true;
+        // Try to play a tiny bit of audio to unlock it
+        sound.volume = 0.01;
+        sound.play().then(() => {
+          sound.pause();
+          sound.currentTime = 0;
+          sound.volume = 1;
+        }).catch(()=>{});
+      }
+    }
+
+    // Handle first user interaction for mobile autoplay
+    document.addEventListener('click', enableAudio, { once: true });
+    document.addEventListener('touchstart', enableAudio, { once: true });
+
+    // Escape key to skip
     document.addEventListener("keydown",e=>{
       if(e.key==="Escape") goToMain();
+    });
+
+    // Visibility change handling (pause audio if tab not visible)
+    document.addEventListener('visibilitychange', function() {
+      if (document.hidden && sound && !sound.paused) {
+        sound.pause();
+      }
     });
   </script>
 
