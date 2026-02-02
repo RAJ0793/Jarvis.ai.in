@@ -9,166 +9,47 @@
     body,html{background:#00c3ff;height:100%;font-family:'Arial',sans-serif;overflow:hidden;}
 
     /* === WELCOME SCREEN === */
-    #welcomeScreen {
-      display:flex;flex-direction:column;justify-content:center;align-items:center;
-      height:100vh;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
-      opacity:1;transition:opacity 2s ease-out;
-      position:relative;
-    }
-    #welcomeScreen.hidden {opacity:0;pointer-events:none;}
+    #welcomeScreen{display:flex;flex-direction:column;justify-content:center;align-items:center;height:100vh;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);opacity:1;transition:opacity 2s ease-out;position:relative;}
+    #welcomeScreen.hidden{opacity:0;pointer-events:none;}
 
-    .container {
-      text-align:center;
-      padding: 2.8em;
-      background:rgba(255,255,255,0.1);
-      -webkit-backdrop-filter:blur(10px);
-      backdrop-filter:blur(10px);
-      border-radius:20px;
-      border:1px solid rgba(255,255,255,0.2);
-      box-shadow:0 8px 32px rgba(31,38,135,0.37);
-      max-width:800px;width:90%;
-    }
+    .container{text-align:center;padding:2.8em;background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);border-radius:20px;border:1px solid rgba(255,255,255,0.2);box-shadow:0 8px 32px rgba(31,38,135,0.37);max-width:800px;width:90%;}
 
-    .logo-container {margin:2rem 0;position:relative;}
-    svg.jarvis-logo text {
-      font-size:100px;font-weight:bold;fill:none;stroke:white;stroke-width:3;
-      stroke-dasharray:700;stroke-dashoffset:700;
-      opacity:0;
-    }
-    .draw-animation svg.jarvis-logo text {
-      animation:drawText 3s ease forwards;
-      opacity:1;
-    }
-    @keyframes drawText {to{stroke-dashoffset:0;}}
+    svg.jarvis-logo text{font-size:100px;font-weight:bold;fill:none;stroke:white;stroke-width:3;stroke-dasharray:700;stroke-dashoffset:700;opacity:0;}
+    .draw-animation svg.jarvis-logo text{animation:drawText 3s ease forwards;opacity:1;}
+    @keyframes drawText{to{stroke-dashoffset:0;}}
 
-    .title {
-      color:white;font-size:2.5rem;margin-bottom:1rem;
-      text-shadow:2px 2px 4px rgba(0,0,0,0.3);
-      opacity:0;
-    }
-    .title.show {animation:fadeInUp 1s ease-out forwards;}
+    .title{color:white;font-size:2.5rem;margin-bottom:1rem;opacity:0;}
+    .title.show{animation:fadeInUp 1s ease-out forwards;}
 
-    #extra {
-      display:inline-block;
-      background: #ff004c;
-      color: white;
-      font-size: 0.8rem;
-      padding: 5px 5px;
-      border-radius: 9px;
-      margin-left: 8px;
-      vertical-align: super;
-    }
+    .subtitle{color:rgb(249,229,4);font-size:1.2rem;margin-bottom:2rem;opacity:0;}
+    .subtitle.show{animation:fadeInUp 1s ease-out forwards;}
 
-    .subtitle {
-      color:rgb(249, 229, 4);font-size:1.2rem;margin-bottom:2rem;
-      opacity:0;
-      height: 10px;
-      width: auto;
-    }
-    .subtitle.show {animation:fadeInUp 1s ease-out forwards;}
-
-    @keyframes fadeInUp {
-      from{opacity:0;transform:translateY(50px);}
-      to{opacity:1;transform:translateY(0);}
-    }
-
-    .particles {
-      position:absolute;top:0;left:0;width:100%;height:100%;
-      pointer-events:none;z-index:-1;
-    }
-    .particle {
-      position:absolute;width:4px;height:4px;
-      background:rgba(255,255,255,0.6);border-radius:50%;
-      animation:float 6s infinite linear;
-    }
-    @keyframes float {
-      0%{transform:translateY(100vh) rotate(0deg);opacity:0;}
-      10%,90%{opacity:1;}
-      100%{transform:translateY(-100px) rotate(360deg);opacity:0;}
-    }
+    @keyframes fadeInUp{from{opacity:0;transform:translateY(50px);}to{opacity:1;transform:translateY(0);}}
 
     /* === PAGE LOADER === */
-    #pageLoader {
-      position:fixed;inset:0;background:#0d1117;
-      display:none;flex-direction:column;justify-content:center;align-items:center;
-      z-index:9999;opacity:1;transition:opacity 2s ease-out;
-    }
-    #pageLoader.hidden {opacity:0;pointer-events:none;}
-    .loader {display:flex;gap:15px;}
-    .dot {
-      width:10px;height:10px;border-radius:50%;
-      background:#3b85f5;animation:bounce 1s infinite alternate;
-    }
-    .dot:nth-child(1){animation-delay:0.2s;}
-    .dot:nth-child(2){animation-delay:0.4s;}
-    .dot:nth-child(3){animation-delay:0.8s;}
-    .dot:nth-child(4){animation-delay:1.0s;}
-    .dot:nth-child(5){animation-delay:1.2s;}
+    #pageLoader{position:fixed;inset:0;background:#0d1117;display:none;flex-direction:column;justify-content:center;align-items:center;z-index:9999;opacity:1;transition:opacity 2s ease-out;}
+    #pageLoader.hidden{opacity:0;pointer-events:none;}
 
-
-    @keyframes bounce{
-      0%{transform:translateY(-15px);}
-      25%{background-color: #8400ff;}
-      50%{background-color: #0f45d7;}
-      75%{background-color: #0cec9e;}
-      80%{background-color: #edea10;}
-      95%{background-color: #e8a01a;}
-      100%{background-color: #f70505a8;}
-    }
-    #pageLoader p {color:#58a6ff;font-size:18px;margin-top:15px;}
-    #pageLoader p {color:#e8ebef;font-size:18px;margin-top:15px;}
-
-    #continueBtn {
-      border:none;border-radius:8px;color:#fff;cursor:pointer;
-      background:linear-gradient(270deg,#ff004c,#ffb600,#00ff6a,#00c3ff,#7a00ff);
-      background-size:400% 400%;animation:rainbow 5s linear infinite;
-      opacity:0;transition:opacity 0.8s ease-in;padding:10px 20px;font-size:16px;
-    }
-
+    #continueBtn{border:none;border-radius:8px;color:#fff;cursor:pointer;background:linear-gradient(270deg,#ff004c,#ffb600,#00ff6a,#00c3ff,#7a00ff);background-size:400% 400%;animation:rainbow 5s linear infinite;opacity:0;transition:opacity 0.8s ease-in;padding:10px 20px;font-size:16px;}
     #continueBtn.show{opacity:1;}
-    @keyframes rainbow{
-      0%{background-position:0% 50%;}
-      50%{background-position:100% 50%;}
-      100%{background-position:0% 50%;}
-    }
-    #continueBtn:hover{transform:scale(1.05);}
-   
-    .dots::after {
-      content: '';
-      display: inline-block;
-      width: 1em;
-      text-align: left;
-      animation: dotsAnim 1.5s steps(3, end) infinite;
-    }
-
-    .loading {
-      font-size: 16px;
-      color: white;
-      margin-top: 20px;
-      opacity: 0;
-    }
-     .loading.show {
-      animation: fadeIn 0.5s ease forwards;
-    }
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
+    @keyframes rainbow{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
   </style>
 </head>
+
 <body>
+
+  <!-- 🔊 Lambo Sound -->
+  <audio id="lamboSound" src="Lambo.mp3" preload="auto"></audio>
+
   <!-- WELCOME SCREEN -->
   <div id="welcomeScreen">
-    <div class="particles" id="particles"></div>
     <div class="container">
       <h1 class="title" id="welcomeText">Welcome to</h1>
-      <p class="subtitle" id="subText">Your all in one smart Ai agent or assistant 
-        <p id="extra">Beta</p>
-      </p>
+      <p class="subtitle" id="subText">Your all in one smart Ai agent or assistant</p>
       <div class="logo-container" id="logoContainer">
-        <svg class="jarvis-logo" viewbox="0 0 600 150" xmlns="http://www.w3.org/2000/svg">
+        <svg class="jarvis-logo" viewBox="0 0 600 150" xmlns="http://www.w3.org/2000/svg">
           <text x="100" y="100">JARVIS</text>
         </svg>
-      <div class="loading" id="loadingText">Website<span class="dots"></span></div>
       </div>
     </div>
   </div>
@@ -179,63 +60,63 @@
   </div>
 
   <script>
+    const sound = document.getElementById('lamboSound');
+
     const welcome=document.getElementById("welcomeText"),
           subtitle=document.getElementById("subText"),
           logoContainer=document.getElementById("logoContainer"),
           welcomeScreen=document.getElementById("welcomeScreen"),
           loader=document.getElementById("pageLoader"),
-          btn=document.getElementById("continueBtn"),
-          dots=document.querySelector(".loader"),
-          text=loader.querySelector("p");
+          btn=document.getElementById("continueBtn");
 
-    // Welcome Screen Sequence
-    startParticles();
+    // Welcome animations
     setTimeout(()=>welcome.classList.add("show"),200);
     setTimeout(()=>logoContainer.classList.add("draw-animation"),1600);
-    setTimeout(()=>subtitle.classList.add("show"),5000);
+    setTimeout(()=>subtitle.classList.add("show"),3000);
 
-    // After Welcome -> Show Loader
+    // After Welcome -> Show Loader + Play Sound
     setTimeout(()=>{
       welcomeScreen.classList.add("hidden");
+
       setTimeout(()=>{
         welcomeScreen.style.display="none";
         loader.style.display="flex";
 
-        // Show Continue Button after 4s
+        // 🔊 START LAMBO SOUND
+        sound.currentTime = 0;
+        sound.play().catch(()=>{});
+
+        // Show button after 4s
         setTimeout(()=>{
           btn.classList.add("show");
-          dots.style.display="none";
-          text.style.display="none";
         },4000);
 
         // Auto redirect after 10s
         setTimeout(goToMain,10000);
 
       },2000);
-    },8000); // 8s for Welcome animations
 
-    function startParticles(){
-      for(let i=0;i<10;i++){
-        setTimeout(()=>{
-          const p=document.createElement('div');
-          p.className='particle';
-          p.style.left=Math.random()*100+'%';
-          p.style.animationDuration=(Math.random()*3+3)+'s';
-          p.style.animationDelay=Math.random()*2+'s';
-          document.getElementById('particles').appendChild(p);
-          setTimeout(()=>p.remove(),8000);
-        },i*100);
-      }
-    }
+    },8000);
 
     function goToMain(){
+      // 🔇 STOP SOUND WHEN LEAVING
+      sound.pause();
+      sound.currentTime = 0;
+
       loader.classList.add("hidden");
       setTimeout(()=>location.href="main.html",2000);
     }
+
+    // Mobile autoplay fix
+    document.addEventListener('click',function first(){
+      sound.play().catch(()=>{});
+      document.removeEventListener('click',first);
+    });
 
     document.addEventListener("keydown",e=>{
       if(e.key==="Escape") goToMain();
     });
   </script>
+
 </body>
 </html>
