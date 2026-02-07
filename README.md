@@ -1,4 +1,4 @@
-# 🤖 JARVIS v2.0 — Offline Personal AI Assistant
+# 🤖 JARVIS v1.0 — Offline Personal AI Assistant
 
 > **Lightweight • Offline-Friendly • Future-Ready**
 
