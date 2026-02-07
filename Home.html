@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- ============================= -->
-<!-- JARVIS Home.html -->
+<!-- JARVIS Home.html - Enhanced -->
 <!-- ============================= -->
 <html lang="en">
 <head>
@@ -63,6 +63,7 @@
             margin-bottom: 2rem;
             background: linear-gradient(45deg, #00ffff, #ff00ff, #ffff00);
             background-size: 300% 300%;
+            -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             animation: gradientShift 3s ease-in-out infinite;
             text-shadow: 0 0 30px rgba(0,255,255,0.5);
@@ -253,6 +254,7 @@
             backdrop-filter: blur(10px);
             position: relative;
             overflow: hidden;
+            text-align: left;
         }
 
         .accordion::after {
@@ -283,18 +285,27 @@
             transition: all 0.3s ease;
             -webkit-backdrop-filter: blur(5px);
             backdrop-filter: blur(5px);
+            margin-bottom: 15px;
         }
 
         .panel.active {
             padding: 20px;
-            max-height: 1000px;
+            max-height: 2000px;
             border-color: rgba(0,255,255,0.3);
         }
 
         .panel p, .panel ul, .panel ol {
             color: #c0c0c0;
-            line-height: 1.6;
+            line-height: 1.8;
             margin-bottom: 1rem;
+        }
+
+        .panel ul, .panel ol {
+            padding-left: 25px;
+        }
+
+        .panel li {
+            margin-bottom: 8px;
         }
 
         .panel code {
@@ -315,6 +326,12 @@
         .panel a:hover {
             color: #ff00ff;
             text-shadow: 0 0 5px rgba(255,0,255,0.5);
+        }
+
+        .panel h3 {
+            color: #ff00ff;
+            margin-top: 15px;
+            margin-bottom: 10px;
         }
 
         .center-button {
@@ -359,7 +376,7 @@
         }
 
         .center-button button:hover {
-            transform: translateX(-50%) scale(1.1);
+            transform: scale(1.1);
             box-shadow: 0 15px 40px rgba(0,255,255,0.5);
         }
 
@@ -385,6 +402,30 @@
             width: 100%;
             height: auto;
             display: block;
+        }
+
+        .info-box {
+            background: rgba(0,255,255,0.1);
+            border-left: 4px solid #00ffff;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .warning-box {
+            background: rgba(255,255,0,0.1);
+            border-left: 4px solid #ffff00;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .success-box {
+            background: rgba(0,255,0,0.1);
+            border-left: 4px solid #00ff00;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
         }
 
         /* Responsive Design */
@@ -444,8 +485,7 @@
     </style>
 </head>
 <body>
-    <!-- HOME TAB CONTENTS -->
-    <div id="home" class="content active loading">
+    <div class="content loading">
         <main>
             <h2 class="dashboard-section-title">
                 JARVIS Dashboard
@@ -457,1207 +497,1365 @@
                 <button onclick="showTabContent(3)" role="tab" aria-selected="false" tabindex="0">Troubleshoot</button>
                 <button onclick="showTabContent(4)" role="tab" aria-selected="false" tabindex="0">FAQ</button>
                 <button onclick="showTabContent(5)" role="tab" aria-selected="false" tabindex="0">Automation</button>
-                
             </div>
             <hr>
+
             <!-- Tab 1: Home -->
             <div id="tab1" class="tab-content active">
                 <h2>Welcome to JARVIS</h2>
                 <p>Your offline-first smart assistant, built for productivity, automation, and daily interaction.</p>
-<div class="feature-grid">
-
-    <div class="feature-card">
-        <h4>🎤 Voice Assistant</h4>
-        <p>Offline voice control using pyttsx3 and SpeechRecognition</p>
-    </div>
-
-    <div class="feature-card">
-        <h4>📋 Requirements</h4>
-        <p>Everything you need, all in one place</p>
-    </div>
-
-    <div class="feature-card"><h4>🧭 Quick Actions</h4><p>Perform frequent actions instantly from a compact panel</p></div>
-<div class="feature-card"><h4>📑 Template Library</h4><p>Pre-made templates for common tasks and documents</p></div>
-<div class="feature-card"><h4>🧿 Focus Shield</h4><p>Block distractions during deep work sessions</p></div>
-<div class="feature-card"><h4>🗃️ Session Saver</h4><p>Restore your last working state anytime</p></div>
-<div class="feature-card"><h4>🧮 Unit Converter</h4><p>Convert units like length, weight, and temperature quickly</p></div>
-<div class="feature-card"><h4>📌 Sticky Notes</h4><p>Pin floating notes anywhere on the screen</p></div>
-<div class="feature-card"><h4>🕵️ Privacy Scanner</h4><p>Detect apps accessing sensitive permissions</p></div>
-<div class="feature-card"><h4>🧵 Macro Recorder</h4><p>Record and replay repetitive workflows</p></div>
-<div class="feature-card"><h4>📊 Chart Builder</h4><p>Create simple charts from your data instantly</p></div>
-<div class="feature-card"><h4>🧾 Text Formatter</h4><p>Clean and format messy text automatically</p></div>
-
-<div class="feature-card"><h4>🔐 Secure Vault</h4><p>Store confidential text securely with encryption</p></div>
-<div class="feature-card"><h4>🗂️ Smart Sorter</h4><p>Auto-sort files into categorized folders</p></div>
-<div class="feature-card"><h4>📮 Quick Share</h4><p>Share content across apps with one command</p></div>
-<div class="feature-card"><h4>🪄 Auto Renamer</h4><p>Rename multiple files using patterns</p></div>
-<div class="feature-card"><h4>📶 Signal Monitor</h4><p>Track WiFi signal strength in real time</p></div>
-<div class="feature-card"><h4>🧠 Command Suggestions</h4><p>Get hints based on your recent activity</p></div>
-<div class="feature-card"><h4>📚 Snippet Library</h4><p>Save reusable text/code snippets</p></div>
-<div class="feature-card"><h4>🧭 Breadcrumbs</h4><p>Track your navigation path across folders</p></div>
-<div class="feature-card"><h4>📅 Habit Tracker</h4><p>Build and monitor daily habits visually</p></div>
-<div class="feature-card"><h4>🧪 Sandbox Runner</h4><p>Test scripts safely in isolation</p></div>
-
-<div class="feature-card"><h4>🧰 Toolbelt</h4><p>Access mini utilities from a single hub</p></div>
-<div class="feature-card"><h4>🗣️ Dictation Pad</h4><p>Convert speech to editable text notes</p></div>
-<div class="feature-card"><h4>🧾 Receipt Saver</h4><p>Store and organize purchase receipts</p></div>
-<div class="feature-card"><h4>🗓️ Timeline Planner</h4><p>Plan projects across a visual timeline</p></div>
-<div class="feature-card"><h4>📎 Attachment Finder</h4><p>Locate files you recently attached anywhere</p></div>
-<div class="feature-card"><h4>🧮 Random Generator</h4><p>Generate random numbers, names, or values</p></div>
-<div class="feature-card"><h4>📍 Geo Reminder</h4><p>Trigger reminders based on locations</p></div>
-<div class="feature-card"><h4>📤 Export Center</h4><p>Export data into multiple file formats</p></div>
-<div class="feature-card"><h4>🧲 Dock Panel</h4><p>Keep favorite tools always accessible</p></div>
-<div class="feature-card"><h4>📡 Port Checker</h4><p>Check open ports and network status</p></div>
-
-<div class="feature-card"><h4>📚 Reading Mode</h4><p>Distraction-free mode for reading content</p></div>
-<div class="feature-card"><h4>🧾 Meeting Logger</h4><p>Log meeting points quickly during calls</p></div>
-<div class="feature-card"><h4>🗂️ Version Tracker</h4><p>Track changes across file versions</p></div>
-<div class="feature-card"><h4>🧭 Path Shortcuts</h4><p>Create quick shortcuts to deep folders</p></div>
-<div class="feature-card"><h4>🧪 Health Check</h4><p>Scan system for common performance issues</p></div>
-<div class="feature-card"><h4>📖 Glossary</h4><p>Maintain your personal terminology list</p></div>
-<div class="feature-card"><h4>🧩 Layout Switcher</h4><p>Change interface layout styles instantly</p></div>
-<div class="feature-card"><h4>🧠 Brain Dump</h4><p>Quickly capture random thoughts and ideas</p></div>
-<div class="feature-card"><h4>📨 Queue Sender</h4><p>Schedule messages to send later</p></div>
-<div class="feature-card"><h4>🗃️ Cache Cleaner</h4><p>Clear temporary files safely</p></div>
-
-<div class="feature-card"><h4>🧭 Context Menu+</h4><p>Enhanced right-click options everywhere</p></div>
-<div class="feature-card"><h4>🧮 Percentage Tool</h4><p>Quick percentage and ratio calculations</p></div>
-<div class="feature-card"><h4>📑 Merge Tool</h4><p>Combine multiple documents into one</p></div>
-<div class="feature-card"><h4>🧵 Task Threads</h4><p>Organize tasks into parallel threads</p></div>
-<div class="feature-card"><h4>📊 Counter</h4><p>Count words, lines, or characters instantly</p></div>
-<div class="feature-card"><h4>🗂️ Auto Archive</h4><p>Archive old files automatically by date</p></div>
-<div class="feature-card"><h4>📍 Pointer Highlighter</h4><p>Highlight cursor for presentations</p></div>
-<div class="feature-card"><h4>📎 Quick Attach</h4><p>Attach recent files without browsing</p></div>
-<div class="feature-card"><h4>🧭 Travel Log</h4><p>Maintain travel notes and records</p></div>
-<div class="feature-card"><h4>📦 Package Builder</h4><p>Bundle files into shareable packages</p></div>
-
-<div class="feature-card"><h4>🧠 Memory Map</h4><p>Visual map of saved notes and data</p></div>
-<div class="feature-card"><h4>🧪 Latency Tester</h4><p>Measure response delays in the system</p></div>
-<div class="feature-card"><h4>📚 Quote Saver</h4><p>Collect and revisit meaningful quotes</p></div>
-<div class="feature-card"><h4>🗂️ Label Printer</h4><p>Design and print custom labels</p></div>
-<div class="feature-card"><h4>📡 Device Pinger</h4><p>Ping devices to check availability</p></div>
-<div class="feature-card"><h4>🧭 Shortcut Trainer</h4><p>Learn useful keyboard shortcuts interactively</p></div>
-<div class="feature-card"><h4>📑 Divider Tool</h4><p>Split documents into sections easily</p></div>
-<div class="feature-card"><h4>🧾 Form Filler</h4><p>Auto-fill repetitive form data</p></div>
-<div class="feature-card"><h4>🗃️ Draft Box</h4><p>Save unfinished content for later</p></div>
-<div class="feature-card"><h4>📈 Trend Watcher</h4><p>Observe patterns in your activities</p></div>
-
-<div class="feature-card"><h4>🧲 Magnet Board</h4><p>Snap important widgets to screen edges</p></div>
-<div class="feature-card"><h4>📚 Index Maker</h4><p>Create indexes for large documents</p></div>
-<div class="feature-card"><h4>🧪 Resource Gauge</h4><p>Visual gauge for system resource load</p></div>
-<div class="feature-card"><h4>📎 Link Organizer</h4><p>Save and categorize useful links</p></div>
-<div class="feature-card"><h4>🗂️ Priority Sort</h4><p>Sort tasks by urgency automatically</p></div>
-<div class="feature-card"><h4>📨 Response Bank</h4><p>Store ready-to-use replies</p></div>
-<div class="feature-card"><h4>🧭 Route Memory</h4><p>Remember frequently visited paths</p></div>
-<div class="feature-card"><h4>📊 Pulse Meter</h4><p>Track activity intensity over time</p></div>
-<div class="feature-card"><h4>🧾 Header Builder</h4><p>Create document headers quickly</p></div>
-<div class="feature-card"><h4>📦 Preset Loader</h4><p>Load preferred settings profiles instantly</p></div>
-
-<div class="feature-card"><h4>🧠 Recall Trigger</h4><p>Trigger stored memories with keywords</p></div>
-<div class="feature-card"><h4>📚 Bookmark Shelf</h4><p>Organize bookmarks in visual shelves</p></div>
-<div class="feature-card"><h4>🧪 Stability Check</h4><p>Test system stability under load</p></div>
-<div class="feature-card"><h4>📑 Outline Maker</h4><p>Create structured outlines for writing</p></div>
-<div class="feature-card"><h4>🧭 Path Cleaner</h4><p>Remove broken shortcuts safely</p></div>
-<div class="feature-card"><h4>📨 Draft Reminder</h4><p>Remind you about unsent drafts</p></div>
-<div class="feature-card"><h4>🗃️ Folder Mirror</h4><p>Mirror folder structure across locations</p></div>
-<div class="feature-card"><h4>📈 Growth Log</h4><p>Track progress across your projects</p></div>
-<div class="feature-card"><h4>🧲 Snap Layouts</h4><p>Arrange windows into preset layouts</p></div>
-<div class="feature-card"><h4>📚 Reference Desk</h4><p>Keep important references within reach</p></div>
-    
-    
-    <div class="feature-card">
-        <h4>🧠 Smart Memory</h4>
-        <p>JSON-based recall system for context retention</p>
-    </div>
-
-    <div class="feature-card">
-        <h4>🧰 Arduino Integration</h4>
-        <p>Smart home automation capabilities</p>
-    </div>
-
-    <div class="feature-card">
-        <h4>🎮 Games</h4>
-        <p>Built-in mini games inside Jarvis</p>
-    </div>
-
-    <div class="feature-card">
-        <h4>🌐 Platforms</h4>
-        <p>Website and app support</p>
-    </div>
-
-    <div class="feature-card">
-        <h4>⚡ Multi-Functional</h4>
-        <p>Supports GUI, CLI, and agent modes</p>
-    </div>
-
-    <div class="feature-card">
-        <h4>📱 Mobile App Support</h4>
-        <p>This feature will be available soon</p>
-    </div>
-
-    <div class="feature-card">
-        <h4>🤖 AI Agent</h4>
-        <p>New AI-powered functions coming soon</p>
-    </div>
-
-    <div class="feature-card">
-        <h4>💻 Multi-Platform</h4>
-        <p>Accessible on macOS, Android, iOS, Windows 10/11, and Linux</p>
-    </div>
-
-    <div class="feature-card">
-        <h4>⚙️ JarSetting</h4>
-        <p>Dedicated settings manager for Jarvis on Windows 11</p>
-    </div>
-
-    <div class="feature-card">
-        <h4>💬 Chatbot</h4>
-        <p>Jarvis also works as a chatbot on Windows 11</p>
-    </div>
-
-    <div class="feature-card">
-        <h4>🖼️ Image Generation</h4>
-        <p>Currently under development</p>
-    </div>
-
-    <div class="feature-card">
-        <h4>🔍 Web Search</h4>
-        <p>Search the web using Google, Bing, Yahoo, and more</p>
-    </div>
-
-    <div class="feature-card">
-        <h4>🚀 Performance</h4>
-        <p>Optimized for fast responses and minimal resource usage</p>
-    </div>
-
-    <div class="feature-card">
-        <h4>🔒 Privacy</h4>
-        <p>Your data stays on your device for complete privacy</p>
-    </div>
-
-    <div class="feature-card">
-        <h4>🎯 Customization</h4>
-        <p>Tailor Jarvis to your specific needs and preferences</p>
-    </div>
-
-    <div class="feature-card">
-        <h4>🌟 Innovation</h4>
-        <p>Regular updates with advanced AI improvements</p>
-    </div>
-
-    <div class="feature-card">
-        <h4>🗂️ File Manager</h4>
-        <p>Search, organize, and manage files with commands</p>
-    </div>
-
-    <div class="feature-card">
-        <h4>🧭 System Navigation</h4>
-        <p>Open apps, folders, and settings without using the mouse</p>
-    </div>
-
-    <div class="feature-card">
-        <h4>📊 System Monitor</h4>
-        <p>Real-time CPU, RAM, and disk usage monitoring</p>
-    </div>
-
-    <div class="feature-card">
-        <h4>🔔 Smart Notifications</h4>
-        <p>Receive important system and task alerts</p>
-    </div>
-
-    <div class="feature-card">
-        <h4>📝 Notes Keeper</h4>
-        <p>Create, save, and recall notes using commands</p>
-    </div>
-
-    <div class="feature-card">
-        <h4>⏰ Task Scheduler</h4>
-        <p>Automate reminders and scheduled tasks</p>
-    </div>
-
-    <div class="feature-card">
-        <h4>🌙 Night Mode</h4>
-        <p>Comfortable interface for low-light usage</p>
-    </div>
-
-    <div class="feature-card">
-        <h4>🔐 App Locker</h4>
-        <p>Protect apps using password or voice authentication</p>
-    </div>
-
-    <div class="feature-card">
-        <h4>📡 Internet Checker</h4>
-        <p>Check internet speed and stability instantly</p>
-    </div>
-
-    <div class="feature-card">
-        <h4>🎵 Media Controller</h4>
-        <p>Hands-free control of music and videos</p>
-    </div>
-
-    <div class="feature-card">
-        <h4>🧮 Calculator</h4>
-        <p>Quick calculations via voice or command line</p>
-    </div>
-
-    <div class="feature-card">
-        <h4>🌍 Language Translator</h4>
-        <p>Instant translation between multiple languages</p>
-    </div>
-
-    <div class="feature-card">
-        <h4>📅 Calendar Access</h4>
-        <p>Check dates, events, and schedules easily</p>
-    </div>
-
-    <div class="feature-card">
-        <h4>🗃️ Clipboard Manager</h4>
-        <p>Store and reuse copied text efficiently</p>
-    </div>
-
-    <div class="feature-card">
-        <h4>🧪 Debug Mode</h4>
-        <p>Advanced troubleshooting tools for developers</p>
-    </div>
-
-    <div class="feature-card">
-        <h4>🖥️ Window Controller</h4>
-        <p>Switch, minimize, and maximize windows using commands</p>
-    </div>
-
-    <div class="feature-card">
-        <h4>📁 Project Launcher</h4>
-        <p>Quick access to coding projects and workspaces</p>
-    </div>
-
-    <div class="feature-card">
-        <h4>🧠 Learning Mode</h4>
-        <p>Adapts to your usage patterns over time</p>
-    </div>
-
-    <div class="feature-card">
-        <h4>📤 Backup Manager</h4>
-        <p>Create and restore backups of Jarvis data</p>
-    </div>
-
-    <div class="feature-card">
-        <h4>🔄 Update Manager</h4>
-        <p>Seamless Jarvis updates and maintenance</p>
-    </div>
-
-</div>
-                         
-                </div>   
-                <hr>
-                <!--Accordion-->
-                <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">What is JARVIS?</button>
-                <div class="panel"><p>JARVIS is a modular, open-source assistant designed to run offline with advanced voice recognition and smart home integration capabilities.</p></div>
                 
-                <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">How to Start?</button>
-                <div class="panel"><p>See Setup tab now!</p></div>
-                
-                <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">Join Development</button>
-                <div class="panel"><p>Contribute on GitHub: <a href="https://github.com/raj0793/jarvis.ai.in" target="_blank" rel="noopener">🔗 Repository</a> You can also stay up to date through GitHub</p></div>
+                <div class="info-box">
+                    <p><strong>🎯 JARVIS v1.0</strong> - An agentic AI inspired by Tony Stark's revolutionary AI from Iron Man. Designed to run efficiently on Intel i3 processors with 2GB RAM and Intel Iris Xe Graphics.</p>
+                </div>
 
-                <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">THANK YOU SO MUCH</button>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>🎤 Voice Assistant</h4>
+                        <p>Offline voice control using pyttsx3 and SpeechRecognition</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>⚡ Lightweight Design</h4>
+                        <p>Runs on 1 core with minimum 2GB RAM requirement</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>🔒 Privacy First</h4>
+                        <p>Open-source model - your data stays on your device</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>🧭 Quick Actions</h4>
+                        <p>Perform frequent actions instantly from a compact panel</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>📑 Template Library</h4>
+                        <p>Pre-made templates for common tasks and documents</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>🧿 Focus Shield</h4>
+                        <p>Block distractions during deep work sessions</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>🗃️ Session Saver</h4>
+                        <p>Restore your last working state anytime</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>🧮 Unit Converter</h4>
+                        <p>Convert units like length, weight, and temperature quickly</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>📌 Sticky Notes</h4>
+                        <p>Pin floating notes anywhere on the screen</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>🕵️ Privacy Scanner</h4>
+                        <p>Detect apps accessing sensitive permissions</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>🧵 Macro Recorder</h4>
+                        <p>Record and replay repetitive workflows</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>📊 Chart Builder</h4>
+                        <p>Create simple charts from your data instantly</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>🧾 Text Formatter</h4>
+                        <p>Clean and format messy text automatically</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>🔐 Secure Vault</h4>
+                        <p>Store confidential text securely with encryption</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>🗂️ Smart Sorter</h4>
+                        <p>Auto-sort files into categorized folders</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>📮 Quick Share</h4>
+                        <p>Share content across apps with one command</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>🪄 Auto Renamer</h4>
+                        <p>Rename multiple files using patterns</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>📶 Signal Monitor</h4>
+                        <p>Track WiFi signal strength in real time</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>🧠 Command Suggestions</h4>
+                        <p>Get hints based on your recent activity</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>📚 Snippet Library</h4>
+                        <p>Save reusable text/code snippets</p>
+                    </div>
+                </div>
+
+                <div class="success-box">
+                    <p><strong>🌟 Open Source & Community Driven</strong></p>
+                    <p>Visit our GitHub repository to contribute, report issues, or request features: <a href="https://github.com/RAJ0793/Jarvis.ai.in" target="_blank">github.com/RAJ0793/Jarvis.ai.in</a></p>
+                </div>
+            </div>
+
+            <!-- Tab 2: Guides -->
+            <div id="tab2" class="tab-content">
+                <h2>📘 Installation & Setup Guides</h2>
+                <p>Step-by-step instructions to get JARVIS up and running on your system</p>
+
+                <button class="accordion">🔧 System Requirements</button>
                 <div class="panel">
-                    <div class="video-container">
-                        <video controls>
-                            <source src="JARVIS.mp4" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
+                    <h3>Minimum Requirements:</h3>
+                    <ul>
+                        <li><strong>Processor:</strong> Intel i3 or equivalent (1 core capable)</li>
+                        <li><strong>RAM:</strong> 2GB minimum (4GB recommended)</li>
+                        <li><strong>Graphics:</strong> Intel Iris Xe Graphics or equivalent</li>
+                        <li><strong>Storage:</strong> 20GB dedicated space on J: drive</li>
+                        <li><strong>Python:</strong> Exactly version 3.10.0 (required)</li>
+                        <li><strong>OS:</strong> Windows 10/11, Linux, or macOS</li>
+                    </ul>
+
+                    <div class="warning-box">
+                        <p><strong>⚠️ Important:</strong> JARVIS requires exactly Python 3.10.0. Other versions may cause compatibility issues.</p>
+                    </div>
+                </div>
+
+                <button class="accordion">📥 Step 1: Installing Python 3.10.0</button>
+                <div class="panel">
+                    <h3>Download Python 3.10.0:</h3>
+                    <ol>
+                        <li>Visit the official Python website: <a href="https://www.python.org/downloads/release/python-3100/" target="_blank">python.org/downloads/release/python-3100/</a></li>
+                        <li>Scroll down to "Files" section</li>
+                        <li>Download the installer for your OS:
+                            <ul>
+                                <li><strong>Windows:</strong> Windows installer (64-bit)</li>
+                                <li><strong>macOS:</strong> macOS 64-bit installer</li>
+                                <li><strong>Linux:</strong> Source tarball or use package manager</li>
+                            </ul>
+                        </li>
+                    </ol>
+
+                    <h3>Installation Steps (Windows):</h3>
+                    <ol>
+                        <li>Run the downloaded installer</li>
+                        <li>✅ <strong>IMPORTANT:</strong> Check "Add Python 3.10 to PATH"</li>
+                        <li>Click "Install Now"</li>
+                        <li>Wait for installation to complete</li>
+                        <li>Verify installation by opening Command Prompt and typing: <code>python --version</code></li>
+                    </ol>
+
+                    <div class="info-box">
+                        <p><strong>💡 Verification:</strong> You should see "Python 3.10.0" in the output. If not, revisit PATH settings.</p>
+                    </div>
+                </div>
+
+                <button class="accordion">💾 Step 2: Creating J: Drive (20GB Reserved)</button>
+                <div class="panel">
+                    <h3>Why J: Drive?</h3>
+                    <p>JARVIS reserves 20GB on J: drive to ensure system stability and easy management. This prevents corruption of your main system drive and allows for clean uninstallation.</p>
+
+                    <h3>Creating J: Drive on Windows:</h3>
+                    <ol>
+                        <li>Open Disk Management (Right-click Start → Disk Management)</li>
+                        <li>Right-click on a drive with at least 20GB free space</li>
+                        <li>Select "Shrink Volume"</li>
+                        <li>Enter 20480 MB (20GB) in the shrink size</li>
+                        <li>Click "Shrink"</li>
+                        <li>Right-click the new unallocated space → "New Simple Volume"</li>
+                        <li>Assign drive letter <strong>J:</strong></li>
+                        <li>Format as NTFS</li>
+                        <li>Complete the wizard</li>
+                    </ol>
+
+                    <div class="warning-box">
+                        <p><strong>⚠️ Alternative:</strong> If you cannot create a new partition, you can use an existing drive with at least 20GB free space, but ensure JARVIS files are in a dedicated folder.</p>
+                    </div>
+                </div>
+
+                <button class="accordion">📦 Step 3: Installing JARVIS</button>
+                <div class="panel">
+                    <h3>Clone from GitHub:</h3>
+                    <ol>
+                        <li>Open Command Prompt or Terminal</li>
+                        <li>Navigate to J: drive: <code>cd J:\</code></li>
+                        <li>Clone the repository:
+                            <code>git clone https://github.com/RAJ0793/Jarvis.ai.in.git</code>
+                        </li>
+                        <li>Navigate to the folder: <code>cd Jarvis.ai.in</code></li>
+                    </ol>
+
+                    <h3>Install Dependencies:</h3>
+                    <ol>
+                        <li>Ensure you're in the JARVIS directory</li>
+                        <li>Install required packages:
+                            <code>pip install -r requirements.txt</code>
+                        </li>
+                        <li>Wait for all packages to download and install</li>
+                    </ol>
+
+                    <div class="success-box">
+                        <p><strong>✅ Success:</strong> If installation completes without errors, you're ready to run JARVIS!</p>
+                    </div>
+                </div>
+
+                <button class="accordion">▶️ Step 4: Running JARVIS</button>
+                <div class="panel">
+                    <h3>First Launch:</h3>
+                    <ol>
+                        <li>Open Command Prompt or Terminal</li>
+                        <li>Navigate to JARVIS directory: <code>cd J:\Jarvis.ai.in</code></li>
+                        <li>Run the main script: <code>python main.py</code></li>
+                        <li>Wait for initialization (first run may take longer)</li>
+                        <li>Follow on-screen prompts for initial setup</li>
+                    </ol>
+
+                    <h3>Voice Commands:</h3>
+                    <p>Once JARVIS is running, you can use voice commands like:</p>
+                    <ul>
+                        <li>"Hey JARVIS, what time is it?"</li>
+                        <li>"JARVIS, open browser"</li>
+                        <li>"JARVIS, search for Python tutorials"</li>
+                        <li>"JARVIS, system status"</li>
+                    </ul>
+
+                    <div class="info-box">
+                        <p><strong>💡 Tip:</strong> Speak clearly and wait for the listening indicator before giving commands.</p>
+                    </div>
+                </div>
+
+                <button class="accordion">⚙️ Step 5: Configuration & Customization</button>
+                <div class="panel">
+                    <h3>Configuring JARVIS:</h3>
+                    <p>Edit the <code>config.json</code> file to customize JARVIS behavior:</p>
+                    <ul>
+                        <li><strong>Voice Settings:</strong> Adjust speed, volume, and voice type</li>
+                        <li><strong>Wake Word:</strong> Change default wake word from "JARVIS"</li>
+                        <li><strong>Automation Rules:</strong> Set up custom automation triggers</li>
+                        <li><strong>API Keys:</strong> Add your API keys for web search and other services</li>
+                    </ul>
+
+                    <h3>Example config.json:</h3>
+                    <code>
+{
+  "wake_word": "JARVIS",
+  "voice_speed": 150,
+  "voice_volume": 0.8,
+  "offline_mode": true,
+  "auto_start": false
+}
+                    </code>
+                </div>
+
+                <button class="accordion">🎯 Operating JARVIS - Core Features</button>
+                <div class="panel">
+                    <h3>Basic Operations:</h3>
+                    
+                    <h4>1. Voice Commands</h4>
+                    <p>Activate JARVIS with the wake word, then speak your command clearly. Wait for acknowledgment before proceeding.</p>
+
+                    <h4>2. File Management</h4>
+                    <ul>
+                        <li>Ask JARVIS to open, create, or organize files</li>
+                        <li>Use Smart Sorter to automatically categorize downloads</li>
+                        <li>Enable Auto Renamer for batch file operations</li>
+                    </ul>
+
+                    <h4>3. Productivity Tools</h4>
+                    <ul>
+                        <li>Use Focus Shield to block distracting websites</li>
+                        <li>Create sticky notes for quick reminders</li>
+                        <li>Set up automation macros for repetitive tasks</li>
+                    </ul>
+
+                    <h4>4. Web Search</h4>
+                    <p>Ask JARVIS to search the web. Results will be fetched and summarized for you.</p>
+
+                    <div class="info-box">
+                        <p><strong>💡 Pro Tip:</strong> Combine multiple features in a single workflow for maximum productivity.</p>
                     </div>
                 </div>
             </div>
-            <hr>
 
-<!-- Tab 2: Guides -->
-<div id="tab2" class="tab-content">
-    <h2>Step-by-Step Guides</h2>
+            <!-- Tab 3: Troubleshoot -->
+            <div id="tab3" class="tab-content">
+                <h2>🔧 Troubleshooting Guide</h2>
+                <p>Solutions to common issues and error messages</p>
 
-    <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">
-        Setup Python Environment
-    </button>
-    <div class="panel">
-        <ol>
-            <li>Download Python 3.10 from python.org</li>
-            <li>Install with <b>PATH option enabled</b></li>
-            <li>Verify: <code>python --version</code></li>
-            <li>Upgrade pip: <code>python -m pip install --upgrade pip</code></li>
-            <li>Verify pip: <code>pip --version</code></li>
-        </ol>
-    </div>
+                <button class="accordion">❌ Python Not Installing / Installation Errors</button>
+                <div class="panel">
+                    <h3>Problem: Python installer won't run or fails</h3>
+                    
+                    <h4>Solutions:</h4>
+                    <ol>
+                        <li><strong>Download from Official Source:</strong> Only download from <a href="https://www.python.org" target="_blank">python.org</a></li>
+                        <li><strong>Run as Administrator:</strong> Right-click installer → "Run as administrator"</li>
+                        <li><strong>Disable Antivirus Temporarily:</strong> Some antivirus software blocks Python installation</li>
+                        <li><strong>Clear Temp Files:</strong> Delete files in <code>C:\Windows\Temp</code></li>
+                        <li><strong>Check Disk Space:</strong> Ensure you have at least 500MB free on C: drive</li>
+                    </ol>
 
-    <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">
-        Create & Activate Virtual Environment
-    </button>
-    <div class="panel">
-        <ol>
-            <li>Create: <code>python -m venv jarvis_env</code></li>
-            <li>Activate: <code>jarvis_env\Scripts\activate</code></li>
-            <li>Check if terminal shows <b>(jarvis_env)</b></li>
-        </ol>
-    </div>
+                    <div class="warning-box">
+                        <p><strong>⚠️ Still not working?</strong> Try the Windows Store version of Python 3.10, but verify it's exactly version 3.10.0.</p>
+                    </div>
+                </div>
 
-    <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">
-        Install Jarvis Requirements
-    </button>
-    <div class="panel">
-        <ol>
-            <li><code>pip install SpeechRecognition pyttsx3 pyaudio</code></li>
-            <li><code>pip install wikipedia pywhatkit</code></li>
-            <li><code>pip install pyautogui psutil</code></li>
-        </ol>
-    </div>
+                <button class="accordion">⚠️ Wrong Python Version Installed</button>
+                <div class="panel">
+                    <h3>Problem: System shows different Python version</h3>
+                    
+                    <h4>Check Current Version:</h4>
+                    <code>python --version</code>
+                    
+                    <h4>Solutions:</h4>
+                    <ol>
+                        <li><strong>Uninstall Other Versions:</strong>
+                            <ul>
+                                <li>Go to Control Panel → Programs → Uninstall a Program</li>
+                                <li>Remove all Python versions except 3.10.0</li>
+                            </ul>
+                        </li>
+                        <li><strong>Fix PATH Variable:</strong>
+                            <ul>
+                                <li>Search "Environment Variables" in Windows</li>
+                                <li>Edit "Path" under System Variables</li>
+                                <li>Move Python 3.10 entries to the top</li>
+                                <li>Remove paths to other Python versions</li>
+                            </ul>
+                        </li>
+                        <li><strong>Use py launcher:</strong> Run <code>py -3.10 --version</code> to verify</li>
+                    </ol>
+                </div>
 
-    <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">
-        Voice Recognition Setup
-    </button>
-    <div class="panel">
-        <ul>
-            <li>Check microphone permissions</li>
-            <li>Adjust microphone sensitivity</li>
-            <li>Test mic before running Jarvis</li>
-        </ul>
-    </div>
+                <button class="accordion">💾 J: Drive Creation Issues</button>
+                <div class="panel">
+                    <h3>Problem: Cannot create J: drive or insufficient space</h3>
+                    
+                    <h4>Solutions:</h4>
+                    <ol>
+                        <li><strong>Use Different Drive Letter:</strong>
+                            <p>Edit JARVIS config to use a different drive (e.g., K: or L:)</p>
+                        </li>
+                        <li><strong>Free Up Space:</strong>
+                            <ul>
+                                <li>Delete temporary files</li>
+                                <li>Uninstall unused programs</li>
+                                <li>Move large files to external storage</li>
+                            </ul>
+                        </li>
+                        <li><strong>Use Existing Drive:</strong>
+                            <p>Create a folder <code>JARVIS</code> on any drive with 20GB free space and update the config file</p>
+                        </li>
+                        <li><strong>External USB Drive:</strong>
+                            <p>Assign letter J: to a USB drive with at least 20GB capacity</p>
+                        </li>
+                    </ol>
 
-    <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">
-        How to Run Jarvis
-    </button>
-    <div class="panel">
-        <ol>
-            <li>Activate virtual environment</li>
-            <li>Open Jarvis folder</li>
-            <li>Run: <code>python main.py</code></li>
-        </ol>
-    </div>
-</div>
+                    <div class="info-box">
+                        <p><strong>💡 Note:</strong> The J: drive requirement ensures JARVIS doesn't interfere with system files. Any dedicated 20GB space works.</p>
+                    </div>
+                </div>
 
-<hr>
+                <button class="accordion">📦 Pip / Dependencies Installation Failing</button>
+                <div class="panel">
+                    <h3>Problem: "pip install -r requirements.txt" fails</h3>
+                    
+                    <h4>Common Errors & Fixes:</h4>
+                    
+                    <h5>1. "pip is not recognized"</h5>
+                    <ul>
+                        <li>Reinstall Python with "Add to PATH" checked</li>
+                        <li>Or use: <code>python -m pip install -r requirements.txt</code></li>
+                    </ul>
 
-<!-- Tab 3: Troubleshoot -->
-<div id="tab3" class="tab-content">
-    <h2>Troubleshooting</h2>
+                    <h5>2. "Could not find a version that satisfies the requirement"</h5>
+                    <ul>
+                        <li>Update pip: <code>python -m pip install --upgrade pip</code></li>
+                        <li>Check internet connection</li>
+                        <li>Try installing packages individually</li>
+                    </ul>
 
-    <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">
-        Python Not Recognized / PATH Issue
-    </button>
-    <div class="panel">
-        <ul>
-            <li>Reinstall Python with PATH enabled</li>
-            <li>Restart system</li>
-            <li>Check: <code>python --version</code></li>
-        </ul>
-    </div>
+                    <h5>3. "Permission denied" errors</h5>
+                    <ul>
+                        <li>Run Command Prompt as Administrator</li>
+                        <li>Or add <code>--user</code> flag: <code>pip install -r requirements.txt --user</code></li>
+                    </ul>
 
-    <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">
-        Microphone Issues
-    </button>
-    <div class="panel">
-        <ul>
-            <li>Check microphone permissions</li>
-            <li>Test with other apps</li>
-            <li>Update audio drivers</li>
-        </ul>
-    </div>
+                    <h5>4. Timeout / Network errors</h5>
+                    <ul>
+                        <li>Increase timeout: <code>pip install -r requirements.txt --timeout 100</code></li>
+                        <li>Use different mirror: <code>pip install -r requirements.txt -i https://pypi.org/simple</code></li>
+                    </ul>
+                </div>
 
-    <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">
-        Virtual Environment Not Working
-    </button>
-    <div class="panel">
-        <ul>
-            <li>Ensure VS Code shows <b>(jarvis_env)</b></li>
-            <li>Activate again: <code>jarvis_env\Scripts\activate</code></li>
-            <li>Reinstall packages inside env</li>
-        </ul>
-    </div>
+                <button class="accordion">🎤 Voice Recognition Not Working</button>
+                <div class="panel">
+                    <h3>Problem: JARVIS doesn't respond to voice commands</h3>
+                    
+                    <h4>Checklist:</h4>
+                    <ol>
+                        <li><strong>Microphone Settings:</strong>
+                            <ul>
+                                <li>Check Windows Sound Settings</li>
+                                <li>Ensure microphone is not muted</li>
+                                <li>Set correct default input device</li>
+                                <li>Test microphone in Voice Recorder app</li>
+                            </ul>
+                        </li>
+                        <li><strong>Permissions:</strong>
+                            <ul>
+                                <li>Go to Settings → Privacy → Microphone</li>
+                                <li>Enable "Allow apps to access your microphone"</li>
+                                <li>Enable for Python specifically</li>
+                            </ul>
+                        </li>
+                        <li><strong>Audio Drivers:</strong>
+                            <ul>
+                                <li>Update audio drivers from Device Manager</li>
+                                <li>Restart system after driver update</li>
+                            </ul>
+                        </li>
+                        <li><strong>PyAudio Installation:</strong>
+                            <code>pip install pyaudio</code>
+                            <p>If this fails, download wheel file from <a href="https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyaudio" target="_blank">here</a></p>
+                        </li>
+                    </ol>
+                </div>
 
-    <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">
-        Pyttsx3 Problems
-    </button>
-    <div class="panel">
-        <ul>
-            <li>Check if installed in virtual environment</li>
-            <li>Run <code>pip list</code></li>
-            <li>Reinstall if needed</li>
-        </ul>
-    </div>
+                <button class="accordion">⚡ JARVIS Running Slow / High CPU Usage</button>
+                <div class="panel">
+                    <h3>Problem: Performance issues on low-end hardware</h3>
+                    
+                    <h4>Optimization Steps:</h4>
+                    <ol>
+                        <li><strong>Enable Lite Mode:</strong>
+                            <p>Edit <code>config.json</code> and set <code>"lite_mode": true</code></p>
+                        </li>
+                        <li><strong>Disable Unused Features:</strong>
+                            <ul>
+                                <li>Turn off real-time monitoring</li>
+                                <li>Disable background animations</li>
+                                <li>Reduce voice response speed</li>
+                            </ul>
+                        </li>
+                        <li><strong>Close Background Apps:</strong>
+                            <p>Free up RAM by closing unnecessary programs</p>
+                        </li>
+                        <li><strong>Increase Virtual Memory:</strong>
+                            <ul>
+                                <li>System Properties → Advanced → Performance Settings</li>
+                                <li>Virtual Memory → Change</li>
+                                <li>Set custom size (Initial: 2048 MB, Maximum: 4096 MB)</li>
+                            </ul>
+                        </li>
+                        <li><strong>Run Single-Core Mode:</strong>
+                            <p>In config, set <code>"cpu_cores": 1</code> for stability</p>
+                        </li>
+                    </ol>
+                </div>
 
-    <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">
-        Pyaudio Installation Error
-    </button>
-    <div class="panel">
-        <ul>
-            <li>Install: <code>pip install pipwin</code></li>
-            <li>Then: <code>pipwin install pyaudio</code></li>
-        </ul>
-    </div>
+                <button class="accordion">🚫 "Module Not Found" Errors</button>
+                <div class="panel">
+                    <h3>Problem: ImportError or ModuleNotFoundError</h3>
+                    
+                    <h4>Solutions:</h4>
+                    <ol>
+                        <li><strong>Verify Virtual Environment:</strong>
+                            <p>If using venv, ensure it's activated before running JARVIS</p>
+                            <code>J:\Jarvis.ai.in\venv\Scripts\activate</code>
+                        </li>
+                        <li><strong>Reinstall Specific Module:</strong>
+                            <code>pip install [module_name]</code>
+                        </li>
+                        <li><strong>Check Python Path:</strong>
+                            <code>python -c "import sys; print(sys.path)"</code>
+                            <p>Ensure JARVIS directory is in the path</p>
+                        </li>
+                        <li><strong>Reinstall All Dependencies:</strong>
+                            <code>pip uninstall -r requirements.txt -y</code>
+                            <code>pip install -r requirements.txt</code>
+                        </li>
+                    </ol>
+                </div>
 
-    <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">
-        In-built Games Not Working
-    </button>
-    <div class="panel">
-        <p>Check if code is correct and dependencies are installed in virtual environment.</p>
-    </div>
-    </div>
+                <button class="accordion">🔄 JARVIS Won't Start / Crashes on Launch</button>
+                <div class="panel">
+                    <h3>Problem: Application crashes immediately after starting</h3>
+                    
+                    <h4>Debugging Steps:</h4>
+                    <ol>
+                        <li><strong>Check Error Logs:</strong>
+                            <p>Open <code>J:\Jarvis.ai.in\logs\error.log</code> to see detailed error messages</p>
+                        </li>
+                        <li><strong>Run in Debug Mode:</strong>
+                            <code>python main.py --debug</code>
+                        </li>
+                        <li><strong>Reset Configuration:</strong>
+                            <ul>
+                                <li>Rename <code>config.json</code> to <code>config.json.old</code></li>
+                                <li>JARVIS will create a new default config on next run</li>
+                            </ul>
+                        </li>
+                        <li><strong>Clean Installation:</strong>
+                            <ul>
+                                <li>Backup your config and data</li>
+                                <li>Delete JARVIS folder</li>
+                                <li>Re-clone from GitHub</li>
+                                <li>Reinstall dependencies</li>
+                            </ul>
+                        </li>
+                        <li><strong>System Compatibility:</strong>
+                            <p>Ensure your OS meets minimum requirements (Windows 10+, updated Linux kernel, macOS 10.14+)</p>
+                        </li>
+                    </ol>
+                </div>
 
-
-
-
-
-
-
-
-
-    
-            <hr>
+                <div class="warning-box">
+                    <p><strong>🆘 Still Having Issues?</strong></p>
+                    <p>Visit our GitHub Issues page: <a href="https://github.com/RAJ0793/Jarvis.ai.in/issues" target="_blank">github.com/RAJ0793/Jarvis.ai.in/issues</a></p>
+                    <p>Create a new issue with:</p>
+                    <ul>
+                        <li>Detailed description of the problem</li>
+                        <li>Your system specifications</li>
+                        <li>Error logs (from error.log file)</li>
+                        <li>Steps you've already tried</li>
+                    </ul>
+                </div>
+            </div>
 
             <!-- Tab 4: FAQ -->
             <div id="tab4" class="tab-content">
-                <h2>Frequently Asked Questions</h2>
+                <h2>❓ Frequently Asked Questions</h2>
+                <p>Quick answers to common questions about JARVIS</p>
 
-                <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">What is JARVIS?</button>
+                <button class="accordion">🤔 What is JARVIS?</button>
                 <div class="panel">
-                    <p>JARVIS is an AI-assistant designed to run both online and offline, offering personalized features such as voice commands, smart search, and system automation.</p>
-                </div>
-                
-                <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">What is JarOS?</button>
-                <div class="panel">
-                    <p>JarOS is an AI-powered operating system designed to run both online and offline, offering personalized features such as voice commands, smart search, and system automation and based on linux and android UI(Coming very soon).</p>
-                </div>
-
-                <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">What makes JARVIS unique?</button>
-                <div class="panel">
-                    <p>JARVIS is designed to be fully offline-capable with advanced voice recognition, smart memory system, and extensive customization options. Unlike cloud-based assistants, your data stays private and secure on your local machine.</p>
-                </div>
-
-                <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">Does JARVIS require the internet?</button>
-                <div class="panel">
-                    <p>Yes. JARVIS works perfectly offline for most features like commands, memory recall, and system tasks. Internet is only required for online search or cloud-based APIs.(offline capable feature coming soon)</p>
+                    <p>JARVIS is an open-source, offline-first agentic AI assistant inspired by Tony Stark's AI from the Iron Man movies. It's specifically designed to run efficiently on low-end hardware like Intel i3 processors with just 2GB of RAM.</p>
+                    
+                    <p>Unlike cloud-based AI assistants, JARVIS prioritizes:</p>
+                    <ul>
+                        <li><strong>Privacy:</strong> All processing happens on your device</li>
+                        <li><strong>Efficiency:</strong> Optimized for minimal resource usage</li>
+                        <li><strong>Productivity:</strong> Automation and task management tools</li>
+                        <li><strong>Transparency:</strong> Fully open-source code</li>
+                    </ul>
                 </div>
 
-                <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">Can JARVIS control my PC?</button>
+                <button class="accordion">🆓 Is JARVIS completely free?</button>
                 <div class="panel">
-                    <p>Yes. JARVIS can open apps, control system settings, manage files, and even automate tasks like updates, music playbook, and custom workflows.</p>
+                    <p><strong>Yes, absolutely!</strong> JARVIS is 100% free and open-source under the MIT License.</p>
+                    
+                    <p>This means you can:</p>
+                    <ul>
+                        <li>Use it for personal or commercial projects</li>
+                        <li>Modify the source code as needed</li>
+                        <li>Distribute your modified versions</li>
+                        <li>Contribute improvements back to the community</li>
+                    </ul>
+
+                    <p>Unlike proprietary AI services (like OpenAI's models), JARVIS will always remain free and community-driven.</p>
                 </div>
 
-                <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">Is my data safe with JARVIS?</button>
+                <button class="accordion">🌐 Does JARVIS work offline?</button>
                 <div class="panel">
-                    <p>Absolutely. JARVIS stores all personal data locally using encrypted JSON files. No data is uploaded to external servers without your permission.</p>
+                    <p><strong>Yes!</strong> JARVIS is designed as an offline-first assistant. Core features work completely offline:</p>
+                    
+                    <ul>
+                        <li>✅ Voice recognition and commands</li>
+                        <li>✅ File management and organization</li>
+                        <li>✅ Automation and macros</li>
+                        <li>✅ Productivity tools</li>
+                        <li>✅ Text processing and formatting</li>
+                    </ul>
+
+                    <p><strong>Features requiring internet:</strong></p>
+                    <ul>
+                        <li>Web search functionality</li>
+                        <li>Weather updates</li>
+                        <li>Online content fetching</li>
+                    </ul>
+
+                    <p>You can configure JARVIS to operate in fully offline mode by setting <code>"offline_mode": true</code> in the config file.</p>
                 </div>
 
-                <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">Can I customize JARVIS?</button>
+                <button class="accordion">💻 What are the exact system requirements?</button>
                 <div class="panel">
-                    <p>Yes. You can add your own commands, voices, responses, and even integrate third-party APIs, making JARVIS completely customizable to your needs.</p>
+                    <h3>Minimum Requirements:</h3>
+                    <ul>
+                        <li><strong>CPU:</strong> Intel i3 (any generation) or AMD equivalent, 1 core minimum</li>
+                        <li><strong>RAM:</strong> 2GB (4GB recommended for smoother performance)</li>
+                        <li><strong>GPU:</strong> Intel Iris Xe Graphics or any integrated graphics</li>
+                        <li><strong>Storage:</strong> 20GB dedicated space (SSD recommended but not required)</li>
+                        <li><strong>Python:</strong> Exactly version 3.10.0</li>
+                    </ul>
+
+                    <h3>Recommended Setup:</h3>
+                    <ul>
+                        <li><strong>CPU:</strong> Intel i5 or higher</li>
+                        <li><strong>RAM:</strong> 4GB or more</li>
+                        <li><strong>Storage:</strong> SSD with 30GB free space</li>
+                    </ul>
+
+                    <div class="info-box">
+                        <p><strong>💡 Note:</strong> JARVIS has been tested and verified on systems as low as Intel i3 with 2GB RAM. Performance varies based on enabled features.</p>
+                    </div>
                 </div>
 
-                <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">What platforms does JARVIS support?</button>
+                <button class="accordion">🐍 Why exactly Python 3.10.0?</button>
                 <div class="panel">
-                    <p>JARVIS supports Windows, Linux, Android (via a companion app), and will soon expand to macOS and iOS.</p>
+                    <p>JARVIS requires <strong>exactly Python 3.10.0</strong> for several critical reasons:</p>
+
+                    <ol>
+                        <li><strong>Dependency Compatibility:</strong> All libraries and packages used in JARVIS are tested and verified with Python 3.10.0</li>
+                        <li><strong>Stability:</strong> Python 3.10.0 provides the right balance of features and stability for resource-constrained systems</li>
+                        <li><strong>Syntax Features:</strong> JARVIS uses pattern matching and other 3.10-specific features</li>
+                        <li><strong>Memory Management:</strong> Python 3.10 has optimized memory usage compared to newer versions</li>
+                    </ol>
+
+                    <div class="warning-box">
+                        <p><strong>⚠️ Warning:</strong> Using Python 3.9 or 3.11+ may cause import errors, runtime crashes, or unexpected behavior. Always verify with <code>python --version</code></p>
+                    </div>
                 </div>
 
-                <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">Does JARVIS update automatically?</button>
+                <button class="accordion">📁 Why do I need a separate J: drive with 20GB?</button>
                 <div class="panel">
-                    <p>JARVIS notifies you when a new version is available and allows you to update manually or automatically, depending on your preference.</p>
+                    <h3>Reasons for dedicated storage:</h3>
+                    
+                    <ol>
+                        <li><strong>System Safety:</strong> Prevents JARVIS from accidentally interfering with system files or other applications</li>
+                        <li><strong>Easy Uninstallation:</strong> Simply delete the J: drive folder to completely remove JARVIS</li>
+                        <li><strong>Performance:</strong> Dedicated space prevents fragmentation and ensures consistent speed</li>
+                        <li><strong>Data Organization:</strong> All JARVIS data, models, and cache are in one location</li>
+                        <li><strong>Corruption Prevention:</strong> If JARVIS encounters issues, your main system drive remains unaffected</li>
+                    </ol>
+
+                    <h3>What does JARVIS store in 20GB?</h3>
+                    <ul>
+                        <li>Core application files (~500MB)</li>
+                        <li>Python libraries and dependencies (~1-2GB)</li>
+                        <li>Voice models and data (~2-3GB)</li>
+                        <li>Cache and temporary files (~1GB)</li>
+                        <li>User data, configs, and logs (~500MB)</li>
+                        <li>Reserved space for updates and expansion (~13-15GB)</li>
+                    </ul>
+
+                    <div class="info-box">
+                        <p><strong>💡 Flexibility:</strong> You don't have to use J: drive. Any drive with 20GB free space works. Just update the config file to point to your chosen location.</p>
+                    </div>
                 </div>
 
-                <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">Can JARVIS learn from me?</button>
+                <button class="accordion">🎙️ How does voice recognition work offline?</button>
                 <div class="panel">
-                    <p>Yes. JARVIS can store previous commands, preferences, and interactions in its local memory, improving responses over time without sending data online.</p>
+                    <p>JARVIS uses local speech recognition libraries that don't require internet:</p>
+
+                    <h3>Technology Stack:</h3>
+                    <ul>
+                        <li><strong>SpeechRecognition:</strong> Captures and processes audio from your microphone</li>
+                        <li><strong>Pocketsphinx:</strong> Offline speech-to-text engine (included in dependencies)</li>
+                        <li><strong>pyttsx3:</strong> Text-to-speech for JARVIS responses</li>
+                    </ul>
+
+                    <h3>How it works:</h3>
+                    <ol>
+                        <li>You speak the wake word ("JARVIS" by default)</li>
+                        <li>JARVIS activates and starts listening</li>
+                        <li>Your voice is captured and processed locally</li>
+                        <li>Command is recognized using offline models</li>
+                        <li>JARVIS executes the command and responds</li>
+                    </ol>
+
+                    <p><strong>Note:</strong> Offline recognition has ~85% accuracy. For better accuracy, you can enable online mode which uses Google's speech API.</p>
                 </div>
 
-                <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">Can I use JARVIS without a microphone?</button>
+                <button class="accordion">🔒 Is my data safe and private?</button>
                 <div class="panel">
-                    <p>Yes. You can control JARVIS entirely through the keyboard or GUI, though voice commands enhance the experience.</p>
+                    <p><strong>Absolutely!</strong> Privacy is a core principle of JARVIS:</p>
+
+                    <h3>Privacy Features:</h3>
+                    <ul>
+                        <li>✅ <strong>No Data Collection:</strong> JARVIS doesn't send any data to external servers</li>
+                        <li>✅ <strong>Local Processing:</strong> All AI operations happen on your device</li>
+                        <li>✅ <strong>No Telemetry:</strong> No usage analytics or tracking</li>
+                        <li>✅ <strong>Open Source:</strong> You can audit the entire codebase on GitHub</li>
+                        <li>✅ <strong>Encrypted Storage:</strong> Sensitive data is encrypted locally</li>
+                    </ul>
+
+                    <h3>What JARVIS can access:</h3>
+                    <ul>
+                        <li>Only files and folders you explicitly grant permission to</li>
+                        <li>Microphone (only when you activate voice commands)</li>
+                        <li>System information for monitoring (CPU, RAM, disk usage)</li>
+                    </ul>
+
+                    <div class="success-box">
+                        <p><strong>🔐 Unlike proprietary AI services:</strong> JARVIS doesn't train on your data, share it with third parties, or store it on cloud servers. What happens on your device, stays on your device.</p>
+                    </div>
                 </div>
 
-                <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">Does JARVIS support multiple languages?</button>
+                <button class="accordion">🎨 Can I customize JARVIS?</button>
                 <div class="panel">
-                    <p>Currently, JARVIS supports English, but you can add more languages through its customization files.</p>
+                    <p><strong>Yes!</strong> JARVIS is highly customizable:</p>
+
+                    <h3>What you can customize:</h3>
+                    <ul>
+                        <li><strong>Wake Word:</strong> Change from "JARVIS" to any word you prefer</li>
+                        <li><strong>Voice:</strong> Adjust speed, volume, pitch, and accent</li>
+                        <li><strong>Interface Theme:</strong> Light mode, dark mode, or custom colors</li>
+                        <li><strong>Commands:</strong> Create custom voice commands and shortcuts</li>
+                        <li><strong>Automation Rules:</strong> Define your own workflows and triggers</li>
+                        <li><strong>Features:</strong> Enable/disable specific tools and modules</li>
+                    </ul>
+
+                    <h3>How to customize:</h3>
+                    <ol>
+                        <li>Edit <code>config.json</code> in the JARVIS directory</li>
+                        <li>Or use the built-in Settings panel (coming in v1.1)</li>
+                        <li>Advanced users can modify Python source files directly</li>
+                    </ol>
+
+                    <p>Example customization:</p>
+                    <code>
+{
+  "wake_word": "Computer",
+  "voice_name": "female",
+  "theme": "dark",
+  "custom_commands": {
+    "launch music": "open spotify.exe"
+  }
+}
+                    </code>
                 </div>
 
-                <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">Can JARVIS run on low-end PCs?</button>
+                <button class="accordion">🤖 Can JARVIS generate images or videos?</button>
                 <div class="panel">
-                    <p>Yes. JARVIS is optimized to run smoothly even on systems with as low as 2GB RAM, ensuring lightweight yet powerful performance.</p>
+                    <p><strong>Not in v1.0, but planned for future releases!</strong></p>
+
+                    <h3>Current Capabilities (v1.0):</h3>
+                    <ul>
+                        <li>✅ Text generation and processing</li>
+                        <li>✅ Voice interaction</li>
+                        <li>✅ File management and automation</li>
+                        <li>✅ Web search and information retrieval</li>
+                        <li>✅ Productivity tools</li>
+                    </ul>
+
+                    <h3>Planned for Future Versions:</h3>
+                    <ul>
+                        <li>🔜 Image generation (lightweight models)</li>
+                        <li>🔜 Basic video editing assistance</li>
+                        <li>🔜 OCR (text extraction from images)</li>
+                        <li>🔜 Image enhancement and manipulation</li>
+                    </ul>
+
+                    <div class="info-box">
+                        <p><strong>💡 Why not now?</strong> Image and video generation require significant computational resources. We're working on optimized models that can run on 2GB RAM systems without compromising performance.</p>
+                    </div>
                 </div>
 
-                <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">Can JARVIS integrate with Arduino and IoT?</button>
+                <button class="accordion">🔄 How do I update JARVIS?</button>
                 <div class="panel">
-                    <p>Yes. JARVIS can be extended to control smart devices, Arduino boards, and IoT setups through plugins and custom modules.</p>
+                    <h3>Updating to Latest Version:</h3>
+                    
+                    <ol>
+                        <li><strong>Backup Your Data:</strong>
+                            <ul>
+                                <li>Copy your <code>config.json</code> file</li>
+                                <li>Backup any custom scripts or data in the <code>user</code> folder</li>
+                            </ul>
+                        </li>
+                        <li><strong>Pull Latest Changes:</strong>
+                            <code>cd J:\Jarvis.ai.in</code>
+                            <code>git pull origin main</code>
+                        </li>
+                        <li><strong>Update Dependencies:</strong>
+                            <code>pip install -r requirements.txt --upgrade</code>
+                        </li>
+                        <li><strong>Restore Your Config:</strong>
+                            <p>Copy back your <code>config.json</code> file</p>
+                        </li>
+                        <li><strong>Test the Update:</strong>
+                            <code>python main.py</code>
+                        </li>
+                    </ol>
+
+                    <div class="warning-box">
+                        <p><strong>⚠️ Important:</strong> Always backup your configuration before updating. Some updates may reset settings to defaults.</p>
+                    </div>
                 </div>
 
-                <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">Can JARVIS control system volume and media playback?</button>
+                <button class="accordion">💬 How can I contribute or get help?</button>
                 <div class="panel">
-                    <p>Yes. JARVIS can adjust system volume, control media playbook, pause/resume music, and manage audio devices through voice or text commands.</p>
+                    <h3>Getting Help:</h3>
+                    <ul>
+                        <li><strong>GitHub Issues:</strong> <a href="https://github.com/RAJ0793/Jarvis.ai.in/issues" target="_blank">Report bugs or request features</a></li>
+                        <li><strong>Discussions:</strong> Join conversations with other users on GitHub Discussions</li>
+                        <li><strong>Documentation:</strong> Check the README and Wiki on GitHub</li>
+                    </ul>
+
+                    <h3>Contributing to JARVIS:</h3>
+                    <ol>
+                        <li><strong>Fork the Repository:</strong> Create your own copy on GitHub</li>
+                        <li><strong>Make Changes:</strong> Improve code, fix bugs, add features</li>
+                        <li><strong>Test Thoroughly:</strong> Ensure your changes work on 2GB RAM systems</li>
+                        <li><strong>Submit Pull Request:</strong> Share your improvements with the community</li>
+                    </ol>
+
+                    <h3>Ways to Contribute:</h3>
+                    <ul>
+                        <li>🐛 Report bugs and issues</li>
+                        <li>💡 Suggest new features</li>
+                        <li>📝 Improve documentation</li>
+                        <li>🔧 Fix bugs in the code</li>
+                        <li>✨ Develop new features</li>
+                        <li>🌍 Translate to other languages</li>
+                        <li>📢 Spread the word about JARVIS</li>
+                    </ul>
+
+                    <div class="success-box">
+                        <p><strong>🌟 All contributions are welcome!</strong> Whether you're a beginner or expert, there's a way for you to help make JARVIS better.</p>
+                    </div>
                 </div>
 
-                <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">Does JARVIS have a mobile app?</button>
+                <button class="accordion">📊 How does JARVIS compare to other AI assistants?</button>
                 <div class="panel">
-                    <p>Yes. A companion Android app is available, allowing you to control your PC remotely and sync with JARVIS's core functions.</p>
+                    <h3>JARVIS vs Other AI Assistants:</h3>
+
+                    <table style="width:100%; border-collapse: collapse; margin: 20px 0;">
+                        <tr style="border-bottom: 2px solid rgba(0,255,255,0.3);">
+                            <th style="padding: 10px; text-align: left;">Feature</th>
+                            <th style="padding: 10px; text-align: left;">JARVIS</th>
+                            <th style="padding: 10px; text-align: left;">ChatGPT/Claude</th>
+                            <th style="padding: 10px; text-align: left;">Alexa/Siri</th>
+                        </tr>
+                        <tr style="border-bottom: 1px solid rgba(0,255,255,0.2);">
+                            <td style="padding: 10px;">Cost</td>
+                            <td style="padding: 10px; color: #00ff00;">Free & Open Source</td>
+                            <td style="padding: 10px;">Paid ($20+/month)</td>
+                            <td style="padding: 10px;">Free (limited)</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid rgba(0,255,255,0.2);">
+                            <td style="padding: 10px;">Privacy</td>
+                            <td style="padding: 10px; color: #00ff00;">100% Local, No Data Sent</td>
+                            <td style="padding: 10px;">Cloud-based, Data Collected</td>
+                            <td style="padding: 10px;">Cloud-based, Data Collected</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid rgba(0,255,255,0.2);">
+                            <td style="padding: 10px;">Offline Mode</td>
+                            <td style="padding: 10px; color: #00ff00;">Yes, Fully Functional</td>
+                            <td style="padding: 10px;">No</td>
+                            <td style="padding: 10px;">Limited</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid rgba(0,255,255,0.2);">
+                            <td style="padding: 10px;">Customization</td>
+                            <td style="padding: 10px; color: #00ff00;">Fully Customizable</td>
+                            <td style="padding: 10px;">Limited to Prompts</td>
+                            <td style="padding: 10px;">Minimal</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid rgba(0,255,255,0.2);">
+                            <td style="padding: 10px;">System Requirements</td>
+                            <td style="padding: 10px;">2GB RAM, Intel i3</td>
+                            <td style="padding: 10px;">Web Browser</td>
+                            <td style="padding: 10px;">Specific Device Required</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid rgba(0,255,255,0.2);">
+                            <td style="padding: 10px;">Automation</td>
+                            <td style="padding: 10px; color: #00ff00;">Advanced Task Automation</td>
+                            <td style="padding: 10px;">Limited</td>
+                            <td style="padding: 10px;">Basic</td>
+                        </tr>
+                    </table>
+
+                    <div class="info-box">
+                        <p><strong>💡 JARVIS Philosophy:</strong> We believe AI should be accessible, private, and under your control. That's why JARVIS is free, open-source, and runs entirely on your hardware.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 5: Automation -->
+            <div id="tab5" class="tab-content">
+                <h2>⚙️ Automation & Workflows</h2>
+                <p>Automate repetitive tasks and create powerful workflows with JARVIS</p>
+
+                <button class="accordion">🎯 What is Automation in JARVIS?</button>
+                <div class="panel">
+                    <p>Automation allows you to create intelligent workflows that execute tasks automatically based on triggers, schedules, or conditions. This saves time and reduces manual effort for repetitive operations.</p>
+
+                    <h3>Types of Automation:</h3>
+                    <ul>
+                        <li><strong>Scheduled Tasks:</strong> Run actions at specific times (e.g., daily backup at 2 AM)</li>
+                        <li><strong>Event-Triggered:</strong> Execute when something happens (e.g., download completes → organize files)</li>
+                        <li><strong>Conditional Logic:</strong> If-then rules based on system state</li>
+                        <li><strong>Voice-Activated:</strong> Custom voice commands to trigger complex workflows</li>
+                        <li><strong>Macro Recording:</strong> Record your actions and replay them</li>
+                    </ul>
                 </div>
 
-                <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">What if I face errors using JARVIS?</button>
+                <button class="accordion">🔄 Setting Up Your First Automation</button>
                 <div class="panel">
-                    <p>JARVIS maintains an error log in its local folder. You can also enable troubleshooting mode to diagnose and fix problems easily.</p>
+                    <h3>Example: Auto-Organize Downloads Folder</h3>
+                    
+                    <h4>Step 1: Create Automation File</h4>
+                    <p>Navigate to <code>J:\Jarvis.ai.in\automations\</code> and create <code>organize_downloads.json</code></p>
+
+                    <h4>Step 2: Define the Automation</h4>
+                    <code>
+{
+  "name": "Organize Downloads",
+  "trigger": "file_added",
+  "watch_folder": "C:\\Users\\YourName\\Downloads",
+  "actions": [
+    {
+      "type": "move_file",
+      "conditions": {
+        "extension": [".jpg", ".png", ".gif"]
+      },
+      "destination": "C:\\Users\\YourName\\Pictures"
+    },
+    {
+      "type": "move_file",
+      "conditions": {
+        "extension": [".pdf", ".docx"]
+      },
+      "destination": "C:\\Users\\YourName\\Documents"
+    }
+  ]
+}
+                    </code>
+
+                    <h4>Step 3: Enable Automation</h4>
+                    <ol>
+                        <li>Open JARVIS config: <code>J:\Jarvis.ai.in\config.json</code></li>
+                        <li>Add to <code>"enabled_automations"</code>: <code>"organize_downloads"</code></li>
+                        <li>Restart JARVIS</li>
+                    </ol>
+
+                    <div class="success-box">
+                        <p><strong>✅ Done!</strong> Now whenever you download a file, JARVIS automatically sorts it to the correct folder.</p>
+                    </div>
                 </div>
 
-                <button class="accordion" onclick="toggleAccordion(this)" aria-expanded="false">Is JARVIS open source?</button>
+                <button class="accordion">⏰ Scheduled Automations</button>
                 <div class="panel">
-                    <p>Yes. JARVIS is open source, allowing developers to contribute, improve, and customize it freely on GitHub.</p>
+                    <h3>Example: Daily System Cleanup</h3>
+
+                    <code>
+{
+  "name": "Daily Cleanup",
+  "trigger": "schedule",
+  "schedule": "daily",
+  "time": "03:00",
+  "actions": [
+    {
+      "type": "clear_cache",
+      "folders": [
+        "C:\\Windows\\Temp",
+        "C:\\Users\\YourName\\AppData\\Local\\Temp"
+      ]
+    },
+    {
+      "type": "delete_old_files",
+      "folder": "C:\\Users\\YourName\\Downloads",
+      "older_than_days": 30
+    },
+    {
+      "type": "notify",
+      "message": "System cleanup completed!"
+    }
+  ]
+}
+                    </code>
+
+                    <h3>Schedule Options:</h3>
+                    <ul>
+                        <li><code>"schedule": "daily"</code> - Every day at specified time</li>
+                        <li><code>"schedule": "weekly"</code> - Every Monday (or specify day)</li>
+                        <li><code>"schedule": "hourly"</code> - Every hour</li>
+                        <li><code>"schedule": "interval"</code> - Custom interval in minutes</li>
+                    </ul>
                 </div>
-            </div> 
-            
 
+                <button class="accordion">🎤 Voice Command Automation</button>
+                <div class="panel">
+                    <h3>Creating Custom Voice Commands</h3>
 
-         
-    <!-- Tab 5: Automation -->
-<div id="tab5" class="tab-content">
-    <div class="hero-section">
-      <h2 class="main-title">🤖 Arduino – Your Friendly Gateway to Innovation</h2>
-      <p class="hero-description">
-        Arduino is not just a microcontroller—it's your <span class="highlight">creative companion</span>.  
-        From blinking LEDs to building robots, it helps you bring imagination to life through the magic of electronics.
-      </p>
-      <div class="image-container">
-        <img src="image5.webp" alt="Arduino Board showcasing versatility" class="hero-image">
-        <div class="image-caption">The versatile Arduino platform that powers millions of projects worldwide</div>
-      </div>
+                    <h4>Example: "Start Work Mode"</h4>
+                    <code>
+{
+  "name": "Work Mode",
+  "trigger": "voice_command",
+  "phrases": [
+    "start work mode",
+    "begin work session",
+    "activate focus mode"
+  ],
+  "actions": [
+    {
+      "type": "enable_focus_shield",
+      "block_sites": [
+        "facebook.com",
+        "youtube.com",
+        "twitter.com"
+      ]
+    },
+    {
+      "type": "open_apps",
+      "apps": [
+        "C:\\Program Files\\Microsoft Office\\WINWORD.EXE",
+        "C:\\Program Files\\Slack\\slack.exe"
+      ]
+    },
+    {
+      "type": "set_do_not_disturb",
+      "duration_minutes": 120
+    },
+    {
+      "type": "speak",
+      "text": "Work mode activated. Focus shield enabled for 2 hours."
+    }
+  ]
+}
+                    </code>
+
+                    <h3>Voice Command Tips:</h3>
+                    <ul>
+                        <li>Use natural phrases that are easy to remember</li>
+                        <li>Add multiple variations of the same command</li>
+                        <li>Keep commands distinct to avoid confusion</li>
+                        <li>Test with different pronunciations</li>
+                    </ul>
+                </div>
+
+                <button class="accordion">🧵 Macro Recording</button>
+                <div class="panel">
+                    <h3>Record and Replay Actions</h3>
+
+                    <h4>How to Record a Macro:</h4>
+                    <ol>
+                        <li>Say: "JARVIS, start recording macro"</li>
+                        <li>Perform the actions you want to automate</li>
+                        <li>Say: "JARVIS, stop recording"</li>
+                        <li>Give it a name when prompted</li>
+                    </ol>
+
+                    <h4>Replay a Macro:</h4>
+                    <p>Say: "JARVIS, run [macro name]"</p>
+
+                    <h3>What Can Be Recorded:</h3>
+                    <ul>
+                        <li>✅ File operations (copy, move, rename)</li>
+                        <li>✅ Application launches</li>
+                        <li>✅ Text input and editing</li>
+                        <li>✅ Mouse clicks and movements (limited)</li>
+                        <li>❌ Secure password entry (for security)</li>
+                        <li>❌ Administrative actions</li>
+                    </ul>
+
+                    <div class="warning-box">
+                        <p><strong>⚠️ Security Note:</strong> Macros can't record sensitive information like passwords. For security, these actions are always skipped during recording.</p>
+                    </div>
+                </div>
+
+                <button class="accordion">📋 Automation Templates</button>
+                <div class="panel">
+                    <h3>Pre-built Automation Templates</h3>
+
+                    <h4>1. Battery Saver Mode</h4>
+                    <p>Automatically reduce performance when battery is low:</p>
+                    <code>
+{
+  "name": "Battery Saver",
+  "trigger": "battery_level",
+  "threshold": 20,
+  "actions": [
+    {"type": "reduce_brightness", "level": 30},
+    {"type": "close_background_apps"},
+    {"type": "enable_power_saver"}
+  ]
+}
+                    </code>
+
+                    <h4>2. Focus Time Blocker</h4>
+                    <p>Block distractions during work hours:</p>
+                    <code>
+{
+  "name": "Focus Hours",
+  "trigger": "schedule",
+  "schedule": "weekdays",
+  "time_range": ["09:00", "17:00"],
+  "actions": [
+    {
+      "type": "block_websites",
+      "sites": ["social media", "entertainment"]
+    },
+    {
+      "type": "disable_notifications",
+      "except": ["outlook", "teams"]
+    }
+  ]
+}
+                    </code>
+
+                    <h4>3. End of Day Routine</h4>
+                    <p>Prepare system for shutdown:</p>
+                    <code>
+{
+  "name": "End Day Routine",
+  "trigger": "voice_command",
+  "phrases": ["end of day", "shutdown routine"],
+  "actions": [
+    {"type": "backup_documents"},
+    {"type": "close_all_apps"},
+    {"type": "clear_temp_files"},
+    {"type": "show_tomorrow_tasks"}
+  ]
+}
+                    </code>
+                </div>
+
+                <button class="accordion">🔗 Chaining Automations</button>
+                <div class="panel">
+                    <h3>Create Complex Workflows</h3>
+                    <p>Chain multiple automations together for sophisticated workflows:</p>
+
+                    <h4>Example: Content Creator Workflow</h4>
+                    <code>
+{
+  "name": "Content Creation Pipeline",
+  "trigger": "voice_command",
+  "phrases": ["start content creation"],
+  "workflow": [
+    {
+      "step": 1,
+      "name": "Setup Environment",
+      "actions": [
+        {"type": "open_app", "app": "Adobe Premiere"},
+        {"type": "open_app", "app": "Photoshop"},
+        {"type": "create_project_folder"}
+      ]
+    },
+    {
+      "step": 2,
+      "name": "Import Assets",
+      "wait_for": "user_confirmation",
+      "actions": [
+        {"type": "organize_media_files"},
+        {"type": "generate_thumbnails"}
+      ]
+    },
+    {
+      "step": 3,
+      "name": "Post Production",
+      "actions": [
+        {"type": "backup_project"},
+        {"type": "export_final_files"},
+        {"type": "upload_to_cloud"}
+      ]
+    }
+  ]
+}
+                    </code>
+
+                    <h3>Workflow Features:</h3>
+                    <ul>
+                        <li>Sequential execution of steps</li>
+                        <li>Wait for user confirmation between steps</li>
+                        <li>Conditional branching based on results</li>
+                        <li>Error handling and rollback</li>
+                    </ul>
+                </div>
+
+                <button class="accordion">🛡️ Conditional Automation</button>
+                <div class="panel">
+                    <h3>If-Then-Else Logic</h3>
+
+                    <h4>Example: Smart Download Handler</h4>
+                    <code>
+{
+  "name": "Smart Download Handler",
+  "trigger": "file_added",
+  "watch_folder": "Downloads",
+  "conditions": [
+    {
+      "if": {"file_size": "> 100MB"},
+      "then": {
+        "type": "move_file",
+        "destination": "D:\\Large Files"
+      },
+      "else": {
+        "type": "organize_by_type"
+      }
+    },
+    {
+      "if": {"file_extension": ".exe"},
+      "then": {
+        "type": "scan_virus",
+        "on_safe": {"move_to": "Programs"},
+        "on_threat": {"quarantine": true, "notify": true}
+      }
+    }
+  ]
+}
+                    </code>
+
+                    <h3>Available Conditions:</h3>
+                    <ul>
+                        <li><code>file_size</code> - Check file size</li>
+                        <li><code>file_extension</code> - Check file type</li>
+                        <li><code>file_age</code> - Check how old file is</li>
+                        <li><code>system_memory</code> - Check available RAM</li>
+                        <li><code>battery_level</code> - Check battery percentage</li>
+                        <li><code>network_status</code> - Check internet connection</li>
+                        <li><code>time_of_day</code> - Check current time</li>
+                    </ul>
+                </div>
+
+                <button class="accordion">📊 Monitoring & Logs</button>
+                <div class="panel">
+                    <h3>Track Automation Performance</h3>
+
+                    <p>View automation logs at: <code>J:\Jarvis.ai.in\logs\automation.log</code></p>
+
+                    <h4>Log Information Includes:</h4>
+                    <ul>
+                        <li>Execution timestamp</li>
+                        <li>Automation name and trigger</li>
+                        <li>Actions performed</li>
+                        <li>Success/failure status</li>
+                        <li>Error messages (if any)</li>
+                        <li>Execution duration</li>
+                    </ul>
+
+                    <h4>Voice Commands for Monitoring:</h4>
+                    <ul>
+                        <li>"JARVIS, show automation status"</li>
+                        <li>"JARVIS, list active automations"</li>
+                        <li>"JARVIS, disable [automation name]"</li>
+                        <li>"JARVIS, show recent automation errors"</li>
+                    </ul>
+
+                    <div class="info-box">
+                        <p><strong>💡 Pro Tip:</strong> Set up a weekly automation to email you a summary of all automation activities.</p>
+                    </div>
+                </div>
+
+                <button class="accordion">⚠️ Automation Best Practices</button>
+                <div class="panel">
+                    <h3>Guidelines for Effective Automation</h3>
+
+                    <h4>DO:</h4>
+                    <ul>
+                        <li>✅ Start with simple automations and gradually add complexity</li>
+                        <li>✅ Test automations thoroughly before enabling them</li>
+                        <li>✅ Use descriptive names for your automations</li>
+                        <li>✅ Add comments to complex automation files</li>
+                        <li>✅ Keep backup copies of working automations</li>
+                        <li>✅ Monitor logs regularly for errors</li>
+                        <li>✅ Use conditional logic to handle edge cases</li>
+                    </ul>
+
+                    <h4>DON'T:</h4>
+                    <ul>
+                        <li>❌ Automate critical system operations without testing</li>
+                        <li>❌ Create infinite loops in automation chains</li>
+                        <li>❌ Run resource-intensive automations too frequently</li>
+                        <li>❌ Automate file deletions without confirmation</li>
+                        <li>❌ Ignore error messages in logs</li>
+                        <li>❌ Use automation for one-time tasks</li>
+                    </ul>
+
+                    <div class="warning-box">
+                        <p><strong>⚠️ Safety First:</strong> Always test new automations in a safe environment. Use <code>"dry_run": true</code> option to preview actions without executing them.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <div class="center-button">
+            <button class="pulse" onclick="window.open('https://github.com/RAJ0793/Jarvis.ai.in', '_blank')">
+                🚀 Get JARVIS on GitHub
+            </button>
+        </div>
     </div>
-  
-    <div class="content-grid">
-      <section class="content-card">
-        <div class="card-header">
-          <h3 class="card-title">✨ What is Arduino?</h3>
-          <div class="card-subtitle">Understanding the Foundation</div>
-        </div>
-        <div class="card-content">
-          <p>
-            Arduino is an <span class="highlight">open-source electronics platform</span> designed to make learning easy, fun, and affordable.  
-            It acts as a <span class="highlight">bridge</span> between your creative ideas and real-world interactive machines.
-          </p>
-          <div class="feature-list">
-            <div class="feature-item">
-              <span class="feature-icon">🔧</span>
-              <span>Hardware & Software Combined</span>
-            </div>
-            <div class="feature-item">
-              <span class="feature-icon">🎯</span>
-              <span>Beginner to Expert Friendly</span>
-            </div>
-            <div class="feature-item">
-              <span class="feature-icon">🌐</span>
-              <span>Global Community Support</span>
-            </div>
-          </div>
-          <div class="image-container">
-            <img src="images/arduino_creativity.png" alt="Arduino enabling creativity in electronics" class="content-img">
-            <div class="image-caption">Arduino: Where creativity meets technology</div>
-          </div>
-        </div>
-      </section>
-  
-      <section class="content-card">
-        <div class="card-header">
-          <h3 class="card-title">👨‍🏫 Who created it & why?</h3>
-          <div class="card-subtitle">The Story Behind Arduino</div>
-        </div>
-        <div class="card-content">
-          <div class="timeline-item">
-            <div class="timeline-marker">📍</div>
-            <div class="timeline-content">
-              <h4>Born in 2005 in Ivrea, Italy</h4>
-              <p>Founded by <span class="highlight">Massimo Banzi</span> and his visionary team of educators and engineers.</p>
-            </div>
-          </div>
-          <div class="mission-box">
-            <h4>🎯 Their Mission</h4>
-            <p>To provide a <span class="highlight">low-cost, beginner-friendly tool</span> that democratizes electronics education for students, artists, designers, and makers worldwide.</p>
-          </div>
-          <div class="image-container">
-            <img src="images/arduino_founders.webp" alt="Arduino founders and their vision" class="content-img">
-            <div class="image-caption">The visionaries who made electronics accessible to everyone</div>
-          </div>
-        </div>
-      </section>
-  
-      <section class="content-card">
-        <div class="card-header">
-          <h3 class="card-title">🚀 Evolution of Arduino</h3>
-          <div class="card-subtitle">From Classroom to Global Innovation</div>
-        </div>
-        <div class="card-content">
-          <div class="evolution-timeline">
-            <div class="evolution-step">
-              <span class="step-number">1</span>
-              <h4>Interaction Design</h4>
-              <p>Started as a tool for design students</p>
-            </div>
-            <div class="evolution-arrow">→</div>
-            <div class="evolution-step">
-              <span class="step-number">2</span>
-              <h4>Global Spread</h4>
-              <p>Adopted by makers worldwide</p>
-            </div>
-            <div class="evolution-arrow">→</div>
-            <div class="evolution-step">
-              <span class="step-number">3</span>
-              <h4>Industry Impact</h4>
-              <p>Powers professional applications</p>
-            </div>
-          </div>
-          <div class="applications-grid">
-            <div class="app-item">🏠 IoT & Smart Homes</div>
-            <div class="app-item">🤖 Robotics & Automation</div>
-            <div class="app-item">🏥 Healthcare Monitoring</div>
-            <div class="app-item">🌱 Smart Agriculture</div>
-            <div class="app-item">🚀 Aerospace Projects</div>
-            <div class="app-item">🎨 Interactive Art</div>
-          </div>
-          <div class="image-container">
-            <img src="images/arduino_projects.png" alt="Diverse Arduino project applications" class="content-img">
-            <div class="image-caption">Arduino powers innovation across countless industries</div>
-          </div>
-        </div>
-      </section>
-  
-      <section class="content-card technical-card">
-        <div class="card-header">
-          <h3 class="card-title">🧠 What is a Microcontroller?</h3>
-          <div class="card-subtitle">The Brain Behind the Magic</div>
-        </div>
-        <div class="card-content">
-          <p class="intro-text">A microcontroller is like a tiny computer that can control things in the real world.</p>
-          <div class="components-grid">
-            <div class="component-item">
-              <div class="component-icon">⚡</div>
-              <h4>Processor</h4>
-              <p>Executes instructions and makes decisions</p>
-            </div>
-            <div class="component-item">
-              <div class="component-icon">💾</div>
-              <h4>Memory</h4>
-              <p>Stores programs, data, and variables</p>
-            </div>
-            <div class="component-item">
-              <div class="component-icon">🔌</div>
-              <h4>I/O Pins</h4>
-              <p>Connect sensors, motors, LEDs, and displays</p>
-            </div>
-          </div>
-          <div class="brain-analogy">
-            <span class="brain-icon">🧠</span>
-            <p><span class="highlight">Think of it as the intelligent brain of Arduino</span> - it receives information, processes it, and controls outputs accordingly.</p>
-          </div>
-          <div class="image-container">
-            <img src="image7.avif" alt="Detailed microcontroller architecture diagram" class="content-img">
-            <div class="image-caption">Inside a microcontroller: The components that make it work</div>
-          </div>
-        </div>
-      </section>
-  
-      <section class="content-card">
-        <div class="card-header">
-          <h3 class="card-title">💡 Why Binary?</h3>
-          <div class="card-subtitle">The Language of Digital Electronics</div>
-        </div>
-        <div class="card-content">
-          <div class="binary-explanation">
-            <p>Microcontrollers understand only <span class="highlight">0s and 1s</span> - the simplest possible language.</p>
-            <div class="binary-demo">
-              <div class="binary-bit on">
-                <span class="bit-value">1</span>
-                <span class="bit-meaning">ON / TRUE / HIGH</span>
-                <span class="bit-voltage">5V</span>
-              </div>
-              <div class="binary-bit off">
-                <span class="bit-value">0</span>
-                <span class="bit-meaning">OFF / FALSE / LOW</span>
-                <span class="bit-voltage">0V</span>
-              </div>
-            </div>
-            <div class="binary-benefits">
-              <h4>Why This Simple System Works So Well:</h4>
-              <ul class="benefits-list">
-                <li>⚡ <strong>Fast Processing:</strong> Simple decisions = rapid execution</li>
-                <li>🛡️ <strong>Reliable Communication:</strong> Less chance for errors</li>
-                <li>🔋 <strong>Energy Efficient:</strong> Clear on/off states save power</li>
-                <li>📡 <strong>Noise Resistant:</strong> Easy to distinguish between states</li>
-              </ul>
-            </div>
-          </div>
-          <div class="image-container">
-            <img src="image6.webp" alt="Binary code visualization and digital communication" class="content-img">
-            <div class="image-caption">Binary: The universal language of all digital devices</div>
-          </div>
-        </div>
-      </section>
-  
-      <section class="content-card">
-        <div class="card-header">
-          <h3 class="card-title">⚡ Why DC Power?</h3>
-          <div class="card-subtitle">Understanding Power Requirements</div>
-        </div>
-        <div class="card-content">
-          <div class="power-comparison">
-            <div class="power-type dc">
-              <h4>🔋 DC (Direct Current)</h4>
-              <div class="power-description">
-                <p>Flows steadily in one direction, like water from a battery</p>
-                <div class="power-wave dc-wave">→→→→→→→</div>
-                <div class="power-features">
-                  <span class="feature">Stable Voltage</span>
-                  <span class="feature">Predictable Flow</span>
-                  <span class="feature">Arduino Safe</span>
-                </div>
-              </div>
-            </div>
-            <div class="vs-divider">VS</div>
-            <div class="power-type ac">
-              <h4>🏠 AC (Alternating Current)</h4>
-              <div class="power-description">
-                <p>Constantly switches direction, like ocean waves</p>
-                <div class="power-wave ac-wave">∿∿∿∿∿∿∿</div>
-                <div class="power-features">
-                  <span class="feature">Variable Voltage</span>
-                  <span class="feature">Changing Direction</span>
-                  <span class="feature">Can Damage Arduino</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="safety-note">
-            <span class="safety-icon">⚠️</span>
-            <p>Arduino needs <span class="highlight">stable DC power</span> (3.3V or 5V) to work safely without component damage.</p>
-          </div>
-          <div class="image-container">
-            <img src="images/dc_vs_ac.webp" alt="Visual comparison of DC vs AC current flow patterns" class="content-img">
-            <div class="image-caption">Understanding the difference: DC flows steadily, AC alternates</div>
-          </div>
-        </div>
-      </section>
-  
-      <section class="content-card">
-        <div class="card-header">
-          <h3 class="card-title">🔌 Types of Arduino Boards</h3>
-          <div class="card-subtitle">Choose Your Perfect Match</div>
-        </div>
-        <div class="card-content">
-          <div class="boards-comparison">
-            <div class="board-item uno">
-              <div class="board-icon">🎯</div>
-              <h4>Arduino UNO</h4>
-              <div class="board-specs">
-                <span class="spec">14 Digital Pins</span>
-                <span class="spec">6 Analog Pins</span>
-                <span class="spec">32KB Flash Memory</span>
-              </div>
-              <p class="board-description">The classic choice - perfect for beginners and most projects</p>
-              <div class="board-ideal">Ideal for: Learning, basic automation, LED projects</div>
-            </div>
-            
-            <div class="board-item nano">
-              <div class="board-icon">📱</div>
-              <h4>Arduino Nano</h4>
-              <div class="board-specs">
-                <span class="spec">14 Digital Pins</span>
-                <span class="spec">8 Analog Pins</span>
-                <span class="spec">32KB Flash Memory</span>
-              </div>
-              <p class="board-description">Same power as UNO but in a compact, breadboard-friendly size</p>
-              <div class="board-ideal">Ideal for: Wearables, compact projects, permanent installations</div>
-            </div>
-            
-            <div class="board-item mega">
-              <div class="board-icon">💪</div>
-              <h4>Arduino Mega</h4>
-              <div class="board-specs">
-                <span class="spec">54 Digital Pins</span>
-                <span class="spec">16 Analog Pins</span>
-                <span class="spec">256KB Flash Memory</span>
-              </div>
-              <p class="board-description">The powerhouse - when you need more pins and memory</p>
-              <div class="board-ideal">Ideal for: Robotics, complex automation, multiple sensors</div>
-            </div>
-          </div>
-          <div class="board-summary">
-            <p>👉 <span class="highlight">Same programming language and principles</span> - just different sizes, memory capacity, and pin count to match your project needs.</p>
-          </div>
-          <div class="image-container">
-            <img src="images/arduino_boards.webp" alt="Arduino UNO, Nano, and Mega boards comparison" class="content-img">
-            <div class="image-caption">Three popular Arduino boards: UNO, Nano, and Mega</div>
-          </div>
-        </div>
-      </section>
-  
-      <section class="content-card technical-card">
-        <div class="card-header">
-          <h3 class="card-title">❤️ The Heart – ATmega Microcontrollers</h3>
-          <div class="card-subtitle">The Chip That Powers Your Dreams</div>
-        </div>
-        <div class="card-content">
-          <div class="chip-info">
-            <p>Most Arduino boards are powered by reliable <span class="highlight">ATmega microcontroller chips</span>:</p>
-            <div class="chip-mapping">
-              <div class="chip-pair">
-                <span class="board-name">Arduino UNO</span>
-                <span class="arrow">→</span>
-                <span class="chip-name">ATmega328P</span>
-                <div class="chip-details">8-bit, 16MHz, Perfect for beginners</div>
-              </div>
-              <div class="chip-pair">
-                <span class="board-name">Arduino Mega</span>
-                <span class="arrow">→</span>
-                <span class="chip-name">ATmega2560</span>
-                <div class="chip-details">8-bit, 16MHz, More pins & memory</div>
-              </div>
-            </div>
-            <div class="chip-benefits">
-              <h4>Why ATmega Chips Are Perfect:</h4>
-              <div class="benefits-grid">
-                <div class="benefit-item">
-                  <span class="benefit-icon">💰</span>
-                  <span>Affordable pricing for everyone</span>
-                </div>
-                <div class="benefit-item">
-                  <span class="benefit-icon">🔋</span>
-                  <span>Low power consumption</span>
-                </div>
-                <div class="benefit-item">
-                  <span class="benefit-icon">📚</span>
-                  <span>Extensive documentation</span>
-                </div>
-                <div class="benefit-item">
-                  <span class="benefit-icon">🎓</span>
-                  <span>Perfect learning curve</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="image-container">
-            <img src="images/atmega_chip.png" alt="ATmega microcontroller chip architecture and features" class="content-img">
-            <div class="image-caption">The ATmega chip: Small in size, big in capabilities</div>
-          </div>
-        </div>
-      </section>
-  
-      <section class="content-card">
-        <div class="card-header">
-          <h3 class="card-title">💻 Role of Coding</h3>
-          <div class="card-subtitle">Bringing Your Ideas to Life</div>
-        </div>
-        <div class="card-content">
-          <div class="coding-intro">
-            <p>Arduino uses a simplified, beginner-friendly version of <span class="highlight">C/C++</span> programming language.</p>
-          </div>
-          <div class="code-example">
-            <h4>🌟 Simple Example: Light up an LED</h4>
-            <div class="code-block">
-              <div class="code-line">
-                <span class="code-function">digitalWrite</span><span class="code-punctuation">(</span><span class="code-number">13</span><span class="code-punctuation">,</span> <span class="code-constant">HIGH</span><span class="code-punctuation">);</span>
-              </div>
-            </div>
-            <div class="code-explanation">
-              <div class="explanation-item">
-                <span class="term">digitalWrite</span>
-                <span class="definition">Function to control a pin</span>
-              </div>
-              <div class="explanation-item">
-                <span class="term">13</span>
-                <span class="definition">Pin number (LED location)</span>
-              </div>
-              <div class="explanation-item">
-                <span class="term">HIGH</span>
-                <span class="definition">Turn ON (send power)</span>
-              </div>
-            </div>
-          </div>
-          <div class="coding-benefits">
-            <div class="benefit-row">
-              <span class="level">🎓 Beginners:</span>
-              <span class="description">Simple syntax, lots of examples, forgiving errors</span>
-            </div>
-            <div class="benefit-row">
-              <span class="level">🧠 Experts:</span>
-              <span class="description">Full C/C++ power, advanced libraries, optimization</span>
-            </div>
-          </div>
-          <div class="image-container">
-            <img src="images/arduino_coding.webp" alt="Arduino IDE coding environment and syntax highlighting" class="content-img">
-            <div class="image-caption">Arduino IDE: Where code meets creativity</div>
-          </div>
-        </div>
-      </section>
-  
-      <section class="content-card highlight-card">
-        <div class="card-header">
-          <h3 class="card-title">🌟 Why Arduino is Special</h3>
-          <div class="card-subtitle">The Magic Behind the Movement</div>
-        </div>
-        <div class="card-content">
-          <div class="special-features">
-            <div class="feature-card">
-              <div class="feature-header">
-                <span class="feature-emoji">🔓</span>
-                <h4>Open-Source Freedom</h4>
-              </div>
-              <p>Complete transparency - hardware designs, software code, and community contributions are freely available to everyone.</p>
-              <div class="feature-impact">Impact: Innovation without barriers</div>
-            </div>
-            
-            <div class="feature-card">
-              <div class="feature-header">
-                <span class="feature-emoji">👥</span>
-                <h4>Massive Global Community</h4>
-              </div>
-              <p>Millions of makers, educators, and innovators sharing knowledge, projects, and solutions worldwide.</p>
-              <div class="feature-impact">Impact: Never code alone - help is always available</div>
-            </div>
-            
-            <div class="feature-card">
-              <div class="feature-header">
-                <span class="feature-emoji">💰</span>
-                <h4>Incredibly Affordable</h4>
-              </div>
-              <p>Professional-grade development tools and hardware at student-friendly prices - starting from just a few dollars.</p>
-              <div class="feature-impact">Impact: Technology education for everyone</div>
-            </div>
-            
-            <div class="feature-card">
-              <div class="feature-header">
-                <span class="feature-emoji">🎯</span>
-                <h4>Beginner-Friendly Design</h4>
-              </div>
-              <p>No prior engineering knowledge required - designed to be your first step into the world of electronics and programming.</p>
-              <div class="feature-impact">Impact: Empowering the next generation of innovators</div>
-            </div>
-          </div>
-          <div class="community-stats">
-            <div class="stat-item">
-              <span class="stat-number">10M+</span>
-              <span class="stat-label">Active Users</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-number">100K+</span>
-              <span class="stat-label">Online Tutorials</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-number">1M+</span>
-              <span class="stat-label">Shared Projects</span>
-            </div>
-          </div>
-          <div class="image-container">
-            <img src="images/arduino_community.png" alt="Arduino global community collaboration and sharing" class="content-img">
-            <div class="image-caption">A global community united by creativity and innovation</div>
-          </div>
-        </div>
-      </section>
-  
-      <section class="final-thought-card">
-        <div class="thought-content">
-          <h3 class="thought-title">💭 Final Thought</h3>
-          <div class="thought-text">
-            <p>
-              Arduino is more than just hardware and software—it's a <span class="highlight">teacher that guides you</span>, 
-              a <span class="highlight">friend that encourages experimentation</span>, and a <span class="highlight">partner in bringing your wildest ideas to life</span>.
-            </p>
-            <p class="inspiration-text">
-              With Arduino, your imagination doesn't just stay locked in your mind—it transforms into blinking lights, 
-              moving robots, smart sensors, and interactive experiences that can change the world.
-            </p>
-          </div>
-          <div class="call-to-action">
-            <span class="cta-emoji">🚀</span>
-            <p>Ready to turn your ideas into reality? Your Arduino journey starts now!</p>
-          </div>
-          <div class="image-container">
-            <img src="images/arduino_future.webp" alt="Arduino enabling future innovations and creative projects" class="content-img">
-            <div class="image-caption">The future is yours to create - one line of code at a time</div>
-          </div>
-        </div>
-      </section>
-    </div>
-  </div>
-  
-  <!-- Launch Button -->
-  <div class="center-button">
-    <button onclick="launchJARVIS()" class="launch-button pulse" aria-label="Launch JARVIS" tabindex="0">
-      <span class="button-icon">🚀</span>
-      <span class="button-text">Launch JARVIS</span>
-      <div class="button-glow"></div>
-    </button>
-  </div>  
-  <!-- Launch Button -->
-  <div class="center-button">
-    <button onclick="launchJARVIS()" class="pulse" aria-label="Launch JARVIS" tabindex="0">🚀 Launch JARVIS</button>
-  </div>
-  
-
 
     <script>
-        // Tab switching functionality
         function showTabContent(tabNumber) {
-            // Hide all tab contents
+            // Hide all tabs
             const allTabs = document.querySelectorAll('.tab-content');
-            allTabs.forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            // Remove active class from all tab buttons
+            allTabs.forEach(tab => tab.classList.remove('active'));
+
+            // Remove active state from all buttons
             const allButtons = document.querySelectorAll('.tabs button');
             allButtons.forEach(button => {
                 button.classList.remove('active');
                 button.setAttribute('aria-selected', 'false');
             });
-            
-            // Show selected tab content
-            document.getElementById(`tab${tabNumber}`).classList.add('active');
-            
-            // Add active class to clicked button
-            const activeButton = document.querySelector(`.tabs button:nth-child(${tabNumber})`);
-            activeButton.classList.add('active');
-            activeButton.setAttribute('aria-selected', 'true');
+
+            // Show selected tab
+            const selectedTab = document.getElementById(`tab${tabNumber}`);
+            if (selectedTab) {
+                selectedTab.classList.add('active');
+            }
+
+            // Set active state on clicked button
+            const clickedButton = event.target;
+            clickedButton.classList.add('active');
+            clickedButton.setAttribute('aria-selected', 'true');
+
+            // Scroll to top smoothly
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         // Accordion functionality
-        function toggleAccordion(element) {
-            const panel = element.nextElementSibling;
-            const isActive = element.classList.contains('active');
-            
-            // Close all other accordions
-            const allAccordions = document.querySelectorAll('.accordion');
-            const allPanels = document.querySelectorAll('.panel');
-            
-            allAccordions.forEach(acc => {
-                acc.classList.remove('active');
-                acc.setAttribute('aria-expanded', 'false');
-            });
-            allPanels.forEach(p => {
-                p.classList.remove('active');
-            });
-            
-            // Toggle current accordion
-            if (!isActive) {
-                element.classList.add('active');
-                element.setAttribute('aria-expanded', 'true');
-                panel.classList.add('active');
-            }
-        }
-
-        // Launch JARVIS functionality
-        function launchJARVIS() {
-            // Add some visual feedback
-            const button = document.querySelector('.center-button button');
-            button.style.transform = 'translateX(-50%) scale(0.95)';
-            button.innerHTML = '🎯 Launching...';
-            
-            setTimeout(() => {
-                button.style.transform = 'translateX(-50%) scale(1)';
-                button.innerHTML = '✅ JARVIS Ready!';
-                
-                setTimeout(() => {
-                    button.innerHTML = '🚀 Launch JARVIS';
-                }, 2000);
-            }, 500);
-            
-            // Here you can add actual JARVIS launch logic
-            console.log('JARVIS is launching...');
-        }
-
-        // Add smooth scrolling for better UX
         document.addEventListener('DOMContentLoaded', function() {
-            // Add loading animation to content
-            const content = document.querySelector('.content');
-            content.classList.add('loading');
-            
-            // Add keyboard navigation for tabs
-            const tabButtons = document.querySelectorAll('.tabs button');
-            tabButtons.forEach((button, index) => {
-                button.addEventListener('keydown', function(e) {
-                    if (e.key === 'ArrowRight') {
-                        e.preventDefault();
-                        const nextIndex = (index + 1) % tabButtons.length;
-                        tabButtons[nextIndex].focus();
-                        tabButtons[nextIndex].click();
-                    } else if (e.key === 'ArrowLeft') {
-                        e.preventDefault();
-                        const prevIndex = (index - 1 + tabButtons.length) % tabButtons.length;
-                        tabButtons[prevIndex].focus();
-                        tabButtons[prevIndex].click();
-                    }
-                });
-            });
-
-            // Add keyboard navigation for accordions
             const accordions = document.querySelectorAll('.accordion');
+
             accordions.forEach(accordion => {
-                accordion.addEventListener('keydown', function(e) {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        toggleAccordion(this);
+                accordion.addEventListener('click', function() {
+                    // Toggle active class on accordion
+                    this.classList.toggle('active');
+
+                    // Get the panel
+                    const panel = this.nextElementSibling;
+
+                    // Toggle panel
+                    if (panel.classList.contains('active')) {
+                        panel.classList.remove('active');
+                    } else {
+                        panel.classList.add('active');
                     }
                 });
             });
 
-            // Add smooth hover effects for feature cards
-            const featureCards = document.querySelectorAll('.feature-card');
-            featureCards.forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-5px) scale(1.02)';
-                });
-                
-                card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0) scale(1)';
-                });
-            });
+            // Add loading class after DOM loads
+            setTimeout(() => {
+                document.querySelector('.content').classList.remove('loading');
+            }, 100);
+        });
 
-            // Add particle effect on mouse move
-            document.addEventListener('mousemove', function(e) {
-                const cursor = document.createElement('div');
-                cursor.className = 'cursor-trail';
-                cursor.style.cssText = `
-                    position: fixed;
-                    width: 4px;
-                    height: 4px;
-                    background: radial-gradient(circle, rgba(0,255,255,0.8) 0%, transparent 70%);
-                    border-radius: 50%;
-                    pointer-events: none;
-                    left: ${e.clientX - 2}px;
-                    top: ${e.clientY - 2}px;
-                    z-index: 9999;
-                    animation: cursorFade 1s ease-out forwards;
-                `;
-                
-                document.body.appendChild(cursor);
-                
-                setTimeout(() => {
-                    if (cursor.parentNode) {
-                        cursor.parentNode.removeChild(cursor);
-                    }
-                }, 1000);
-            });
-
-            // Add CSS animation for cursor trail
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes cursorFade {
-                    0% { opacity: 1; transform: scale(1); }
-                    100% { opacity: 0; transform: scale(0.5); }
-                }
-                
-                /* Add smooth transitions for better performance */
-                * {
-                    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                }
-                
-                /* Enhanced focus styles for accessibility */
-                .tabs button:focus,
-                .accordion:focus,
-                .center-button button:focus {
-                    outline: 2px solid #00ffff;
-                    outline-offset: 2px;
-                }
-            `;
-            document.head.appendChild(style);
+        // Keyboard navigation for accessibility
+        document.addEventListener('keydown', function(e) {
+            if (e.target.classList.contains('accordion') && (e.key === 'Enter' || e.key === ' ')) {
+                e.preventDefault();
+                e.target.click();
+            }
         });
     </script>
 </body>
