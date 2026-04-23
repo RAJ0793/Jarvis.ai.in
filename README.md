@@ -85,3 +85,11 @@ Future direction includes:
 ## 📸 Screenshots
 
 > *(Add screenshots here when UI is ready)*
+
+---
+
+## 🛡️ Security Sandbox Design
+
+A proposed secure execution model for JARVIS is documented in:
+
+- [`SANDBOX_DESIGN.md`](./SANDBOX_DESIGN.md)
